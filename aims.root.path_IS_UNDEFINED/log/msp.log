@@ -1,0 +1,550 @@
+[2024-12-18 11:07:06.739][INFO ][background-preinit][Version] HV000001: Hibernate Validator 8.0.0.Final
+[2024-12-18 11:07:06.904][INFO ][main][AimsMetroMspApplication] Starting AimsMetroMspApplication using Java 17.0.8 with PID 53324 (C:\workspace\MSP\converter-metro-checkin\bin\main started by SandeepWali in C:\workspace\MSP\converter-metro-checkin)
+[2024-12-18 11:07:06.906][INFO ][main][AimsMetroMspApplication] No active profile set, falling back to 1 default profile: "default"
+[2024-12-18 11:07:07.398][WARN ][main][AnnotationConfigServletWebServerApplicationContext] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.solum.aims.msp.AimsMetroMspApplication]
+[2024-12-18 11:07:07.443][ERROR][main][SpringApplication] Application run failed
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [com.solum.aims.msp.AimsMetroMspApplication]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:178)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:398)
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:283)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:344)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:115)
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:747)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:565)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:732)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:434)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:310)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1304)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1293)
+	at com.solum.aims.msp.AimsMetroMspApplication.main(AimsMetroMspApplication.java:11)
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'aims.root.path' in value "file:${aims.root.path}/env/aims.properties"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:180)
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:126)
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:239)
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:210)
+	at org.springframework.core.env.AbstractEnvironment.resolveRequiredPlaceholders(AbstractEnvironment.java:588)
+	at org.springframework.core.io.support.PropertySourceProcessor.processPropertySource(PropertySourceProcessor.java:85)
+	at org.springframework.context.annotation.PropertySourceRegistry.processPropertySource(PropertySourceRegistry.java:77)
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:273)
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:243)
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:188)
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:297)
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:243)
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:196)
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:164)
+	... 13 common frames omitted
+[2024-12-18 11:14:16.590][INFO ][background-preinit][Version] HV000001: Hibernate Validator 8.0.0.Final
+[2024-12-18 11:14:16.733][INFO ][main][AimsMetroMspApplication] Starting AimsMetroMspApplication using Java 17.0.8 with PID 19668 (C:\workspace\MSP\converter-metro-checkin\bin\main started by SandeepWali in C:\workspace\MSP\converter-metro-checkin)
+[2024-12-18 11:14:16.735][INFO ][main][AimsMetroMspApplication] No active profile set, falling back to 1 default profile: "default"
+[2024-12-18 11:14:17.845][INFO ][main][BatchRegistrar] Finished Spring Batch infrastructure beans configuration in 12 ms.
+[2024-12-18 11:14:17.857][INFO ][main][RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2024-12-18 11:14:18.013][INFO ][main][RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 144 ms. Found 3 JPA repository interfaces.
+[2024-12-18 11:14:18.015][INFO ][main][RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2024-12-18 11:14:18.054][INFO ][main][RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 37 ms. Found 11 JPA repository interfaces.
+[2024-12-18 11:14:18.684][INFO ][main][DefaultConfiguringBeanFactoryPostProcessor] No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+[2024-12-18 11:14:18.698][INFO ][main][DefaultConfiguringBeanFactoryPostProcessor] No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+[2024-12-18 11:14:19.376][INFO ][main][TomcatWebServer] Tomcat initialized with port(s): 8083 (http)
+[2024-12-18 11:14:19.385][INFO ][main][Http11NioProtocol] Initializing ProtocolHandler ["http-nio-8083"]
+[2024-12-18 11:14:19.386][INFO ][main][StandardService] Starting service [Tomcat]
+[2024-12-18 11:14:19.386][INFO ][main][StandardEngine] Starting Servlet engine: [Apache Tomcat/10.1.8]
+[2024-12-18 11:14:19.527][INFO ][main][[/]] Initializing Spring embedded WebApplicationContext
+[2024-12-18 11:14:19.527][INFO ][main][ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 2720 ms
+[2024-12-18 11:14:19.707][INFO ][main][HikariDataSource] HikariPool-1 - Starting...
+[2024-12-18 11:14:19.976][INFO ][main][HikariPool] HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@12365bd8
+[2024-12-18 11:14:19.979][INFO ][main][HikariDataSource] HikariPool-1 - Start completed.
+[2024-12-18 11:14:20.230][INFO ][main][database] Set default schema name to public
+[2024-12-18 11:14:20.338][INFO ][main][lockservice] Successfully acquired change log lock
+[2024-12-18 11:14:20.647][INFO ][main][changelog] Reading from public.databasechangelog
+[2024-12-18 11:14:20.747][INFO ][main][lockservice] Successfully released change log lock
+[2024-12-18 11:14:20.799][INFO ][main][LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[2024-12-18 11:14:20.917][INFO ][main][Version] HHH000412: Hibernate ORM core version 6.1.7.Final
+[2024-12-18 11:14:21.625][INFO ][main][HikariDataSource] HikariPool-2 - Starting...
+[2024-12-18 11:14:21.672][INFO ][main][HikariPool] HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@46c475ba
+[2024-12-18 11:14:21.673][INFO ][main][HikariDataSource] HikariPool-2 - Start completed.
+[2024-12-18 11:14:21.703][INFO ][main][SQL dialect] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+[2024-12-18 11:14:21.772][INFO ][main][EnversServiceImpl] Envers integration enabled? : true
+[2024-12-18 11:14:21.857][WARN ][main][AnnotationBinder] HHH000503: A class should not be annotated with both @Inheritance and @MappedSuperclass. @Inheritance will be ignored for: com.solum.aims.msp.persistence.core.entity.CoreEntity.
+[2024-12-18 11:14:23.015][INFO ][main][JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2024-12-18 11:14:23.022][INFO ][main][LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2024-12-18 11:14:23.035][INFO ][main][LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[2024-12-18 11:14:23.194][INFO ][main][SQL dialect] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+[2024-12-18 11:14:23.197][INFO ][main][EnversServiceImpl] Envers integration enabled? : true
+[2024-12-18 11:14:23.282][INFO ][main][AuditMetadataGenerator] Adding properties for entity: com.solum.aims.msp.persistence.entity.Article
+[2024-12-18 11:14:23.289][INFO ][main][AdditionalJaxbMappingProducerImpl] Adding JAXB document mapping
+[2024-12-18 11:14:23.529][INFO ][main][boot] HHH90005601: Envers-generated HBM mapping...
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<hibernate-mapping auto-import="false" xmlns="http://www.hibernate.org/xsd/orm/hbm">
+    <class discriminator-value="Article" table="Article_AUD" entity-name="com.solum.aims.msp.persistence.entity.Article_AUD" abstract="false">
+        <composite-id name="originalId">
+            <key-property name="articleId">
+                <column length="255" name="article_id"/>
+                <type name="string">
+                    <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                    <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                    <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                    <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                    <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.embeddable.ArticleCompositePK</param>
+                    <param name="org.hibernate.type.ParameterType.propertyName">articleId</param>
+                </type>
+            </key-property>
+            <key-property name="stationCode">
+                <column length="255" name="station_code"/>
+                <type name="string">
+                    <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                    <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                    <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                    <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                    <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.embeddable.ArticleCompositePK</param>
+                    <param name="org.hibernate.type.ParameterType.propertyName">stationCode</param>
+                </type>
+            </key-property>
+            <key-many-to-one class="org.hibernate.envers.DefaultRevisionEntity" name="REV">
+                <column name="REV"/>
+            </key-many-to-one>
+        </composite-id>
+        <property insert="true" name="REVTYPE" type="org.hibernate.envers.internal.entities.RevisionTypeType" update="false"/>
+        <property insert="true" name="created" update="false">
+            <column length="255" name="created"/>
+            <type name="timestamp">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.util.Date</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">created</param>
+            </type>
+        </property>
+        <property insert="true" name="customBatchId" update="false">
+            <column length="255" name="custom_batch_id"/>
+            <type name="string">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">customBatchId</param>
+            </type>
+        </property>
+        <property insert="true" name="data" update="false">
+            <column length="1073741824" name="data"/>
+            <type name="string">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">data</param>
+            </type>
+        </property>
+        <property insert="true" name="lastModified" update="false">
+            <column length="255" name="last_modified"/>
+            <type name="timestamp">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.util.Date</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">lastModified</param>
+            </type>
+        </property>
+        <property insert="true" name="name" update="false">
+            <column length="512" name="name"/>
+            <type name="string">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">name</param>
+            </type>
+        </property>
+        <property insert="true" name="nfcUrl" update="false">
+            <column length="255" name="nfc_url"/>
+            <type name="string">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">nfcUrl</param>
+            </type>
+        </property>
+        <property insert="true" name="reservedOne" update="false">
+            <column length="255" name="reserved_one"/>
+            <type name="string">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">reservedOne</param>
+            </type>
+        </property>
+        <property insert="true" name="reservedThree" update="false">
+            <column length="255" name="reserved_three"/>
+            <type name="string">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">reservedThree</param>
+            </type>
+        </property>
+        <property insert="true" name="reservedTwo" update="false">
+            <column length="255" name="reserved_two"/>
+            <type name="string">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">reservedTwo</param>
+            </type>
+        </property>
+    </class>
+</hibernate-mapping>
+
+[2024-12-18 11:14:23.531][INFO ][main][AdditionalJaxbMappingProducerImpl] Adding JAXB document mapping
+[2024-12-18 11:14:23.572][INFO ][main][boot] HHH90005601: Envers-generated HBM mapping...
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<hibernate-mapping auto-import="false" xmlns="http://www.hibernate.org/xsd/orm/hbm">
+    <class table="REVINFO" name="org.hibernate.envers.DefaultRevisionEntity" entity-name="org.hibernate.envers.DefaultRevisionEntity">
+        <id name="id" type="integer">
+            <column name="REV"/>
+            <generator class="native"/>
+        </id>
+        <property insert="true" name="timestamp" type="long" update="false">
+            <column name="REVTSTMP"/>
+        </property>
+    </class>
+</hibernate-mapping>
+
+[2024-12-18 11:14:23.760][INFO ][main][JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2024-12-18 11:14:23.761][INFO ][main][LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2024-12-18 11:14:23.823][WARN ][main][JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2024-12-18 11:14:24.153][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.MetroArticleRepository
+[2024-12-18 11:14:24.420][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.MetroEnddeviceRepository
+[2024-12-18 11:14:24.494][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.EndDeviceRepository
+[2024-12-18 11:14:24.579][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.ArticleRepository
+[2024-12-18 11:14:24.952][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.MetroContentRepository
+[2024-12-18 11:14:25.008][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.TemplateTypeRepository
+[2024-12-18 11:14:25.034][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.MetroTemplateGroupMapRepository
+[2024-12-18 11:14:25.066][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.MetroTemplateGroupRepository
+[2024-12-18 11:14:25.118][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.core.repository.AccesspointRepository
+[2024-12-18 11:14:25.139][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.core.repository.StationRepository
+[2024-12-18 11:14:25.193][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.core.repository.CoreEndDeviceRepository
+[2024-12-18 11:14:25.271][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.FileResultRepository
+[2024-12-18 11:14:25.366][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.TemplateStationRepository
+[2024-12-18 11:14:25.411][INFO ][main][EmbeddedDatabaseFactory] Starting embedded database: url='jdbc:hsqldb:mem:embedded_batch_db', username='sa'
+[2024-12-18 11:14:25.743][INFO ][main][JobRepositoryFactoryBean] No database type set, using meta data indicating: HSQL
+[2024-12-18 11:14:25.790][INFO ][main][JobRepositoryFactoryBean] No database type set, using meta data indicating: HSQL
+[2024-12-18 11:14:25.795][INFO ][main][JobRepositoryFactoryBean] No database type set, using meta data indicating: HSQL
+[2024-12-18 11:14:25.850][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 11:14:25.857][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 11:14:25.880][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 11:14:25.884][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 11:14:25.886][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 11:14:25.894][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 11:14:25.896][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 11:14:25.900][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 11:14:25.902][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 11:14:25.905][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 11:14:25.906][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 11:14:25.920][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 11:14:25.922][INFO ][main][JobRepositoryFactoryBean] No database type set, using meta data indicating: POSTGRES
+[2024-12-18 11:14:25.937][INFO ][main][SimpleJobLauncher] No TaskExecutor has been set, defaulting to synchronous executor.
+[2024-12-18 11:14:26.581][INFO ][main][EventDrivenConsumer] Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+[2024-12-18 11:14:26.582][INFO ][main][PublishSubscribeChannel] Channel 'application.errorChannel' has 1 subscriber(s).
+[2024-12-18 11:14:26.583][INFO ][main][EventDrivenConsumer] started bean '_org.springframework.integration.errorLogger'
+[2024-12-18 11:14:26.583][INFO ][main][EventDrivenConsumer] Adding {service-activator:processingM1MessageEndPointChain.launchingGateway.serviceActivator} as a subscriber to the 'processingM1Channel' channel
+[2024-12-18 11:14:26.583][INFO ][main][DirectChannel] Channel 'application.processingM1Channel' has 1 subscriber(s).
+[2024-12-18 11:14:26.583][INFO ][main][EventDrivenConsumer] started bean 'processingM1MessageEndPointChain.launchingGateway.serviceActivator'
+[2024-12-18 11:14:26.583][INFO ][main][EventDrivenConsumer] Adding {filter:processingM1MessageEndPointChain.payLoadExistenceFilter.filter} as a subscriber to the 'processingM1FileFilterChannel' channel
+[2024-12-18 11:14:26.583][INFO ][main][DirectChannel] Channel 'application.processingM1FileFilterChannel' has 1 subscriber(s).
+[2024-12-18 11:14:26.583][INFO ][main][EventDrivenConsumer] started bean 'processingM1MessageEndPointChain.payLoadExistenceFilter.filter'
+[2024-12-18 11:14:26.583][INFO ][main][EventDrivenConsumer] Adding {service-activator:outboundAimsMessageEndPointChain.launchingGatewaySendingUnlink.serviceActivator} as a subscriber to the 'sendingUnlinkChannel' channel
+[2024-12-18 11:14:26.583][INFO ][main][DirectChannel] Channel 'application.sendingUnlinkChannel' has 1 subscriber(s).
+[2024-12-18 11:14:26.583][INFO ][main][EventDrivenConsumer] started bean 'outboundAimsMessageEndPointChain.launchingGatewaySendingUnlink.serviceActivator'
+[2024-12-18 11:14:26.583][INFO ][main][EventDrivenConsumer] Adding {service-activator:outboundAimsMessageEndPointChain.launchingGateSendingImage.serviceActivator} as a subscriber to the 'sendingProductImageChannel' channel
+[2024-12-18 11:14:26.583][INFO ][main][DirectChannel] Channel 'application.sendingProductImageChannel' has 1 subscriber(s).
+[2024-12-18 11:14:26.583][INFO ][main][EventDrivenConsumer] started bean 'outboundAimsMessageEndPointChain.launchingGateSendingImage.serviceActivator'
+[2024-12-18 11:14:26.583][INFO ][main][EventDrivenConsumer] Adding {service-activator:outboundMspMessageEndPointChain.launchingGatewayRequestingReleaseImage.serviceActivator} as a subscriber to the 'requestReleaseImageChannel' channel
+[2024-12-18 11:14:26.583][INFO ][main][DirectChannel] Channel 'application.requestReleaseImageChannel' has 1 subscriber(s).
+[2024-12-18 11:14:26.583][INFO ][main][EventDrivenConsumer] started bean 'outboundMspMessageEndPointChain.launchingGatewayRequestingReleaseImage.serviceActivator'
+[2024-12-18 11:14:26.583][INFO ][main][EventDrivenConsumer] Adding {service-activator:outboundMspMessageEndPointChain.launchingGateRequestingProductImage.serviceActivator} as a subscriber to the 'requestProductImageChannel' channel
+[2024-12-18 11:14:26.583][INFO ][main][DirectChannel] Channel 'application.requestProductImageChannel' has 1 subscriber(s).
+[2024-12-18 11:14:26.583][INFO ][main][EventDrivenConsumer] started bean 'outboundMspMessageEndPointChain.launchingGateRequestingProductImage.serviceActivator'
+[2024-12-18 11:14:26.597][INFO ][main][SourcePollingChannelAdapter] started bean 'processingM1FileChannelAdapter.inboundChannelAdapter'
+[2024-12-18 11:14:26.598][INFO ][main][Http11NioProtocol] Starting ProtocolHandler ["http-nio-8083"]
+[2024-12-18 11:14:26.633][INFO ][main][TomcatWebServer] Tomcat started on port(s): 8083 (http) with context path ''
+[2024-12-18 11:14:26.643][INFO ][main][AimsMetroMspApplication] Started AimsMetroMspApplication in 10.478 seconds (process running for 11.038)
+[2024-12-18 11:14:26.647][INFO ][main][ApplicationEventListener] AIMS METRO MSP Module started.
+[2024-12-18 11:14:42.925][INFO ][http-nio-8083-exec-1][[/]] Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2024-12-18 11:14:42.926][INFO ][http-nio-8083-exec-1][DispatcherServlet] Initializing Servlet 'dispatcherServlet'
+[2024-12-18 11:14:42.927][INFO ][http-nio-8083-exec-1][DispatcherServlet] Completed initialization in 1 ms
+[2024-12-18 11:14:42.978][WARN ][http-nio-8083-exec-1][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.controller.ReportController
+[2024-12-18 11:14:51.485][ERROR][http-nio-8083-exec-1][ESLPdfDoc] Fail Empty Query result string
+[2024-12-18 11:15:06.398][ERROR][http-nio-8083-exec-1][ESLPdfDoc] Fail Empty Query result string
+[2024-12-18 11:15:07.509][ERROR][http-nio-8083-exec-1][ESLPdfDoc] Fail Empty Query result string
+[2024-12-18 11:15:09.807][ERROR][http-nio-8083-exec-1][ESLPdfDoc] Fail Empty Query result string
+[2024-12-18 11:15:10.144][ERROR][http-nio-8083-exec-1][ESLPdfDoc] Fail Empty Query result string
+[2024-12-18 11:15:17.071][ERROR][http-nio-8083-exec-1][ESLPdfDoc] Fail Empty Query result string
+[2024-12-18 11:15:19.381][ERROR][http-nio-8083-exec-1][ESLPdfDoc] Fail Empty Query result string
+[2024-12-18 11:15:19.721][ERROR][http-nio-8083-exec-1][ESLPdfDoc] Fail Empty Query result string
+[2024-12-18 11:15:21.404][ERROR][http-nio-8083-exec-1][ESLPdfDoc] Fail Empty Query result string
+[2024-12-18 11:15:40.250][ERROR][http-nio-8083-exec-4][ESLPdfDoc] Fail Empty Query result string
+[2024-12-18 11:15:50.830][ERROR][http-nio-8083-exec-5][ReportController] Fail generatePdfDocuments Exception : Cannot invoke "Object.toString()" because the return value of "java.util.Map.get(Object)" is null
+[2024-12-18 11:16:12.823][ERROR][http-nio-8083-exec-7][ReportController] Fail generatePdfDocuments Exception : Cannot invoke "Object.toString()" because the return value of "java.util.Map.get(Object)" is null
+[2024-12-18 13:12:53.055][WARN ][HikariPool-1 housekeeper][HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h7m32s112ms296µs200ns).
+[2024-12-18 13:12:54.646][WARN ][HikariPool-2 housekeeper][HikariPool] HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=1h7m32s102ms982µs800ns).
+[2024-12-18 13:34:50.570][INFO ][background-preinit][Version] HV000001: Hibernate Validator 8.0.0.Final
+[2024-12-18 13:34:50.704][INFO ][main][AimsMetroMspApplication] Starting AimsMetroMspApplication using Java 17.0.8 with PID 31008 (C:\workspace\MSP\converter-metro-checkin\bin\main started by SandeepWali in C:\workspace\MSP\converter-metro-checkin)
+[2024-12-18 13:34:50.708][INFO ][main][AimsMetroMspApplication] No active profile set, falling back to 1 default profile: "default"
+[2024-12-18 13:34:51.822][INFO ][main][BatchRegistrar] Finished Spring Batch infrastructure beans configuration in 13 ms.
+[2024-12-18 13:34:51.832][INFO ][main][RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2024-12-18 13:34:51.973][INFO ][main][RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 132 ms. Found 3 JPA repository interfaces.
+[2024-12-18 13:34:51.975][INFO ][main][RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2024-12-18 13:34:52.027][INFO ][main][RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 51 ms. Found 11 JPA repository interfaces.
+[2024-12-18 13:34:52.669][INFO ][main][DefaultConfiguringBeanFactoryPostProcessor] No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+[2024-12-18 13:34:52.685][INFO ][main][DefaultConfiguringBeanFactoryPostProcessor] No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+[2024-12-18 13:34:53.619][INFO ][main][TomcatWebServer] Tomcat initialized with port(s): 8083 (http)
+[2024-12-18 13:34:53.633][INFO ][main][Http11NioProtocol] Initializing ProtocolHandler ["http-nio-8083"]
+[2024-12-18 13:34:53.635][INFO ][main][StandardService] Starting service [Tomcat]
+[2024-12-18 13:34:53.635][INFO ][main][StandardEngine] Starting Servlet engine: [Apache Tomcat/10.1.8]
+[2024-12-18 13:34:53.814][INFO ][main][[/]] Initializing Spring embedded WebApplicationContext
+[2024-12-18 13:34:53.815][INFO ][main][ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 3044 ms
+[2024-12-18 13:34:54.021][INFO ][main][HikariDataSource] HikariPool-1 - Starting...
+[2024-12-18 13:34:54.344][INFO ][main][HikariPool] HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@561d88ee
+[2024-12-18 13:34:54.346][INFO ][main][HikariDataSource] HikariPool-1 - Start completed.
+[2024-12-18 13:34:54.601][INFO ][main][database] Set default schema name to public
+[2024-12-18 13:34:54.698][INFO ][main][lockservice] Successfully acquired change log lock
+[2024-12-18 13:34:55.057][INFO ][main][changelog] Reading from public.databasechangelog
+[2024-12-18 13:34:55.137][INFO ][main][lockservice] Successfully released change log lock
+[2024-12-18 13:34:55.215][INFO ][main][LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[2024-12-18 13:34:55.344][INFO ][main][Version] HHH000412: Hibernate ORM core version 6.1.7.Final
+[2024-12-18 13:34:56.182][INFO ][main][HikariDataSource] HikariPool-2 - Starting...
+[2024-12-18 13:34:56.241][INFO ][main][HikariPool] HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@2e1c5d1f
+[2024-12-18 13:34:56.242][INFO ][main][HikariDataSource] HikariPool-2 - Start completed.
+[2024-12-18 13:34:56.287][INFO ][main][SQL dialect] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+[2024-12-18 13:34:56.384][INFO ][main][EnversServiceImpl] Envers integration enabled? : true
+[2024-12-18 13:34:56.471][WARN ][main][AnnotationBinder] HHH000503: A class should not be annotated with both @Inheritance and @MappedSuperclass. @Inheritance will be ignored for: com.solum.aims.msp.persistence.core.entity.CoreEntity.
+[2024-12-18 13:34:57.490][INFO ][main][JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2024-12-18 13:34:57.501][INFO ][main][LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2024-12-18 13:34:57.509][INFO ][main][LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+[2024-12-18 13:34:57.673][INFO ][main][SQL dialect] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+[2024-12-18 13:34:57.680][INFO ][main][EnversServiceImpl] Envers integration enabled? : true
+[2024-12-18 13:34:57.756][INFO ][main][AuditMetadataGenerator] Adding properties for entity: com.solum.aims.msp.persistence.entity.Article
+[2024-12-18 13:34:57.766][INFO ][main][AdditionalJaxbMappingProducerImpl] Adding JAXB document mapping
+[2024-12-18 13:34:58.026][INFO ][main][boot] HHH90005601: Envers-generated HBM mapping...
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<hibernate-mapping auto-import="false" xmlns="http://www.hibernate.org/xsd/orm/hbm">
+    <class discriminator-value="Article" table="Article_AUD" entity-name="com.solum.aims.msp.persistence.entity.Article_AUD" abstract="false">
+        <composite-id name="originalId">
+            <key-property name="articleId">
+                <column length="255" name="article_id"/>
+                <type name="string">
+                    <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                    <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                    <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                    <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                    <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.embeddable.ArticleCompositePK</param>
+                    <param name="org.hibernate.type.ParameterType.propertyName">articleId</param>
+                </type>
+            </key-property>
+            <key-property name="stationCode">
+                <column length="255" name="station_code"/>
+                <type name="string">
+                    <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                    <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                    <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                    <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                    <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.embeddable.ArticleCompositePK</param>
+                    <param name="org.hibernate.type.ParameterType.propertyName">stationCode</param>
+                </type>
+            </key-property>
+            <key-many-to-one class="org.hibernate.envers.DefaultRevisionEntity" name="REV">
+                <column name="REV"/>
+            </key-many-to-one>
+        </composite-id>
+        <property insert="true" name="REVTYPE" type="org.hibernate.envers.internal.entities.RevisionTypeType" update="false"/>
+        <property insert="true" name="created" update="false">
+            <column length="255" name="created"/>
+            <type name="timestamp">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.util.Date</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">created</param>
+            </type>
+        </property>
+        <property insert="true" name="customBatchId" update="false">
+            <column length="255" name="custom_batch_id"/>
+            <type name="string">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">customBatchId</param>
+            </type>
+        </property>
+        <property insert="true" name="data" update="false">
+            <column length="1073741824" name="data"/>
+            <type name="string">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">data</param>
+            </type>
+        </property>
+        <property insert="true" name="lastModified" update="false">
+            <column length="255" name="last_modified"/>
+            <type name="timestamp">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.util.Date</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">lastModified</param>
+            </type>
+        </property>
+        <property insert="true" name="name" update="false">
+            <column length="512" name="name"/>
+            <type name="string">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">name</param>
+            </type>
+        </property>
+        <property insert="true" name="nfcUrl" update="false">
+            <column length="255" name="nfc_url"/>
+            <type name="string">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">nfcUrl</param>
+            </type>
+        </property>
+        <property insert="true" name="reservedOne" update="false">
+            <column length="255" name="reserved_one"/>
+            <type name="string">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">reservedOne</param>
+            </type>
+        </property>
+        <property insert="true" name="reservedThree" update="false">
+            <column length="255" name="reserved_three"/>
+            <type name="string">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">reservedThree</param>
+            </type>
+        </property>
+        <property insert="true" name="reservedTwo" update="false">
+            <column length="255" name="reserved_two"/>
+            <type name="string">
+                <param name="org.hibernate.type.ParameterType.primaryKey">false</param>
+                <param name="org.hibernate.type.ParameterType.dynamic">true</param>
+                <param name="org.hibernate.type.ParameterType.returnedClass">java.lang.String</param>
+                <param name="org.hibernate.type.ParameterType.accessType">field</param>
+                <param name="org.hibernate.type.ParameterType.entityClass">com.solum.aims.msp.persistence.entity.Article</param>
+                <param name="org.hibernate.type.ParameterType.propertyName">reservedTwo</param>
+            </type>
+        </property>
+    </class>
+</hibernate-mapping>
+
+[2024-12-18 13:34:58.030][INFO ][main][AdditionalJaxbMappingProducerImpl] Adding JAXB document mapping
+[2024-12-18 13:34:58.079][INFO ][main][boot] HHH90005601: Envers-generated HBM mapping...
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<hibernate-mapping auto-import="false" xmlns="http://www.hibernate.org/xsd/orm/hbm">
+    <class table="REVINFO" name="org.hibernate.envers.DefaultRevisionEntity" entity-name="org.hibernate.envers.DefaultRevisionEntity">
+        <id name="id" type="integer">
+            <column name="REV"/>
+            <generator class="native"/>
+        </id>
+        <property insert="true" name="timestamp" type="long" update="false">
+            <column name="REVTSTMP"/>
+        </property>
+    </class>
+</hibernate-mapping>
+
+[2024-12-18 13:34:58.271][INFO ][main][JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+[2024-12-18 13:34:58.271][INFO ][main][LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2024-12-18 13:34:58.328][WARN ][main][JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[2024-12-18 13:34:58.667][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.MetroArticleRepository
+[2024-12-18 13:34:58.900][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.MetroEnddeviceRepository
+[2024-12-18 13:34:58.968][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.EndDeviceRepository
+[2024-12-18 13:34:59.068][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.ArticleRepository
+[2024-12-18 13:34:59.423][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.MetroContentRepository
+[2024-12-18 13:34:59.501][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.TemplateTypeRepository
+[2024-12-18 13:34:59.539][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.MetroTemplateGroupMapRepository
+[2024-12-18 13:34:59.563][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.MetroTemplateGroupRepository
+[2024-12-18 13:34:59.615][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.core.repository.AccesspointRepository
+[2024-12-18 13:34:59.635][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.core.repository.StationRepository
+[2024-12-18 13:34:59.661][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.core.repository.CoreEndDeviceRepository
+[2024-12-18 13:34:59.729][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.FileResultRepository
+[2024-12-18 13:34:59.814][WARN ][main][LocalVariableTableParameterNameDiscoverer] Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: com.solum.aims.msp.persistence.repository.TemplateStationRepository
+[2024-12-18 13:34:59.847][INFO ][main][EmbeddedDatabaseFactory] Starting embedded database: url='jdbc:hsqldb:mem:embedded_batch_db', username='sa'
+[2024-12-18 13:35:00.151][INFO ][main][JobRepositoryFactoryBean] No database type set, using meta data indicating: HSQL
+[2024-12-18 13:35:00.190][INFO ][main][JobRepositoryFactoryBean] No database type set, using meta data indicating: HSQL
+[2024-12-18 13:35:00.193][INFO ][main][JobRepositoryFactoryBean] No database type set, using meta data indicating: HSQL
+[2024-12-18 13:35:00.232][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 13:35:00.239][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 13:35:00.267][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 13:35:00.270][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 13:35:00.272][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 13:35:00.279][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 13:35:00.281][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 13:35:00.287][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 13:35:00.292][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 13:35:00.296][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 13:35:00.297][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 13:35:00.309][INFO ][main][BatchObservabilityBeanPostProcessor] No Micrometer observation registry found, defaulting to ObservationRegistry.NOOP
+[2024-12-18 13:35:00.311][INFO ][main][JobRepositoryFactoryBean] No database type set, using meta data indicating: POSTGRES
+[2024-12-18 13:35:00.319][INFO ][main][SimpleJobLauncher] No TaskExecutor has been set, defaulting to synchronous executor.
+[2024-12-18 13:35:00.975][INFO ][main][EventDrivenConsumer] Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+[2024-12-18 13:35:00.976][INFO ][main][PublishSubscribeChannel] Channel 'application.errorChannel' has 1 subscriber(s).
+[2024-12-18 13:35:00.978][INFO ][main][EventDrivenConsumer] started bean '_org.springframework.integration.errorLogger'
+[2024-12-18 13:35:00.979][INFO ][main][EventDrivenConsumer] Adding {filter:processingM1MessageEndPointChain.payLoadExistenceFilter.filter} as a subscriber to the 'processingM1FileFilterChannel' channel
+[2024-12-18 13:35:00.979][INFO ][main][DirectChannel] Channel 'application.processingM1FileFilterChannel' has 1 subscriber(s).
+[2024-12-18 13:35:00.979][INFO ][main][EventDrivenConsumer] started bean 'processingM1MessageEndPointChain.payLoadExistenceFilter.filter'
+[2024-12-18 13:35:00.979][INFO ][main][EventDrivenConsumer] Adding {service-activator:processingM1MessageEndPointChain.launchingGateway.serviceActivator} as a subscriber to the 'processingM1Channel' channel
+[2024-12-18 13:35:00.979][INFO ][main][DirectChannel] Channel 'application.processingM1Channel' has 1 subscriber(s).
+[2024-12-18 13:35:00.979][INFO ][main][EventDrivenConsumer] started bean 'processingM1MessageEndPointChain.launchingGateway.serviceActivator'
+[2024-12-18 13:35:00.979][INFO ][main][EventDrivenConsumer] Adding {service-activator:outboundAimsMessageEndPointChain.launchingGatewaySendingUnlink.serviceActivator} as a subscriber to the 'sendingUnlinkChannel' channel
+[2024-12-18 13:35:00.979][INFO ][main][DirectChannel] Channel 'application.sendingUnlinkChannel' has 1 subscriber(s).
+[2024-12-18 13:35:00.979][INFO ][main][EventDrivenConsumer] started bean 'outboundAimsMessageEndPointChain.launchingGatewaySendingUnlink.serviceActivator'
+[2024-12-18 13:35:00.979][INFO ][main][EventDrivenConsumer] Adding {service-activator:outboundAimsMessageEndPointChain.launchingGateSendingImage.serviceActivator} as a subscriber to the 'sendingProductImageChannel' channel
+[2024-12-18 13:35:00.980][INFO ][main][DirectChannel] Channel 'application.sendingProductImageChannel' has 1 subscriber(s).
+[2024-12-18 13:35:00.980][INFO ][main][EventDrivenConsumer] started bean 'outboundAimsMessageEndPointChain.launchingGateSendingImage.serviceActivator'
+[2024-12-18 13:35:00.980][INFO ][main][EventDrivenConsumer] Adding {service-activator:outboundMspMessageEndPointChain.launchingGateRequestingProductImage.serviceActivator} as a subscriber to the 'requestProductImageChannel' channel
+[2024-12-18 13:35:00.980][INFO ][main][DirectChannel] Channel 'application.requestProductImageChannel' has 1 subscriber(s).
+[2024-12-18 13:35:00.980][INFO ][main][EventDrivenConsumer] started bean 'outboundMspMessageEndPointChain.launchingGateRequestingProductImage.serviceActivator'
+[2024-12-18 13:35:00.980][INFO ][main][EventDrivenConsumer] Adding {service-activator:outboundMspMessageEndPointChain.launchingGatewayRequestingReleaseImage.serviceActivator} as a subscriber to the 'requestReleaseImageChannel' channel
+[2024-12-18 13:35:00.980][INFO ][main][DirectChannel] Channel 'application.requestReleaseImageChannel' has 1 subscriber(s).
+[2024-12-18 13:35:00.980][INFO ][main][EventDrivenConsumer] started bean 'outboundMspMessageEndPointChain.launchingGatewayRequestingReleaseImage.serviceActivator'
+[2024-12-18 13:35:00.996][INFO ][main][SourcePollingChannelAdapter] started bean 'processingM1FileChannelAdapter.inboundChannelAdapter'
+[2024-12-18 13:35:00.997][INFO ][main][Http11NioProtocol] Starting ProtocolHandler ["http-nio-8083"]
+[2024-12-18 13:35:01.032][INFO ][main][TomcatWebServer] Tomcat started on port(s): 8083 (http) with context path ''
+[2024-12-18 13:35:01.043][INFO ][main][AimsMetroMspApplication] Started AimsMetroMspApplication in 10.901 seconds (process running for 11.439)
+[2024-12-18 13:35:01.046][INFO ][main][ApplicationEventListener] AIMS METRO MSP Module started.
+[2024-12-18 16:32:14.785][WARN ][HikariPool-1 housekeeper][HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=11m33s293ms603µs600ns).
+[2024-12-18 16:32:16.468][WARN ][HikariPool-2 housekeeper][HikariPool] HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=11m33s290ms166µs200ns).

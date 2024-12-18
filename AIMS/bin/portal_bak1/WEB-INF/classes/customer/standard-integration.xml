@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-file="http://www.springframework.org/schema/integration/file"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file-5.0.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-5.0.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	
+	<bean id="lastModifiedComparator" class="com.solum.aims.portal.common.util.LastModifiedComparator"/>
+	
+	<int-file:inbound-channel-adapter id="filesIn"
+									directory="${customer.file.input.path}"
+									filename-pattern="*.data"
+									prevent-duplicates="false"
+									comparator="lastModifiedComparator"
+									auto-create-directory="true" 
+									auto-startup="true">
+		<int:poller id="poller" fixed-delay="1000"/>
+	</int-file:inbound-channel-adapter>
+	
+	
+	<int-file:outbound-channel-adapter id="filesOutDebug" 
+									delete-source-files="true" 
+									auto-create-directory="true"
+									directory-expression="'${customer.file.backup.path}/' + new java.text.SimpleDateFormat('yyyyMMdd').format(new java.util.Date())"/>
+
+	<int:chain input-channel="filesIn" output-channel="filesOutDebug">
+		<int:filter expression="payload.exists()"/>
+		<int:service-activator method="parsingFile" ref="standardParser"/>
+	</int:chain>
+	
+	<bean id="standardParser" class="com.solum.aims.portal.customer.standard.StandardFileParser">
+		<property name="standardDataMap" ref="standardDataMap"/>
+		<property name="mappedArticleId" value="ARTICLE_ID"/>
+		<property name="mappedStationCode" value="STORE_CODE"/>
+		<property name="mappedArticleName" value="ITEM_NAME"/>
+		<property name="mappedNfc" value="NFC_URL"/>
+		<property name="mappedOriginPrice" value="LIST_PRICE"/>
+		<property name="mappedSalePrice" value="SALE_PRICE"/>
+		<property name="mappedDiscountPercentage" value="DISCOUNT_PERCENTAGE"/>
+		<property name="delimiter" value=";"/>
+	</bean>
+	
+	<util:list id="standardDataMap" value-type="java.lang.String">
+		<value>STORE_CODE</value>
+		<value>ARTICLE_ID</value>
+		<value>BARCODE</value>
+		<value>ITEM_NAME</value>
+		<value>ALIAS</value>
+		<value>SALE_PRICE</value>
+		<value>LIST_PRICE</value>
+		<value>UNIT_PRICE</value>
+		<value>ORIGIN</value>
+		<value>MANUFACTURER</value>
+		<value>TYPE</value>
+		<value>WEIGHT</value>
+		<value>WEIGHT_UNIT</value>
+		<value>UNIT_PRICE_UNIT</value>
+		<value>UNIT_DIMENSION</value>
+		<value>A_MARKER</value>
+		<value>R_MARKER</value>
+		<value>CATEGORY1</value>
+		<value>CATEGORY2</value>
+		<value>CATEGORY3</value>
+		<value>CATEGORY4</value>
+		<value>CATEGORY5</value>
+		<value>DISPLAY_TYPE</value>
+		<value>DISPLAY_TYPE2</value>
+		<value>DISPLAY_TYPE3</value>
+		<value>NFC_URL</value>
+		<value>ETC_0</value>
+		<value>ETC_1</value>
+		<value>ETC_2</value>
+		<value>ETC_3</value>
+		<value>ETC_4</value>
+		<value>ETC_5</value>
+		<value>ETC_6</value>
+		<value>ETC_7</value>
+		<value>ETC_8</value>
+		<value>ETC_9</value>
+	</util:list>
+</beans>

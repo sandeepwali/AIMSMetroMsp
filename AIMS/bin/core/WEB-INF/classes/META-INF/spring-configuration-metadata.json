@@ -1,0 +1,538 @@
+{
+  "groups": [
+    {
+      "name": "aims-core.batch",
+      "type": "com.solum.aims.core.property.BatchProperties",
+      "sourceType": "com.solum.aims.core.property.BatchProperties"
+    },
+    {
+      "name": "aims-core.batch.embedded-database",
+      "type": "com.solum.aims.core.property.BatchProperties$EmbeddedDatabase",
+      "sourceType": "com.solum.aims.core.property.BatchProperties",
+      "sourceMethod": "getEmbeddedDatabase()"
+    },
+    {
+      "name": "aims-core.batch.inbound-linker-job",
+      "type": "com.solum.aims.core.property.BatchProperties$InboundLinkerJob",
+      "sourceType": "com.solum.aims.core.property.BatchProperties",
+      "sourceMethod": "getInboundLinkerJob()"
+    },
+    {
+      "name": "aims-core.batch.inbound-linker-job.task-executor",
+      "type": "com.solum.aims.core.property.BatchProperties$TaskExecutor",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$InboundLinkerJob",
+      "sourceMethod": "getTaskExecutor()"
+    },
+    {
+      "name": "aims-core.batch.outbound-linker-job",
+      "type": "com.solum.aims.core.property.BatchProperties$OutboundLinkerJob",
+      "sourceType": "com.solum.aims.core.property.BatchProperties",
+      "sourceMethod": "getOutboundLinkerJob()"
+    },
+    {
+      "name": "aims-core.batch.outbound-linker-job.task-executor",
+      "type": "com.solum.aims.core.property.BatchProperties$TaskExecutor",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$OutboundLinkerJob",
+      "sourceMethod": "getTaskExecutor()"
+    },
+    {
+      "name": "aims-core.batch.processor-job",
+      "type": "com.solum.aims.core.property.BatchProperties$ProcessorJob",
+      "sourceType": "com.solum.aims.core.property.BatchProperties",
+      "sourceMethod": "getProcessorJob()"
+    },
+    {
+      "name": "aims-core.batch.processor-job.task-executor",
+      "type": "com.solum.aims.core.property.BatchProperties$TaskExecutor",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$ProcessorJob",
+      "sourceMethod": "getTaskExecutor()"
+    },
+    {
+      "name": "aims-core.batch.skip",
+      "type": "com.solum.aims.core.property.BatchProperties$Skip",
+      "sourceType": "com.solum.aims.core.property.BatchProperties",
+      "sourceMethod": "getSkip()"
+    },
+    {
+      "name": "aims-core.encryption",
+      "type": "com.solum.aims.core.property.EncryptionProperties",
+      "sourceType": "com.solum.aims.core.property.EncryptionProperties"
+    },
+    {
+      "name": "aims-core.integration",
+      "type": "com.solum.aims.core.property.IntegrationProperties",
+      "sourceType": "com.solum.aims.core.property.IntegrationProperties"
+    },
+    {
+      "name": "aims-core.integration.file",
+      "type": "com.solum.aims.core.property.IntegrationProperties$File",
+      "sourceType": "com.solum.aims.core.property.IntegrationProperties",
+      "sourceMethod": "getFile()"
+    },
+    {
+      "name": "aims-core.integration.file.backup",
+      "type": "com.solum.aims.core.property.IntegrationProperties$File$Backup",
+      "sourceType": "com.solum.aims.core.property.IntegrationProperties$File",
+      "sourceMethod": "getBackup()"
+    },
+    {
+      "name": "aims-core.integration.file.input",
+      "type": "com.solum.aims.core.property.IntegrationProperties$File$Input",
+      "sourceType": "com.solum.aims.core.property.IntegrationProperties$File",
+      "sourceMethod": "getInput()"
+    },
+    {
+      "name": "aims-core.integration.file.skip",
+      "type": "com.solum.aims.core.property.IntegrationProperties$File$Skip",
+      "sourceType": "com.solum.aims.core.property.IntegrationProperties$File",
+      "sourceMethod": "getSkip()"
+    },
+    {
+      "name": "aims-core.rabbitmq",
+      "type": "com.solum.aims.core.property.RabbitMqProperties",
+      "sourceType": "com.solum.aims.core.property.RabbitMqProperties"
+    },
+    {
+      "name": "aims-core.rabbitmq.queue",
+      "type": "com.solum.aims.core.property.RabbitMqProperties$Queue",
+      "sourceType": "com.solum.aims.core.property.RabbitMqProperties",
+      "sourceMethod": "getQueue()"
+    },
+    {
+      "name": "aims-core.rabbitmq.queue.routing-key",
+      "type": "com.solum.aims.core.property.RabbitMqProperties$Queue$RoutingKey",
+      "sourceType": "com.solum.aims.core.property.RabbitMqProperties$Queue",
+      "sourceMethod": "getRoutingKey()"
+    },
+    {
+      "name": "aims-core.rabbitmq.user",
+      "type": "com.solum.aims.core.property.RabbitMqProperties$User",
+      "sourceType": "com.solum.aims.core.property.RabbitMqProperties",
+      "sourceMethod": "getUser()"
+    },
+    {
+      "name": "aims-core.retry",
+      "type": "com.solum.aims.core.property.RetryProperties",
+      "sourceType": "com.solum.aims.core.property.RetryProperties"
+    },
+    {
+      "name": "aims-core.scheduler",
+      "type": "com.solum.aims.core.property.SchedulerProperties",
+      "sourceType": "com.solum.aims.core.property.SchedulerProperties"
+    },
+    {
+      "name": "aims-core.scheduler.timeout",
+      "type": "com.solum.aims.core.property.SchedulerProperties$Timeout",
+      "sourceType": "com.solum.aims.core.property.SchedulerProperties",
+      "sourceMethod": "getTimeout()"
+    },
+    {
+      "name": "aims-core.scheduler.timeout.access-point",
+      "type": "com.solum.aims.core.property.SchedulerProperties$Timeout$AccessPoint",
+      "sourceType": "com.solum.aims.core.property.SchedulerProperties$Timeout",
+      "sourceMethod": "getAccessPoint()"
+    },
+    {
+      "name": "aims-core.scheduler.timeout.content",
+      "type": "com.solum.aims.core.property.SchedulerProperties$Timeout$Content",
+      "sourceType": "com.solum.aims.core.property.SchedulerProperties$Timeout",
+      "sourceMethod": "getContent()"
+    },
+    {
+      "name": "aims-core.scheduler.timeout.server",
+      "type": "com.solum.aims.core.property.SchedulerProperties$Timeout$Server",
+      "sourceType": "com.solum.aims.core.property.SchedulerProperties$Timeout",
+      "sourceMethod": "getServer()"
+    },
+    {
+      "name": "aims-core.web",
+      "type": "com.solum.aims.core.property.WebProperties",
+      "sourceType": "com.solum.aims.core.property.WebProperties"
+    },
+    {
+      "name": "aims-core.web.security",
+      "type": "com.solum.aims.core.property.WebProperties$Security",
+      "sourceType": "com.solum.aims.core.property.WebProperties",
+      "sourceMethod": "getSecurity()"
+    },
+    {
+      "name": "aims-core.web.security.http-basic-auth",
+      "type": "com.solum.aims.core.property.WebProperties$Security$HttpBasicAuth",
+      "sourceType": "com.solum.aims.core.property.WebProperties$Security",
+      "sourceMethod": "getHttpBasicAuth()"
+    },
+    {
+      "name": "aims-core.web.security.user-store",
+      "type": "com.solum.aims.core.property.WebProperties$Security$UserStore",
+      "sourceType": "com.solum.aims.core.property.WebProperties$Security",
+      "sourceMethod": "getUserStore()"
+    },
+    {
+      "name": "aims-core.web.security.user-store.b-crypt",
+      "type": "com.solum.aims.core.property.WebProperties$Security$UserStore$BCrypt",
+      "sourceType": "com.solum.aims.core.property.WebProperties$Security$UserStore",
+      "sourceMethod": "getBCrypt()"
+    },
+    {
+      "name": "aims-core.web.url",
+      "type": "com.solum.aims.core.property.WebProperties$Url",
+      "sourceType": "com.solum.aims.core.property.WebProperties",
+      "sourceMethod": "getUrl()"
+    },
+    {
+      "name": "spring.datasource.hikari",
+      "type": "com.solum.aims.core.property.HikariConnectionPoolProperties",
+      "sourceType": "com.solum.aims.core.property.HikariConnectionPoolProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "aims-core.batch.embedded-database.connection-string",
+      "type": "java.lang.String",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$EmbeddedDatabase",
+      "defaultValue": "batch_db"
+    },
+    {
+      "name": "aims-core.batch.embedded-database.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$EmbeddedDatabase",
+      "defaultValue": false
+    },
+    {
+      "name": "aims-core.batch.embedded-database.type",
+      "type": "java.lang.String",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$EmbeddedDatabase"
+    },
+    {
+      "name": "aims-core.batch.inbound-linker-job.active-poll-period",
+      "type": "java.lang.Long",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$InboundLinkerJob",
+      "defaultValue": 1000
+    },
+    {
+      "name": "aims-core.batch.inbound-linker-job.idle-poll-period",
+      "type": "java.lang.Long",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$InboundLinkerJob",
+      "defaultValue": 5000
+    },
+    {
+      "name": "aims-core.batch.inbound-linker-job.max-messages-per-poll",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$InboundLinkerJob",
+      "defaultValue": 0
+    },
+    {
+      "name": "aims-core.batch.inbound-linker-job.task-executor.core-pool-scale-factor",
+      "type": "java.lang.Float",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$TaskExecutor",
+      "defaultValue": 1
+    },
+    {
+      "name": "aims-core.batch.inbound-linker-job.task-executor.max-pool-scale-factor",
+      "type": "java.lang.Float",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$TaskExecutor",
+      "defaultValue": 1
+    },
+    {
+      "name": "aims-core.batch.inbound-linker-job.task-executor.queue-capacity",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$TaskExecutor"
+    },
+    {
+      "name": "aims-core.batch.outbound-linker-job.active-poll-period",
+      "type": "java.lang.Long",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$OutboundLinkerJob",
+      "defaultValue": 1000
+    },
+    {
+      "name": "aims-core.batch.outbound-linker-job.idle-poll-period",
+      "type": "java.lang.Long",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$OutboundLinkerJob",
+      "defaultValue": 5000
+    },
+    {
+      "name": "aims-core.batch.outbound-linker-job.max-contract-count",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$OutboundLinkerJob",
+      "defaultValue": 0
+    },
+    {
+      "name": "aims-core.batch.outbound-linker-job.max-contract-size",
+      "type": "org.springframework.util.unit.DataSize",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$OutboundLinkerJob"
+    },
+    {
+      "name": "aims-core.batch.outbound-linker-job.max-handoff-count",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$OutboundLinkerJob",
+      "defaultValue": 0
+    },
+    {
+      "name": "aims-core.batch.outbound-linker-job.max-messages-per-poll",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$OutboundLinkerJob",
+      "defaultValue": 0
+    },
+    {
+      "name": "aims-core.batch.outbound-linker-job.task-executor.core-pool-scale-factor",
+      "type": "java.lang.Float",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$TaskExecutor",
+      "defaultValue": 1
+    },
+    {
+      "name": "aims-core.batch.outbound-linker-job.task-executor.max-pool-scale-factor",
+      "type": "java.lang.Float",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$TaskExecutor",
+      "defaultValue": 1
+    },
+    {
+      "name": "aims-core.batch.outbound-linker-job.task-executor.queue-capacity",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$TaskExecutor"
+    },
+    {
+      "name": "aims-core.batch.processor-job.active-poll-period",
+      "type": "java.lang.Long",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$ProcessorJob",
+      "defaultValue": 1000
+    },
+    {
+      "name": "aims-core.batch.processor-job.commit-interval",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$ProcessorJob",
+      "defaultValue": 0
+    },
+    {
+      "name": "aims-core.batch.processor-job.idle-poll-period",
+      "type": "java.lang.Long",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$ProcessorJob",
+      "defaultValue": 5000
+    },
+    {
+      "name": "aims-core.batch.processor-job.max-messages-per-poll",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$ProcessorJob",
+      "defaultValue": 0
+    },
+    {
+      "name": "aims-core.batch.processor-job.task-executor.core-pool-scale-factor",
+      "type": "java.lang.Float",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$TaskExecutor",
+      "defaultValue": 1
+    },
+    {
+      "name": "aims-core.batch.processor-job.task-executor.max-pool-scale-factor",
+      "type": "java.lang.Float",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$TaskExecutor",
+      "defaultValue": 1
+    },
+    {
+      "name": "aims-core.batch.processor-job.task-executor.queue-capacity",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$TaskExecutor"
+    },
+    {
+      "name": "aims-core.batch.skip.exceptions",
+      "type": "java.util.List<java.lang.Class<java.lang.Exception>>",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$Skip"
+    },
+    {
+      "name": "aims-core.batch.skip.limit",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.BatchProperties$Skip",
+      "defaultValue": 0
+    },
+    {
+      "name": "aims-core.encryption.properties",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.solum.aims.core.property.EncryptionProperties"
+    },
+    {
+      "name": "aims-core.integration.file.backup.enable",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.solum.aims.core.property.IntegrationProperties$File$Backup",
+      "defaultValue": false
+    },
+    {
+      "name": "aims-core.integration.file.backup.path",
+      "type": "java.io.File",
+      "sourceType": "com.solum.aims.core.property.IntegrationProperties$File$Backup"
+    },
+    {
+      "name": "aims-core.integration.file.input.age",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.IntegrationProperties$File$Input",
+      "defaultValue": 0
+    },
+    {
+      "name": "aims-core.integration.file.input.path",
+      "type": "java.io.File",
+      "sourceType": "com.solum.aims.core.property.IntegrationProperties$File$Input"
+    },
+    {
+      "name": "aims-core.integration.file.input.queue-size",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.IntegrationProperties$File$Input",
+      "defaultValue": 0
+    },
+    {
+      "name": "aims-core.integration.file.input.recover-count",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.IntegrationProperties$File$Input",
+      "defaultValue": 0
+    },
+    {
+      "name": "aims-core.integration.file.skip.enable",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.solum.aims.core.property.IntegrationProperties$File$Skip",
+      "defaultValue": false
+    },
+    {
+      "name": "aims-core.integration.file.skip.path",
+      "type": "java.io.File",
+      "sourceType": "com.solum.aims.core.property.IntegrationProperties$File$Skip"
+    },
+    {
+      "name": "aims-core.rabbitmq.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.solum.aims.core.property.RabbitMqProperties",
+      "defaultValue": false
+    },
+    {
+      "name": "aims-core.rabbitmq.queue.routing-key.inbound-linker-job",
+      "type": "java.lang.String",
+      "sourceType": "com.solum.aims.core.property.RabbitMqProperties$Queue$RoutingKey"
+    },
+    {
+      "name": "aims-core.rabbitmq.queue.routing-key.processor-job",
+      "type": "java.lang.String",
+      "sourceType": "com.solum.aims.core.property.RabbitMqProperties$Queue$RoutingKey"
+    },
+    {
+      "name": "aims-core.rabbitmq.queue.type",
+      "type": "java.lang.String",
+      "sourceType": "com.solum.aims.core.property.RabbitMqProperties$Queue"
+    },
+    {
+      "name": "aims-core.rabbitmq.user.name",
+      "type": "java.lang.String",
+      "sourceType": "com.solum.aims.core.property.RabbitMqProperties$User"
+    },
+    {
+      "name": "aims-core.rabbitmq.user.password",
+      "type": "java.lang.String",
+      "sourceType": "com.solum.aims.core.property.RabbitMqProperties$User"
+    },
+    {
+      "name": "aims-core.rabbitmq.virtual-host",
+      "type": "java.lang.String",
+      "sourceType": "com.solum.aims.core.property.RabbitMqProperties"
+    },
+    {
+      "name": "aims-core.retry.exceptions",
+      "type": "java.util.List<java.lang.Class<java.lang.Exception>>",
+      "sourceType": "com.solum.aims.core.property.RetryProperties"
+    },
+    {
+      "name": "aims-core.retry.max-attempts",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.RetryProperties",
+      "defaultValue": 0
+    },
+    {
+      "name": "aims-core.scheduler.timeout.access-point.fixed-delay",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.SchedulerProperties$Timeout$AccessPoint",
+      "defaultValue": 0
+    },
+    {
+      "name": "aims-core.scheduler.timeout.access-point.timeout-period",
+      "type": "java.time.Duration",
+      "sourceType": "com.solum.aims.core.property.SchedulerProperties$Timeout$AccessPoint"
+    },
+    {
+      "name": "aims-core.scheduler.timeout.content.fixed-delay",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.SchedulerProperties$Timeout$Content",
+      "defaultValue": 0
+    },
+    {
+      "name": "aims-core.scheduler.timeout.content.timeout-period",
+      "type": "java.time.Duration",
+      "sourceType": "com.solum.aims.core.property.SchedulerProperties$Timeout$Content"
+    },
+    {
+      "name": "aims-core.scheduler.timeout.content.timeout-size",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.SchedulerProperties$Timeout$Content",
+      "defaultValue": 0
+    },
+    {
+      "name": "aims-core.scheduler.timeout.server.fixed-delay",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.SchedulerProperties$Timeout$Server",
+      "defaultValue": 0
+    },
+    {
+      "name": "aims-core.scheduler.timeout.server.timeout-period",
+      "type": "java.time.Duration",
+      "sourceType": "com.solum.aims.core.property.SchedulerProperties$Timeout$Server"
+    },
+    {
+      "name": "aims-core.web.main-title",
+      "type": "java.lang.String",
+      "sourceType": "com.solum.aims.core.property.WebProperties"
+    },
+    {
+      "name": "aims-core.web.security.http-basic-auth.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.solum.aims.core.property.WebProperties$Security$HttpBasicAuth",
+      "defaultValue": false
+    },
+    {
+      "name": "aims-core.web.security.http-basic-auth.password",
+      "type": "java.lang.String",
+      "sourceType": "com.solum.aims.core.property.WebProperties$Security$HttpBasicAuth"
+    },
+    {
+      "name": "aims-core.web.security.http-basic-auth.username",
+      "type": "java.lang.String",
+      "sourceType": "com.solum.aims.core.property.WebProperties$Security$HttpBasicAuth"
+    },
+    {
+      "name": "aims-core.web.security.user-store.b-crypt.log-rounds",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.WebProperties$Security$UserStore$BCrypt",
+      "defaultValue": 0
+    },
+    {
+      "name": "aims-core.web.security.user-store.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.solum.aims.core.property.WebProperties$Security$UserStore",
+      "defaultValue": false
+    },
+    {
+      "name": "aims-core.web.url.connect-timeout",
+      "type": "java.time.Duration",
+      "sourceType": "com.solum.aims.core.property.WebProperties$Url"
+    },
+    {
+      "name": "aims-core.web.url.read-timeout",
+      "type": "java.time.Duration",
+      "sourceType": "com.solum.aims.core.property.WebProperties$Url"
+    },
+    {
+      "name": "spring.datasource.hikari.max-life-time",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.HikariConnectionPoolProperties",
+      "defaultValue": 0
+    },
+    {
+      "name": "spring.datasource.hikari.maximum-pool-size",
+      "type": "java.lang.Integer",
+      "sourceType": "com.solum.aims.core.property.HikariConnectionPoolProperties",
+      "defaultValue": 0
+    }
+  ],
+  "hints": []
+}

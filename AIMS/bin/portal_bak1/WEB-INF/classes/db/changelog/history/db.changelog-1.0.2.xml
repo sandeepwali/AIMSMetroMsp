@@ -1,0 +1,81 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+	
+    <changeSet author="Justyn (generated)" id="1.0.2" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    	
+    	<comment> UPDATE Hibernate core version from 4.3.11.Final to 5.0.11.Final (DBMS - postgresql) </comment>
+    	
+    	<renameColumn tableName="article" oldColumnName="aims_portal_batch" newColumnName="aims_portal_batch_id"/>
+    	<renameColumn tableName="template" oldColumnName="aims_portal_batch" newColumnName="aims_portal_batch_id"/>
+    
+    	<dropTable tableName="sequences"/>
+    	<createSequence sequenceName="aims_portal_batch_seq" 
+    		incrementBy="50" 
+    		minValue="1" 
+    		maxValue="9223372036854775807"
+    		startValue="1"
+    		cacheSize="1"/>
+    	<sql>SELECT setval('aims_portal_batch_seq', max(id)) FROM aims_portal_batch</sql>
+    	
+    	<createSequence sequenceName="warehouse_product_seq" 
+    		incrementBy="50" 
+    		minValue="1" 
+    		maxValue="9223372036854775807"
+    		startValue="1"
+    		cacheSize="1"/>
+    	<sql>SELECT setval('warehouse_product_seq', max(id)) FROM warehouse_product</sql>
+    	
+    	<createSequence sequenceName="bletag_setting_seq" 
+    		incrementBy="50" 
+    		minValue="1" 
+    		maxValue="9223372036854775807"
+    		startValue="1"
+    		cacheSize="1"/>
+    	<sql>SELECT setval('bletag_setting_seq', max(id)) FROM bletag_setting</sql>
+    	
+    	<createSequence sequenceName="dashboard_settings_seq" 
+    		incrementBy="50" 
+    		minValue="1" 
+    		maxValue="9223372036854775807"
+    		startValue="1"
+    		cacheSize="1"/>
+    	<sql>SELECT setval('dashboard_settings_seq', max(id)) FROM dashboard_settings</sql>
+    </changeSet>
+    
+    <changeSet author="Justyn (generated)" id="1.0.2-1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    	
+    	<addColumn tableName="aims_portal_batch">
+			<column name="message_param_tmp" type="VARCHAR"/>
+		</addColumn>
+		<sql>
+			UPDATE aims_portal_batch 
+			SET message_param_tmp=convert_from(loread(lo_open(message_param::int, x'262144'::int), x'262144'::int), 'UTF-8')
+		</sql>
+		<dropColumn tableName="aims_portal_batch" columnName="message_param"/>
+		<renameColumn tableName="aims_portal_batch" oldColumnName="message_param_tmp" newColumnName="message_param"/>
+		
+		<addColumn tableName="article">
+			<column name="data_tmp" type="VARCHAR"/>
+		</addColumn>
+		<sql>
+			UPDATE article 
+			SET data_tmp=convert_from(loread(lo_open(data::int, x'262144'::int), x'262144'::int), 'UTF-8')
+		</sql>
+		<dropColumn tableName="article" columnName="data"/>
+		<renameColumn tableName="article" oldColumnName="data_tmp" newColumnName="data"/>
+		
+		<addColumn tableName="template">
+			<column name="data_tmp" type="VARCHAR"/>
+		</addColumn>
+		<sql>
+			UPDATE template 
+			SET data_tmp=convert_from(loread(lo_open(data::int, x'262144'::int), x'262144'::int), 'UTF-8')
+		</sql>
+		<dropColumn tableName="template" columnName="data"/>
+		<renameColumn tableName="template" oldColumnName="data_tmp" newColumnName="data"/>
+    </changeSet>
+</databaseChangeLog>

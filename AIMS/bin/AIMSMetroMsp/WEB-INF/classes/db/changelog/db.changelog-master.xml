@@ -1,0 +1,173 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<!-- <databaseChangeLog -->
+<!-- 	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" -->
+<!-- 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" -->
+<!-- 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.9.xsd"> -->
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+	xmlns:pgsql="http://www.liquibase.org/xml/ns/dbchangelog-ext/liquibase-pgsql">
+
+	<!-- Set the schemaUrl property -->
+	<property name="xml.schemaUrl"
+		value="classpath:/db/changelog/dbchangelog-3.9.xsd" />
+	<changeSet author="Justyn.Lee" id="1.0.0.RELEASE">
+		<createTable tableName="metro_article">
+			<column name="id" type="BIGINT">
+				<constraints nullable="false" primaryKey="true"
+					primaryKeyName="metro_article_pkey" />
+			</column>
+			<column name="country_code" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="store_number" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="sales_line" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="article_id" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="data" type="VARCHAR" />
+		</createTable>
+		<addUniqueConstraint
+			columnNames="country_code, store_number, sales_line, article_id"
+			constraintName="metro_article_un" tableName="metro_article" />
+
+		<createTable tableName="metro_enddevice">
+			<column name="id" type="BIGINT">
+				<constraints nullable="false" primaryKey="true"
+					primaryKeyName="metro_enddevice_pkey" />
+			</column>
+			<column name="code" type="VARCHAR(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="type" type="VARCHAR(255)" />
+			<column name="height" type="INTEGER" />
+			<column name="width" type="INTEGER" />
+			<column name="color" type="INTEGER" />
+			<column name="model" type="INTEGER" />
+			<column name="article_id" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint columnNames="code"
+			constraintName="metro_enddevice_un" tableName="metro_enddevice" />
+		<addForeignKeyConstraint
+			baseColumnNames="article_id" baseTableName="metro_enddevice"
+			constraintName="fk_enddevice_article" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="id" referencedTableName="metro_article"
+			validate="true" />
+
+		<createTable tableName="metro_content">
+			<column name="id" type="BIGINT">
+				<constraints nullable="false" primaryKey="true"
+					primaryKeyName="metro_content_pkey" />
+			</column>
+			<column name="width" type="INTEGER" />
+			<column name="height" type="INTEGER" />
+			<column name="color" type="INTEGER" />
+			<column name="model" type="INTEGER" />
+			<column name="page" type="INTEGER" />
+			<column name="type" type="VARCHAR(255)" />
+			<column name="content" type="VARCHAR" />
+			<column name="article_id" type="BIGINT">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint
+			columnNames="width, height, color, page, article_id"
+			constraintName="metro_content_un" tableName="metro_content" />
+		<addForeignKeyConstraint
+			baseColumnNames="article_id" baseTableName="metro_content"
+			constraintName="fk_content_article" deferrable="false"
+			initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION"
+			referencedColumnNames="id" referencedTableName="metro_article"
+			validate="true" />
+
+		<createSequence sequenceName="hibernate_sequence" />
+	</changeSet>
+
+	<changeSet author="Suni.Kim" id="1.0.0.1.RELEASE">
+		<dropUniqueConstraint
+			constraintName="metro_content_un" tableName="metro_content" />
+		<addUniqueConstraint
+			columnNames="width, height, color, page, model, article_id"
+			constraintName="metro_content_un" tableName="metro_content" />
+	</changeSet>
+
+	<changeSet author="Suni.Kim" id="msp.1.0.3">
+		<createIndex indexName="idx_metro_article_station_article"
+			tableName="metro_article">
+			<column name="country_code" />
+			<column name="store_number" />
+			<column name="sales_line" />
+			<column name="article_id" />
+		</createIndex>
+		<createIndex indexName="idx_metro_content_enddevice_page"
+			tableName="metro_content">
+			<column name="article_id" />
+			<column name="width" />
+			<column name="height" />
+			<column name="color" />
+			<column name="model" />
+			<column name="page" />
+		</createIndex>
+		<createIndex indexName="idx_metro_enddevice_article_type"
+			tableName="metro_enddevice">
+			<column name="article_id" />
+			<column name="type" />
+		</createIndex>
+
+		<sql>reindex table metro_article</sql>
+		<sql>reindex table metro_content</sql>
+		<sql>reindex table metro_enddevice</sql>
+	</changeSet>
+
+
+	<changeSet id="msp.2.0.4" author="solum">
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="metro_template_group"/>
+				<tableExists tableName="metro_template_group_map"/>
+				<foreignKeyConstraintExists foreignKeyName="metro_template_group_pk"/>
+			</not>
+		</preConditions>
+		<createTable tableName="metro_template_group">
+			<column name="name" type="VARCHAR(255)" />
+			<column name="description" type="VARCHAR(255)" />
+			<column name="model" type="INTEGER" />
+			<column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE" />
+			<column name="last_modified"
+				type="TIMESTAMP(6) WITHOUT TIME ZONE" />
+
+		</createTable>
+
+		<createTable tableName="metro_template_group_map">
+			<column name="name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="station_code" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="group_name" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addPrimaryKey columnNames="name,model"
+			constraintName="metro_template_group_pk"
+			tableName="metro_template_group" />
+	</changeSet>
+	<changeSet id="msp.2.0.5" author="sti">
+	<createSequence sequenceName="metro_article_seq" incrementBy="1" minValue="1" maxValue="9223372036854775807"  cacheSize="1"/>
+	<createSequence sequenceName="metro_enddevice_seq" incrementBy="1" minValue="1" maxValue="9223372036854775807"  cacheSize="1"/>
+	<createSequence sequenceName="metro_content_seq" incrementBy="1" minValue="1" maxValue="9223372036854775807"  cacheSize="1"/>
+	<createSequence sequenceName="revinfo_seq" incrementBy="50" minValue="1" maxValue="9223372036854775807"  cacheSize="1"/>
+	</changeSet>
+</databaseChangeLog>

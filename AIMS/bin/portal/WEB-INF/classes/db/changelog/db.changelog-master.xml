@@ -1,0 +1,50 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+	
+	<property name="now" value="GETDATE()" dbms="mssql"/>
+	<property name="now" value="now()" dbms="postgresql"/>
+
+	<include relativeToChangelogFile="true" file="history/db.changelog-1.0.0.xml"/>	
+    <include relativeToChangelogFile="true" file="history/db.changelog-1.0.1.xml"/>	
+    <include relativeToChangelogFile="true" file="history/db.changelog-1.0.2.xml"/>	
+    
+    <include relativeToChangelogFile="true" file="history/db.changelog-1.1.0.xml"/>	
+	
+	<include relativeToChangelogFile="true" file="history/db.changelog-2.0.1.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-2.0.8.xml"/> 
+	<include relativeToChangelogFile="true" file="history/db.changelog-2.0.10.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-2.2.1.8.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-2.2.1.10.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-2.2.1.12.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-2.3.0.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-2.3.1.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-3.1.0.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-3.2.0.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-3.2.0.tapAndGo.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-3.3.0.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-3.4.0.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-3.4.3.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.2.0.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.2.1.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.2.3.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.3.0.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.3.1.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.3.2.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.3.2.1.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.3.3.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.4.0.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.4.1.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.5.0.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.5.1.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.5.2.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.5.3.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.6.1.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.6.2.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.6.4.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.6.5.xml"/>
+	<include relativeToChangelogFile="true" file="history/db.changelog-4.7.0.xml"/>
+</databaseChangeLog>

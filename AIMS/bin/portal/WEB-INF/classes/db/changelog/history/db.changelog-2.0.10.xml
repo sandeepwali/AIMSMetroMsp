@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="Dohoon.oh (generated)" id="2.0.10" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <createIndex indexName="idx_fk_aims_portal_batch" tableName="article">
+	        <column name="aims_portal_batch_id" type="bigint"/>
+	    </createIndex>
+	</changeSet>
+</databaseChangeLog>

@@ -1,0 +1,510 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+	
+    <changeSet author="Justyn (generated)" id="1.1.0" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    
+    	<validCheckSum>1:any</validCheckSum>
+    	
+    	<comment> Implement multil store operation for biz 1. </comment>
+    	
+		<addColumn tableName="article">
+			<column name="station_code" type="VARCHAR(255)" defaultValue="DEFAULT_STATION_CODE">
+				<constraints nullable="false"/>
+			</column>
+		</addColumn>
+		<addColumn tableName="template">
+			<column name="station_code" type="VARCHAR(255)" defaultValue="DEFAULT_STATION_CODE">
+				<constraints nullable="false"/>
+			</column>
+		</addColumn>
+		<addColumn tableName="end_device_articles">
+			<column name="station_code" type="VARCHAR(255)" defaultValue="DEFAULT_STATION_CODE">
+				<constraints nullable="false"/>
+			</column>
+		</addColumn>
+		<addColumn tableName="end_device_templates">
+			<column name="station_code" type="VARCHAR(255)" defaultValue="DEFAULT_STATION_CODE">
+				<constraints nullable="false"/>
+			</column>
+		</addColumn>
+		<addColumn tableName="end_device">
+			<column name="station_code" type="VARCHAR(255)" defaultValue="DEFAULT_STATION_CODE">
+				<constraints nullable="false"/>
+			</column>
+		</addColumn>
+
+		<dropForeignKeyConstraint baseTableName="end_device_articles" constraintName="fk_9jxn8oaj6k38s51b2kub4jkuc"/>
+		<dropForeignKeyConstraint baseTableName="end_device_templates" constraintName="fk_7ywt1kcksihl1jiuya8h5ns5c"/>
+		
+		<dropPrimaryKey tableName="article" constraintName="article_pkey"/>
+		<dropPrimaryKey tableName="template" constraintName="template_pkey"/>
+		
+		<addPrimaryKey columnNames="article_id,station_code" constraintName="article_pkey" tableName="article"/>
+		<addPrimaryKey columnNames="name,station_code" constraintName="template_pkey" tableName="template"/>
+		
+		<addForeignKeyConstraint baseColumnNames="article_id,station_code" baseTableName="end_device_articles" constraintName="fk_9jxn8oaj6k38s51b2kub4jkuc" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="article_id,station_code" referencedTableName="article"/>
+		<addForeignKeyConstraint baseColumnNames="name,station_code" baseTableName="end_device_templates" constraintName="fk_7ywt1kcksihl1jiuya8h5ns5c" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="name,station_code" referencedTableName="template"/>
+		
+		<createTable tableName="aims_station_code">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aims_station_code" type="VARCHAR(4000)"/>
+            <column name="city_name" type="VARCHAR(4000)"/>
+            <column name="coordinates" type="VARCHAR(4000)"/>
+            <column name="country_code" type="VARCHAR(4000)"/>
+            <column name="country_name" type="VARCHAR(4000)"/>
+            <column name="location" type="VARCHAR(4000)"/>
+            <column name="subdivision_code" type="VARCHAR(4000)"/>
+            <column name="subdivision_name" type="VARCHAR(4000)"/>
+        </createTable>
+    	
+    	<addPrimaryKey columnNames="id" constraintName="aims_station_code_pkey" tableName="aims_station_code"/>
+    	
+    	<createSequence sequenceName="aims_station_code_seq" 
+    		incrementBy="50" 
+    		minValue="1" 
+    		maxValue="9223372036854775807"
+    		startValue="1"
+    		cacheSize="1"/>
+
+    	<createIndex indexName="idx_city_name" tableName="aims_station_code">
+            <column name="city_name"/>
+        </createIndex>
+    </changeSet>
+
+	<changeSet author="Justyn (generated)" id="1.1.0-mssql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    	
+        <createSequence cycle="false" incrementBy="50" maxValue="9223372036854775807" minValue="-9223372036854775808" sequenceName="aims_portal_batch_seq" startValue="1"/>
+        <createSequence cycle="false" incrementBy="50" maxValue="9223372036854775807" minValue="-9223372036854775808" sequenceName="aims_station_code_seq" startValue="1"/>
+        <createSequence cycle="false" incrementBy="50" maxValue="9223372036854775807" minValue="-9223372036854775808" sequenceName="bletag_setting_seq" startValue="1"/>
+        <createSequence cycle="false" incrementBy="50" maxValue="9223372036854775807" minValue="-9223372036854775808" sequenceName="dashboard_settings_seq" startValue="1"/>
+        <createSequence cycle="false" incrementBy="50" maxValue="9223372036854775807" minValue="-9223372036854775808" sequenceName="warehouse_product_seq" startValue="1"/>
+
+        <createTable tableName="aims_portal_batch">
+            <column name="id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="datetime2(7)"/>
+            <column name="custom_batch_id" type="varchar(255)"/>
+            <column name="last_modified" type="datetime2(7)"/>
+            <column name="message_param" type="varchar(MAX)"/>
+            <column name="message_provider" type="varchar(255)"/>
+            <column name="status" type="varchar(255)"/>
+            <column name="station_code" type="varchar(255)"/>
+            <column name="type" type="varchar(255)"/>
+        </createTable>
+
+        <createTable tableName="aims_station_code">
+            <column name="id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aims_station_code" type="varchar(4000)"/>
+            <column name="city_name" type="varchar(4000)"/>
+            <column name="coordinates" type="varchar(4000)"/>
+            <column name="country_code" type="varchar(4000)"/>
+            <column name="country_name" type="varchar(4000)"/>
+            <column name="location" type="varchar(4000)"/>
+            <column name="subdivision_code" type="varchar(4000)"/>
+            <column name="subdivision_name" type="varchar(4000)"/>
+        </createTable>
+        <createTable tableName="article">
+            <column name="article_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="station_code" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="datetime2(7)"/>
+            <column name="data" type="varchar(MAX)"/>
+            <column name="last_modified" type="datetime2(7)"/>
+            <column name="name" type="varchar(512)"/>
+            <column name="nfc_url" type="varchar(255)"/>
+            <column name="aims_portal_batch_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="bletag_setting">
+            <column name="id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createtime" type="varchar(4000)"/>
+            <column name="labelid" type="varchar(4000)"/>
+            <column name="macid" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updatetime" type="varchar(4000)"/>
+            <column name="url" type="varchar(4000)"/>
+        </createTable>
+        <createTable tableName="dashboard_settings">
+            <column name="id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="datetime2(7)"/>
+            <column name="item" type="varchar(255)"/>
+            <column name="last_modified" type="datetime2(7)"/>
+            <column name="param_1" type="varchar(4000)"/>
+            <column name="param_10" type="varchar(255)"/>
+            <column name="param_2" type="varchar(255)"/>
+            <column name="param_3" type="varchar(255)"/>
+            <column name="param_4" type="varchar(255)"/>
+            <column name="param_5" type="varchar(255)"/>
+            <column name="param_6" type="varchar(255)"/>
+            <column name="param_7" type="varchar(255)"/>
+            <column name="param_8" type="varchar(255)"/>
+            <column name="param_9" type="varchar(255)"/>
+            <column name="param_descr" type="varchar(1000)"/>
+            <column name="value" type="varchar(255)"/>
+        </createTable>
+        <createTable tableName="end_device">
+            <column name="label_code" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="datetime2(7)"/>
+            <column name="last_modified" type="datetime2(7)"/>
+            <column name="station_code" type="varchar(255)"/>
+        </createTable>
+        <createTable tableName="end_device_articles">
+            <column name="label_code" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="article_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="station_code" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="seq" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="end_device_templates">
+            <column name="label_code" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="station_code" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="page" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="template">
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="station_code" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="datetime2(7)"/>
+            <column name="data" type="varchar(MAX)"/>
+            <column name="height" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified" type="datetime2(7)"/>
+            <column name="type" type="varchar(255)"/>
+            <column name="width" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aims_portal_batch_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="warehouse_product">
+            <column name="id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bin" type="varchar(4000)"/>
+            <column name="created" type="datetime2(7)"/>
+            <column name="equip_no" type="varchar(4000)"/>
+            <column name="gi_matr_id" type="varchar(4000)"/>
+            <column name="last_modified" type="datetime2(7)"/>
+            <column name="line_nm" type="varchar(4000)"/>
+            <column name="matr_code" type="varchar(4000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="req_dt" type="varchar(4000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stored_qty" type="varchar(4000)"/>
+            <column name="supply_qty" type="varchar(4000)"/>
+            <column name="tag_id" type="varchar(4000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="zone" type="varchar(4000)"/>
+        </createTable>
+        <addPrimaryKey columnNames="id" constraintName="PK__aims_por__3213E83F33CC0FC2" tableName="aims_portal_batch"/>
+        <addPrimaryKey columnNames="id" constraintName="PK__aims_sta__3213E83FB8647A2A" tableName="aims_station_code"/>
+        <addPrimaryKey columnNames="article_id, station_code" constraintName="PK__article__453E10E9A6FE3C3F" tableName="article"/>
+        <addPrimaryKey columnNames="id" constraintName="PK__bletag_s__3213E83F68A54EEF" tableName="bletag_setting"/>
+        <addPrimaryKey columnNames="id" constraintName="PK__dashboar__3213E83FCA5EA2B8" tableName="dashboard_settings"/>
+        <addPrimaryKey columnNames="label_code, seq" constraintName="PK__end_devi__41BC3AB3DC0CB736" tableName="end_device_articles"/>
+        <addPrimaryKey columnNames="label_code, page" constraintName="PK__end_devi__4452348EACC58188" tableName="end_device_templates"/>
+        <addPrimaryKey columnNames="label_code" constraintName="PK__end_devi__BC61C178A15C91ED" tableName="end_device"/>
+        <addPrimaryKey columnNames="name, station_code" constraintName="PK__template__FBE9C993FFDCA561" tableName="template"/>
+        <addPrimaryKey columnNames="id" constraintName="PK__warehous__3213E83F957BA13A" tableName="warehouse_product"/>
+        <addUniqueConstraint columnNames="macid" constraintName="UK_f7oluugj4mxfjhj7t4b5ptxr0" tableName="bletag_setting"/>
+        <addUniqueConstraint columnNames="tag_id" constraintName="UK_lxu8re3851a84vh6ukmitmwoy" tableName="warehouse_product"/>
+        <createIndex indexName="IDXm8ujhih8wnytekl8lja90e7y7" tableName="aims_station_code">
+            <column name="city_name"/>
+        </createIndex>
+        <addForeignKeyConstraint baseColumnNames="name,station_code" baseTableName="end_device_templates" constraintName="FK18j8ykyyce0v45s44m3bw64f1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="name,station_code" referencedTableName="template"/>
+        <addForeignKeyConstraint baseColumnNames="article_id,station_code" baseTableName="end_device_articles" constraintName="FKog1yhceayljt8a9tomnuw07jl" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="article_id,station_code" referencedTableName="article"/>
+        <addForeignKeyConstraint baseColumnNames="label_code" baseTableName="end_device_articles" constraintName="FKpc37j3om9qv2p1866evhjvexn" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="label_code" referencedTableName="end_device"/>
+        <addForeignKeyConstraint baseColumnNames="aims_portal_batch_id" baseTableName="article" constraintName="FKpdct60kgexrhaf948vq0sunly" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="aims_portal_batch"/>
+        <addForeignKeyConstraint baseColumnNames="label_code" baseTableName="end_device_templates" constraintName="FKq91w2q1imduodybw7lbjgvu8w" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="label_code" referencedTableName="end_device"/>
+        <addForeignKeyConstraint baseColumnNames="aims_portal_batch_id" baseTableName="template" constraintName="FKs19k8vsopi5taasgxwwli6o73" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="aims_portal_batch"/>
+    
+	</changeSet>
+	
+	<changeSet author="Justyn (generated)" id="1.1.0-oracle" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="oracle" objectQuotingStrategy="QUOTE_ALL_OBJECTS" onValidationFail="MARK_RAN">
+		
+        <createSequence cacheSize="20" cycle="false" incrementBy="50" maxValue="9999999999999999999999999999" minValue="1" ordered="false" sequenceName="AIMS_PORTAL_BATCH_SEQ" startValue="1001"/>
+        <createSequence cacheSize="20" cycle="false" incrementBy="50" maxValue="9999999999999999999999999999" minValue="1" ordered="false" sequenceName="AIMS_STATION_CODE_SEQ" startValue="1"/>
+        <createSequence cacheSize="20" cycle="false" incrementBy="50" maxValue="9999999999999999999999999999" minValue="1" ordered="false" sequenceName="BLETAG_SETTING_SEQ" startValue="1"/>
+        <createSequence cacheSize="20" cycle="false" incrementBy="50" maxValue="9999999999999999999999999999" minValue="1" ordered="false" sequenceName="DASHBOARD_SETTINGS_SEQ" startValue="1"/>
+        <createSequence cacheSize="20" cycle="false" incrementBy="50" maxValue="9999999999999999999999999999" minValue="1" ordered="false" sequenceName="WAREHOUSE_PRODUCT_SEQ" startValue="1"/>
+    	
+    	<createTable tableName="AIMS_PORTAL_BATCH">
+            <column name="ID" type="NUMBER(19, 0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED" type="TIMESTAMP(6)"/>
+            <column name="CUSTOM_BATCH_ID" type="VARCHAR2(255 CHAR)"/>
+            <column name="LAST_MODIFIED" type="TIMESTAMP(6)"/>
+            <column name="MESSAGE_PARAM" type="LONG"/>
+            <column name="MESSAGE_PROVIDER" type="VARCHAR2(255 CHAR)"/>
+            <column name="STATUS" type="VARCHAR2(255 CHAR)"/>
+            <column name="STATION_CODE" type="VARCHAR2(255 CHAR)"/>
+            <column name="TYPE" type="VARCHAR2(255 CHAR)"/>
+        </createTable>
+        
+        <createTable tableName="AIMS_STATION_CODE">
+            <column name="ID" type="NUMBER(19, 0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AIMS_STATION_CODE" type="VARCHAR2(4000 CHAR)"/>
+            <column name="CITY_NAME" type="VARCHAR2(4000 CHAR)"/>
+            <column name="COORDINATES" type="VARCHAR2(4000 CHAR)"/>
+            <column name="COUNTRY_CODE" type="VARCHAR2(4000 CHAR)"/>
+            <column name="COUNTRY_NAME" type="VARCHAR2(4000 CHAR)"/>
+            <column name="LOCATION" type="VARCHAR2(4000 CHAR)"/>
+            <column name="SUBDIVISION_CODE" type="VARCHAR2(4000 CHAR)"/>
+            <column name="SUBDIVISION_NAME" type="VARCHAR2(4000 CHAR)"/>
+        </createTable>
+        
+        <createTable tableName="ARTICLE">
+            <column name="ARTICLE_ID" type="VARCHAR2(255 CHAR)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATION_CODE" type="VARCHAR2(255 CHAR)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED" type="TIMESTAMP(6)"/>
+            <column name="DATA" type="LONG"/>
+            <column name="LAST_MODIFIED" type="TIMESTAMP(6)"/>
+            <column name="NAME" type="VARCHAR2(512 CHAR)"/>
+            <column name="NFC_URL" type="VARCHAR2(255 CHAR)"/>
+            <column name="AIMS_PORTAL_BATCH_ID" type="NUMBER(19, 0)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="BLETAG_SETTING">
+            <column name="ID" type="NUMBER(19, 0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATETIME" type="VARCHAR2(4000 CHAR)"/>
+            <column name="LABELID" type="VARCHAR2(4000 CHAR)"/>
+            <column name="MACID" type="VARCHAR2(255 CHAR)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="UPDATETIME" type="VARCHAR2(4000 CHAR)"/>
+            <column name="URL" type="VARCHAR2(4000 CHAR)"/>
+        </createTable>
+        
+        <createTable tableName="DASHBOARD_SETTINGS">
+            <column name="ID" type="NUMBER(19, 0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CATEGORY" type="VARCHAR2(255 CHAR)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED" type="TIMESTAMP(6)"/>
+            <column name="ITEM" type="VARCHAR2(255 CHAR)"/>
+            <column name="LAST_MODIFIED" type="TIMESTAMP(6)"/>
+            <column name="PARAM_1" type="VARCHAR2(4000 CHAR)"/>
+            <column name="PARAM_10" type="VARCHAR2(255 CHAR)"/>
+            <column name="PARAM_2" type="VARCHAR2(255 CHAR)"/>
+            <column name="PARAM_3" type="VARCHAR2(255 CHAR)"/>
+            <column name="PARAM_4" type="VARCHAR2(255 CHAR)"/>
+            <column name="PARAM_5" type="VARCHAR2(255 CHAR)"/>
+            <column name="PARAM_6" type="VARCHAR2(255 CHAR)"/>
+            <column name="PARAM_7" type="VARCHAR2(255 CHAR)"/>
+            <column name="PARAM_8" type="VARCHAR2(255 CHAR)"/>
+            <column name="PARAM_9" type="VARCHAR2(255 CHAR)"/>
+            <column name="PARAM_DESCR" type="VARCHAR2(1000 CHAR)"/>
+            <column name="VALUE" type="VARCHAR2(255 CHAR)"/>
+        </createTable>
+        
+        <createTable tableName="END_DEVICE">
+            <column name="LABEL_CODE" type="VARCHAR2(255 CHAR)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED" type="TIMESTAMP(6)"/>
+            <column name="LAST_MODIFIED" type="TIMESTAMP(6)"/>
+            <column name="STATION_CODE" type="VARCHAR2(255 CHAR)"/>
+        </createTable>
+        
+        <createTable tableName="END_DEVICE_ARTICLES">
+            <column name="LABEL_CODE" type="VARCHAR2(255 CHAR)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ARTICLE_ID" type="VARCHAR2(255 CHAR)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATION_CODE" type="VARCHAR2(255 CHAR)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SEQ" type="NUMBER(*, 0)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="END_DEVICE_TEMPLATES">
+            <column name="LABEL_CODE" type="VARCHAR2(255 CHAR)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR2(255 CHAR)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATION_CODE" type="VARCHAR2(255 CHAR)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PAGE" type="NUMBER(*, 0)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="TEMPLATE">
+            <column name="NAME" type="VARCHAR2(255 CHAR)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STATION_CODE" type="VARCHAR2(255 CHAR)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED" type="TIMESTAMP(6)"/>
+            <column name="DATA" type="LONG"/>
+            <column name="HEIGHT" type="NUMBER(10, 0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="LAST_MODIFIED" type="TIMESTAMP(6)"/>
+            <column name="TYPE" type="VARCHAR2(255 CHAR)"/>
+            <column name="WIDTH" type="NUMBER(10, 0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AIMS_PORTAL_BATCH_ID" type="NUMBER(19, 0)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="WAREHOUSE_PRODUCT">
+            <column name="ID" type="NUMBER(19, 0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="BIN" type="VARCHAR2(4000 CHAR)"/>
+            <column name="CREATED" type="TIMESTAMP(6)"/>
+            <column name="EQUIP_NO" type="VARCHAR2(4000 CHAR)"/>
+            <column name="GI_MATR_ID" type="VARCHAR2(4000 CHAR)"/>
+            <column name="LAST_MODIFIED" type="TIMESTAMP(6)"/>
+            <column name="LINE_NM" type="VARCHAR2(4000 CHAR)"/>
+            <column name="MATR_CODE" type="VARCHAR2(4000 CHAR)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="REQ_DT" type="VARCHAR2(4000 CHAR)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="STORED_QTY" type="VARCHAR2(4000 CHAR)"/>
+            <column name="SUPPLY_QTY" type="VARCHAR2(4000 CHAR)"/>
+            <column name="TAG_ID" type="VARCHAR2(4000 CHAR)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ZONE" type="VARCHAR2(4000 CHAR)"/>
+        </createTable>
+        
+         <createIndex indexName="SYS_C007660" tableName="AIMS_PORTAL_BATCH" unique="true">
+            <column name="ID"/>
+        </createIndex>
+        <addPrimaryKey columnNames="ID" constraintName="SYS_C007660" forIndexName="SYS_C007660" tableName="AIMS_PORTAL_BATCH"/>
+        
+        <createIndex indexName="SYS_C007662" tableName="AIMS_STATION_CODE" unique="true">
+            <column name="ID"/>
+        </createIndex>
+        <addPrimaryKey columnNames="ID" constraintName="SYS_C007662" forIndexName="SYS_C007662" tableName="AIMS_STATION_CODE"/>
+        
+        <createIndex indexName="SYS_C007666" tableName="ARTICLE" unique="true">
+            <column name="ARTICLE_ID"/>
+            <column name="STATION_CODE"/>
+        </createIndex>
+        <addPrimaryKey columnNames="ARTICLE_ID, STATION_CODE" constraintName="SYS_C007666" forIndexName="SYS_C007666" tableName="ARTICLE"/>
+        
+        <createIndex indexName="SYS_C007669" tableName="BLETAG_SETTING" unique="true">
+            <column name="ID"/>
+        </createIndex>
+        <addPrimaryKey columnNames="ID" constraintName="SYS_C007669" forIndexName="SYS_C007669" tableName="BLETAG_SETTING"/>
+        <createIndex indexName="SYS_C007672" tableName="DASHBOARD_SETTINGS" unique="true">
+            <column name="ID"/>
+        </createIndex>
+        <addPrimaryKey columnNames="ID" constraintName="SYS_C007672" forIndexName="SYS_C007672" tableName="DASHBOARD_SETTINGS"/>
+        <createIndex indexName="SYS_C007674" tableName="END_DEVICE" unique="true">
+            <column name="LABEL_CODE"/>
+        </createIndex>
+        <addPrimaryKey columnNames="LABEL_CODE" constraintName="SYS_C007674" forIndexName="SYS_C007674" tableName="END_DEVICE"/>
+        <createIndex indexName="SYS_C007679" tableName="END_DEVICE_ARTICLES" unique="true">
+            <column name="LABEL_CODE"/>
+            <column name="SEQ"/>
+        </createIndex>
+        <addPrimaryKey columnNames="LABEL_CODE, SEQ" constraintName="SYS_C007679" forIndexName="SYS_C007679" tableName="END_DEVICE_ARTICLES"/>
+        <createIndex indexName="SYS_C007684" tableName="END_DEVICE_TEMPLATES" unique="true">
+            <column name="LABEL_CODE"/>
+            <column name="PAGE"/>
+        </createIndex>
+        <addPrimaryKey columnNames="LABEL_CODE, PAGE" constraintName="SYS_C007684" forIndexName="SYS_C007684" tableName="END_DEVICE_TEMPLATES"/>
+        <createIndex indexName="SYS_C007690" tableName="TEMPLATE" unique="true">
+            <column name="NAME"/>
+            <column name="STATION_CODE"/>
+        </createIndex>
+        <addPrimaryKey columnNames="NAME, STATION_CODE" constraintName="SYS_C007690" forIndexName="SYS_C007690" tableName="TEMPLATE"/>
+        <createIndex indexName="SYS_C007695" tableName="WAREHOUSE_PRODUCT" unique="true">
+            <column name="ID"/>
+        </createIndex>
+        <addPrimaryKey columnNames="ID" constraintName="SYS_C007695" forIndexName="SYS_C007695" tableName="WAREHOUSE_PRODUCT"/>
+        <createIndex indexName="UK_F7OLUUGJ4MXFJHJ7T4B5PTXR0" tableName="BLETAG_SETTING" unique="true">
+            <column name="MACID"/>
+        </createIndex>
+        <addUniqueConstraint columnNames="MACID" constraintName="UK_F7OLUUGJ4MXFJHJ7T4B5PTXR0" forIndexName="UK_F7OLUUGJ4MXFJHJ7T4B5PTXR0" tableName="BLETAG_SETTING"/>
+        <createIndex indexName="UK_LXU8RE3851A84VH6UKMITMWOY" tableName="WAREHOUSE_PRODUCT" unique="true">
+            <column name="TAG_ID"/>
+        </createIndex>
+        <addUniqueConstraint columnNames="TAG_ID" constraintName="UK_LXU8RE3851A84VH6UKMITMWOY" forIndexName="UK_LXU8RE3851A84VH6UKMITMWOY" tableName="WAREHOUSE_PRODUCT"/>
+        <createIndex indexName="IDXM8UJHIH8WNYTEKL8LJA90E7Y7" tableName="AIMS_STATION_CODE">
+            <column name="CITY_NAME"/>
+        </createIndex>
+        <addForeignKeyConstraint baseColumnNames="NAME,STATION_CODE" baseTableName="END_DEVICE_TEMPLATES" constraintName="FK18J8YKYYCE0V45S44M3BW64F1" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="NAME,STATION_CODE" referencedTableName="TEMPLATE"/>
+        <addForeignKeyConstraint baseColumnNames="ARTICLE_ID,STATION_CODE" baseTableName="END_DEVICE_ARTICLES" constraintName="FKOG1YHCEAYLJT8A9TOMNUW07JL" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ARTICLE_ID,STATION_CODE" referencedTableName="ARTICLE"/>
+        <addForeignKeyConstraint baseColumnNames="LABEL_CODE" baseTableName="END_DEVICE_ARTICLES" constraintName="FKPC37J3OM9QV2P1866EVHJVEXN" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="LABEL_CODE" referencedTableName="END_DEVICE"/>
+        <addForeignKeyConstraint baseColumnNames="AIMS_PORTAL_BATCH_ID" baseTableName="ARTICLE" constraintName="FKPDCT60KGEXRHAF948VQ0SUNLY" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="AIMS_PORTAL_BATCH"/>
+        <addForeignKeyConstraint baseColumnNames="LABEL_CODE" baseTableName="END_DEVICE_TEMPLATES" constraintName="FKQ91W2Q1IMDUODYBW7LBJGVU8W" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="LABEL_CODE" referencedTableName="END_DEVICE"/>
+        <addForeignKeyConstraint baseColumnNames="AIMS_PORTAL_BATCH_ID" baseTableName="TEMPLATE" constraintName="FKS19K8VSOPI5TAASGXWWLI6O73" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="ID" referencedTableName="AIMS_PORTAL_BATCH"/>
+	</changeSet>
+</databaseChangeLog>

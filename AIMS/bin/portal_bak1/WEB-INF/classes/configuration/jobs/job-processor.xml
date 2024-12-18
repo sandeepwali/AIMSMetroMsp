@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-5.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- CONTENT -->
+ 	<bean id="contentJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="taskExecutor" ref="contentJobExcutor"/>
+	</bean>
+	<bean id="contentMessageEndPointChain" class="com.solum.aims.portal.batch.integration.BatchProcessorMessageEndPointChain">
+		<property name="job" ref="processorJob"/>
+		<property name="jobLauncher" ref="contentJobLauncher"/>
+		<property name="type" value="CONTENT"/>
+	</bean>
+	<int:service-activator id="contentServiceActivator" input-channel="batchContentChannel" ref="contentMessageEndPointChain"/>
+	
+	<!-- UPDATE_NFC -->
+	<bean id="updateNfcJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="taskExecutor" ref="updateNfcJobExcutor"/>
+	</bean>
+ 	<bean id="updateNfcMessageEndPointChain" class="com.solum.aims.portal.batch.integration.BatchProcessorMessageEndPointChain">
+		<property name="job" ref="processorJob"/>
+		<property name="jobLauncher" ref="updateNfcJobLauncher"/>
+		<property name="type" value="UPDATE_NFC"/>
+	</bean>
+	<int:service-activator id="updatNfcServiceActivator" input-channel="batchUpdateNfcChannel" ref="updateNfcMessageEndPointChain"/>
+	
+	<!-- UPDATE_SCHEDULE -->
+ 	<bean id="updateScheduleJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="taskExecutor" ref="updateScheduleJobExcutor"/>
+	</bean>
+	<bean id="updateScheduleMessageEndPointChain" class="com.solum.aims.portal.batch.integration.BatchProcessorMessageEndPointChain">
+		<property name="job" ref="processorJob"/>
+		<property name="jobLauncher" ref="updateScheduleJobLauncher"/>
+		<property name="type" value="UPDATE_SCHEDULE"/>
+	</bean>
+	<int:service-activator id="updateScheduleServiceActivator" input-channel="batcUpdateScheduleChannel" ref="updateScheduleMessageEndPointChain"/>
+	
+	<!-- UPDATE_FRONT_PAGE_INDEX -->
+	<bean id="updateFrontPageIndexJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="taskExecutor" ref="updateFrontPageIndexJobExcutor"/>
+	</bean>
+	<bean id="updateFrontPageMessageEndPointChain" class="com.solum.aims.portal.batch.integration.BatchProcessorMessageEndPointChain">
+		<property name="job" ref="processorJob"/>
+		<property name="jobLauncher" ref="updateFrontPageIndexJobLauncher"/>
+		<property name="type" value="UPDATE_FRONT_PAGE_INDEX"/>
+	</bean>
+	<int:service-activator id="updateFrontPageServiceActivator" input-channel="batchUpdatePageIndexChannelChannel" ref="updateFrontPageMessageEndPointChain"/>
+	
+	<!-- ARTICLE -->
+	<bean id="articleJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="taskExecutor" ref="articleJobExcutor"/>
+	</bean>
+	<bean id="articleMessageEndPointChain" class="com.solum.aims.portal.batch.integration.BatchProcessorMessageEndPointChain">
+		<property name="job" ref="processorJob"/>
+		<property name="jobLauncher" ref="articleJobLauncher"/>
+		<property name="type" value="ARTICLE"/>
+	</bean>
+	<int:service-activator id="articleServiceActivator" input-channel="batchArticleChannel" ref="articleMessageEndPointChain"/>
+	
+	<!-- TEMPLATE -->
+	<bean id="templateJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="taskExecutor" ref="templateJobExcutor"/>
+	</bean>
+	<bean id="templateMessageEndPointChain" class="com.solum.aims.portal.batch.integration.BatchProcessorMessageEndPointChain">
+		<property name="job" ref="processorJob"/>
+		<property name="jobLauncher" ref="templateJobLauncher"/>
+		<property name="type" value="TEMPLATE"/>
+	</bean>
+	<int:service-activator id="templateServiceActivator" input-channel="batchTemplateChannel" ref="templateMessageEndPointChain"/>
+	
+	<!-- FORCE_UPDATE -->
+	<bean id="forcedUpdateJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="taskExecutor" ref="forcedUpdateJobExcutor"/>
+	</bean>	
+	<bean id="forcedUpdateMessageEndPointChain" class="com.solum.aims.portal.batch.integration.BatchProcessorMessageEndPointChain">
+		<property name="job" ref="processorJob"/>
+		<property name="jobLauncher" ref="forcedUpdateJobLauncher"/>
+		<property name="type" value="FORCE_UPDATE"/>
+	</bean>
+	<int:service-activator id="forcedUpdateServiceActivator" input-channel="batchForceUpdateChannel" ref="forcedUpdateMessageEndPointChain"/>
+	
+	<!-- ASSIGN -->
+	<bean id="assignJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="taskExecutor" ref="assignJobExcutor"/>
+	</bean>
+	<bean id="assignMessageEndPointChain" class="com.solum.aims.portal.batch.integration.BatchProcessorMessageEndPointChain">
+		<property name="job" ref="processorJob"/>
+		<property name="jobLauncher" ref="assignJobLauncher"/>
+		<property name="type" value="ASSIGN"/>
+	</bean>
+	<int:service-activator id="assignServiceActivator" input-channel="batchAssignChannel" ref="assignMessageEndPointChain"/>
+
+	<!-- EXTRA ASSIGN -->
+	<bean id="assignExtraJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="taskExecutor" ref="assignExtraJobExcutor"/>
+	</bean>
+	<bean id="assignExtraMessageEndPointChain" class="com.solum.aims.portal.batch.integration.BatchProcessorMessageEndPointChain">
+		<property name="job" ref="processorJob"/>
+		<property name="jobLauncher" ref="assignExtraJobLauncher"/>
+		<property name="type" value="ASSIGN_EXTRA"/>
+	</bean>
+	<int:service-activator id="assignExtraServiceActivator" input-channel="batchAssignExtraChannel" ref="assignExtraMessageEndPointChain"/>
+
+	<!-- REMOVE_ARTICLE -->
+	<bean id="removeArticleJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="taskExecutor" ref="removeArticleJobExcutor"/>
+	</bean>
+	<bean id="removeArticleMessageEndPointChain" class="com.solum.aims.portal.batch.integration.BatchProcessorMessageEndPointChain">
+		<property name="job" ref="processorJob"/>
+		<property name="jobLauncher" ref="removeArticleJobLauncher"/>
+		<property name="type" value="REMOVE_ARTICLE"/>
+	</bean>
+	<int:service-activator id="removeArticleServiceActivator" input-channel="batchRemoveArticleChannel" ref="removeArticleMessageEndPointChain"/>
+	
+	<!-- UNASSIGN -->
+	<bean id="unassignJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="taskExecutor" ref="unassignJobExcutor"/>
+	</bean>
+	<bean id="unassignMessageEndPointChain" class="com.solum.aims.portal.batch.integration.BatchProcessorMessageEndPointChain">
+		<property name="job" ref="processorJob"/>
+		<property name="jobLauncher" ref="unassignJobLauncher"/>
+		<property name="type" value="UNASSIGN"/>
+	</bean>
+	<int:service-activator id="unassignServiceActivator" input-channel="batchUnassignChannel" ref="unassignMessageEndPointChain"/>
+	
+	<!-- DELETE -->
+	<bean id="deleteJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="taskExecutor" ref="deleteJobExcutor"/>
+	</bean>
+	<bean id="deleteMessageEndPointChain" class="com.solum.aims.portal.batch.integration.BatchProcessorMessageEndPointChain">
+		<property name="job" ref="processorJob"/>
+		<property name="jobLauncher" ref="deleteJobLauncher"/>
+		<property name="type" value="DELETE"/>
+	</bean>
+	<int:service-activator id="deleteServiceActivator" input-channel="batchDeleteChannel" ref="deleteMessageEndPointChain"/>
+
+	<!--MASTER_ARTICLE -->
+	<bean id="masterArticleJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="taskExecutor" ref="articleJobExcutor"/>
+	</bean>
+	<bean id="masterArticleMessageEndPointChain" class="com.solum.aims.portal.batch.integration.BatchProcessorMessageEndPointChain">
+		<property name="job" ref="processorJob"/>
+		<property name="jobLauncher" ref="masterArticleJobLauncher"/>
+		<property name="type" value="MASTER_ARTICLE"/>
+	</bean>
+	<int:service-activator id="masterArticleServiceActivator" input-channel="batchMasterArticleChannel" ref="masterArticleMessageEndPointChain"/>
+	
+	<!-- DEFINE JOB -->	
+	<batch:job id="processorJob">
+	
+		<batch:listeners>
+			<batch:listener ref="aimsPortalJobListener" />
+		</batch:listeners>
+		
+		<!-- Launching processor job -->
+		<batch:step id="processorJobExecution" next="PortalBatchTypeDecision">
+			<batch:tasklet ref="processorJobExecutionTasklet" />
+		</batch:step>
+		
+		<!-- Batch type decider -->
+		<batch:decision id="PortalBatchTypeDecision" decider="aimsPortalBatchTypeDecider">
+			<batch:next on="CONTENT" to="ContentProcessor" />
+			<batch:next on="UNASSIGN" to="UnassignProcessor"/>
+			<batch:next on="UPDATE_NFC" to="UpdateNfcProcessor" />
+			<batch:next on="UPDATE_FRONT_PAGE_INDEX" to="UpdateFrontPageIndexProcessor" />
+			<batch:next on="UPDATE_SCHEDULE" to="UpdateScheduleProcessor" />
+			<batch:next on="TEMPLATE" to="TemplateProcessor"/>
+			<batch:next on="ARTICLE" to="ArticleProcessor"/>
+			<batch:next on="REMOVE_ARTICLE" to="RemoveArticleProcessor"/>
+			<batch:next on="ASSIGN" to="AssignProcessor"/>
+			<batch:next on="ASSIGN_EXTRA" to="AssignExtraProcessor"/>
+			<batch:next on="DELETE" to="DeleteProcessor"/>
+			<batch:next on="FORCE_UPDATE" to="ForcedUpdateProcessor"/>
+			<batch:next on="MASTER_ARTICLE" to="MasterArticleProcessor"/>
+			<batch:next on="*" to="UNKNOWN.ProcessorJobExit"/>
+		</batch:decision>
+		
+		<!-- CONTENT -->
+		<batch:step id="ContentProcessor" next="CONTENT.CoreMessageDistribute">
+			<batch:tasklet ref="contentProcessorTasklet" />
+		</batch:step>
+		<batch:step id="CONTENT.CoreMessageDistribute">
+			<batch:tasklet ref="coreMessageDistributeTasklet" />
+		</batch:step>
+		
+		<!-- UNASSIGN -->
+		<batch:step id="UnassignProcessor" next="UNASSIGN.CoreMessageDistribute">
+			<batch:tasklet ref="unassignProcessorTasklet" />
+		</batch:step>
+		<batch:step id="UNASSIGN.CoreMessageDistribute">
+			<batch:tasklet ref="coreMessageDistributeTasklet" />
+		</batch:step>
+		
+		<!-- UPDATE_NFC -->
+		<batch:step id="UpdateNfcProcessor" next="UPDATE_NFC.CoreMessageDistribute">
+			<batch:tasklet ref="updateNfcProcessorTasklet" />
+		</batch:step>
+		<batch:step id="UPDATE_NFC.CoreMessageDistribute">
+			<batch:tasklet ref="coreMessageDistributeTasklet" />
+		</batch:step>
+		
+		<!-- UPDATE_Front page index -->
+		<batch:step id="UpdateFrontPageIndexProcessor" next="UPDATE_FRONT_PAGE_INDEX.CoreMessageDistribute">
+			<batch:tasklet ref="updateFrontPageIndexProcessorTasklet" />
+		</batch:step>
+		<batch:step id="UPDATE_FRONT_PAGE_INDEX.CoreMessageDistribute">
+			<batch:tasklet ref="coreMessageDistributeTasklet" />
+		</batch:step>
+
+		<!-- UPDATE Schedule -->
+		<batch:step id="UpdateScheduleProcessor" next="UPDATE_SCHEDUL.CoreMessageDistruibute">
+			<batch:tasklet ref="updateScheduleProcessorTasklet" />
+		</batch:step>
+		<batch:step id="UPDATE_SCHEDUL.CoreMessageDistruibute">
+			<batch:tasklet ref="coreMessageDistributeTasklet" />
+		</batch:step>
+		
+		<!-- TEMPLATE -->
+		<batch:step id="TemplateProcessor" next="TEMPLATE.CreateAssignBatch">
+			<batch:tasklet ref="templateProcessorTasklet"/>
+		</batch:step>
+		<batch:step id="TEMPLATE.CreateAssignBatch">
+			<batch:tasklet ref="createAssignBatchTasklet"/>
+		</batch:step>
+		
+		<!-- ARTICLE -->
+		<batch:step id="ArticleProcessor" next="ARTICLE.CreateAssignBatch">
+			<batch:tasklet ref="articleProcessorTasklet"/>
+		</batch:step>
+		<batch:step id="ARTICLE.CreateAssignBatch">
+			<batch:tasklet ref="createAssignBatchTasklet"/>
+		</batch:step>
+		
+		<!-- FORCE UPDATE -->
+		<batch:step id="ForcedUpdateProcessor">
+			<batch:tasklet ref="createAssignBatchTasklet"/>
+		</batch:step>
+
+		<!-- REMOVE_ARTICLE -->
+		<batch:step id="RemoveArticleProcessor" next="REMOVE_ARTICLE.CoreMessageDistributeTasklet">
+			<batch:tasklet ref="removeArticleProcessorTasklet"/>
+		</batch:step>
+		<batch:step id="REMOVE_ARTICLE.CoreMessageDistributeTasklet">
+			<batch:tasklet ref="coreMessageDistributeTasklet" />
+		</batch:step>
+		
+		<!-- ASSIGN -->
+		<batch:step id="AssignProcessor" next="ASSIGN.ContentProvider">
+			<batch:tasklet ref="assignProcessorTasklet"/>
+		</batch:step>
+		<batch:step id="ASSIGN.ContentProvider" next="ASSIGN.CoreMessageDistribute">
+			<batch:tasklet ref="contentProviderTasklet" />
+		</batch:step>
+		<batch:step id="ASSIGN.CoreMessageDistribute">
+			<batch:tasklet ref="coreMessageDistributeTasklet" />
+		</batch:step>
+
+		<!-- ASSIGN EXTRA -->
+		<batch:step id="AssignExtraProcessor" next="ASSIGN_EXTRA.ContentProvider">
+			<batch:tasklet ref="assignProcessorTasklet"/>
+		</batch:step>
+		<batch:step id="ASSIGN_EXTRA.ContentProvider" next="ASSIGN_EXTRA.CoreMessageDistribute">
+			<batch:tasklet ref="contentProviderTasklet" />
+		</batch:step>
+		<batch:step id="ASSIGN_EXTRA.CoreMessageDistribute">
+			<batch:tasklet ref="coreMessageDistributeTasklet" />
+		</batch:step>
+		
+		<!-- DELETE -->
+		<batch:step id="DeleteProcessor" next="DELETE.CoreMessageDistribute">
+			<batch:tasklet ref="deleteProcessorTasklet" />
+		</batch:step>
+		<batch:step id="DELETE.CoreMessageDistribute">
+			<batch:tasklet ref="coreMessageDistributeTasklet" />
+		</batch:step>		
+
+		<!-- MASTER_ARTICLE -->
+		<batch:step id="MasterArticleProcessor" next="MASTER_ARTICLE.CreateAssignBatch">
+			<batch:tasklet ref="masterArticleProcessorTasklet"/>
+		</batch:step>
+		<batch:step id="MASTER_ARTICLE.CreateAssignBatch">
+			<batch:tasklet ref="createAssignBatchTasklet"/>
+		</batch:step>
+		
+		<!-- Unknown batch type -->
+		<batch:step id="UNKNOWN.ProcessorJobExit">
+			<batch:tasklet ref="processorJobExitTasklet" />
+		</batch:step>
+	</batch:job>
+	
+</beans>

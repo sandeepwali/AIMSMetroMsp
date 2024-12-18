@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+						http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	
+	<job id="outboundAimsJob" job-repository="outboundAimsJobRepository" xmlns="http://www.springframework.org/schema/batch">
+		<listeners>
+			<listener ref="outboundAimsJobListener"/>
+		</listeners>
+		
+		<decision id="OUTBOUND.AIMS.LaunchingDecider" decider="outboundAimsLaunchingDecider">
+			<next on="SENDING_IMAGE" to="OUTBOUND.AIMS.SendingImage"/>
+			<next on="SENDING_UNLINK" to="OUTBOUND.AIMS.SendingUnlink"/>
+		</decision>
+		
+		<step id="OUTBOUND.AIMS.SendingImage">
+			<tasklet ref="sendingImageToAimsTasklet" />
+		</step>
+		
+		<step id="OUTBOUND.AIMS.SendingUnlink">
+			<tasklet ref="sendingUnlinkToAimsTasklet" />
+		</step>
+	</job>
+
+</beans>

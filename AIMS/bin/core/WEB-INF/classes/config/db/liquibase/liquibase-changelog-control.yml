@@ -1,0 +1,21 @@
+databaseChangeLog:
+- property:
+    name: changeLogVersion
+    value: 4.7.3.RELEASE
+- property:
+    name: dbmsType
+    value: postgresql
+    dbms: postgresql
+- property:
+    name: dbmsType
+    value: sqlserver
+    dbms: mssql
+- changeSet:
+    id: ${changeLogVersion}
+    author: Solu-M
+    runAlways: true
+    comment: Liquibase ChangeLog Control
+    changes:
+    - delete:
+        tableName: databasechangelog
+        where: id<>'${changeLogVersion}' AND filename LIKE '%liquibase-changelog-control.yml'

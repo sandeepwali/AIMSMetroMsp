@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>딩벳_이미지폰트</title>
+		<meta name="viewport" content="width=device-width; initial-scale=1.0">
+		<link rel="stylesheet" type="text/css" href="../css/cis.css" />
+		<style>
+			body{ background:#fff; }
+			ul { margin: 0; padding: 0; list-style: none; overflow: hidden; }		
+			li { font:45px/50px 'icon',sans-serif; float: left; width:50px; height:50px; border:1px solid #333; text-align: center; }
+			.cc{ font:normal 14px 'NanumGothic',Gulim; }
+			.dd{ font:bold 14px 'NanumGothic',Gulim; }
+		</style>
+	</head>
+<body>
+	<p class="cc">나눔고딕</p>
+	<p class="dd">나눔고딕</p>
+	<ul id="ul1">
+	</ul>
+	<hr/>
+	<ul id="ul2">
+		
+	</ul>
+	<script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+	<script>
+		var $ul1 = $("#ul1");
+		var $ul2 = $("#ul2");
+		for(var i = 8447 ; i < 11099; i++) {
+			$("<li>").text(String.fromCharCode(i)).appendTo($ul1);			
+		}				
+		for(var i = 61439 ; i < 62855; i++) {
+			$("<li>").text(String.fromCharCode(i)).appendTo($ul2);
+		}
+	</script>
+</body>
+</html>
+

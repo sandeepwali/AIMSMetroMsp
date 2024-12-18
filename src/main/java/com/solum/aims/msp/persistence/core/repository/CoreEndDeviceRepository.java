@@ -1,0 +1,33 @@
+package com.solum.aims.msp.persistence.core.repository;
+
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import com.solum.aims.msp.persistence.core.entity.CoreEndDevice;
+
+@Repository
+public interface CoreEndDeviceRepository extends JpaRepository<CoreEndDevice, Long> {
+
+//
+	@Query(nativeQuery = true, value = "select e.code as labelId from enddevice e where e.state = 'TIMEOUT' and e.station_id = ?1 and e.current_page = 1")
+	List<String> findErrorLabelByStationId(Long stationId);
+
+	@Query(nativeQuery = true, value = "select e.code as labelId from enddevice e where e.state = 'TIMEOUT' and e.station_id = ?1")
+	List<String> findErrorLabeInfolByStationId(Long stationId);
+
+//
+	@Query(nativeQuery = true, value = "select count(e.code) from enddevice e where e.state = 'TIMEOUT' and e.station_id = ?1 and e.current_page = 1 ")
+	int getErrorLabelListForCount(long id);
+
+	@Query(nativeQuery = true, value = "select count(e.code) from enddevice e where e.state = 'TIMEOUT' and e.station_id = ?1 ")
+	int getErrorLabelListInfoForCount(long id);
+
+	@Query(nativeQuery = true, value = "select t1.type, t1.total, t2.year8more, t3.year7, t4.year6, t5.year5, t6.year5less, t7.unknown from (select type, count(e.type) as total from enddevice e where e.station_id = ?1 group by e.type) t1 left outer join(select tc.type, count(tc.type) as year8more from (select type, code, ((cast(EXTRACT(YEAR FROM now()) as INT)) - cast(SUBSTRING(code ,1,2) AS INT) - 2000) as year from enddevice e where e.station_id = ?1 and char_length(e.code) in(14, 18) and left(code, 1) ~ E'[0-9]' group by e.type, e.code) tc where tc.year >= 8 group by tc.type) t2 on t1.type = t2.type left outer join(select tc.type, count(tc.type) as year7 from(select type, code, ((cast(EXTRACT(YEAR FROM now()) as INT)) - cast(SUBSTRING(code ,1,2) AS INT) - 2000) as year from enddevice e where e.station_id = ?1 and char_length(e.code) in(14, 18) and left(code, 1) ~ E'[0-9]' group by e.type, e.code) tc where tc.year = 7 group by tc.type) t3 on t1.type = t3.type left outer join(select tc.type, count(tc.type) as year6 from (select type, code, ((cast(EXTRACT(YEAR FROM now()) as INT)) - cast(SUBSTRING(code ,1,2) AS INT) - 2000) as year from enddevice e where e.station_id = ?1 and char_length(e.code) in(14, 18) and left(code, 1) ~ E'[0-9]' group by e.type, e.code) tc where tc.year = 6 group by tc.type) t4 on t1.type = t4.type left outer join(select tc.type, count(tc.type) as year5 from (select type, code, ((cast(EXTRACT(YEAR FROM now()) as INT)) - cast(SUBSTRING(code ,1,2) AS INT) - 2000) as year from enddevice e where e.station_id = ?1 and char_length(e.code) in(14, 18) and left(code, 1) ~ E'[0-9]' group by e.type, e.code) tc where tc.year = 5 group by tc.type) t5 on t1.type = t5.type left outer join(select tc.type, count(tc.type) as year5less from (select type, code, ((cast(EXTRACT(YEAR FROM now()) as INT)) - cast(SUBSTRING(code ,1,2) AS INT) - 2000) as year from enddevice e where e.station_id = ?1 and char_length(e.code) in(14, 18) and left(code, 1) ~ E'[0-9]' group by e.type, e.code) tc where tc.year < 5 group by tc.type) t6 on t1.type = t6.type left outer join(select tc.type, count(tc.type) as unknown from (select type, code, ((cast(EXTRACT(YEAR FROM now()) as INT)) - cast(SUBSTRING(code ,1,2) AS INT) - 2000) as year from enddevice e where e.station_id = ?1 and (char_length(e.code) not in(14, 18) or left(code, 1) ~ E'[a-zA-Z]') group by e.type, e.code) tc group by tc.type) t7 on t1.type = t7.type group by t1.type, t1.total, t2.year8more, t3.year7, t4.year6, t5.year5, t6.year5less, t7.unknown",
+			countQuery = "select count(a.*) from (select t1.type, t1.total, t2.year8more, t3.year7, t4.year6, t5.year5, t6.year5less, t7.unknown from (select type, count(e.type) as total from enddevice e where e.station_id = ?1 group by e.type) t1 left outer join(select tc.type, count(tc.type) as year8more from (select type, code, ((cast(EXTRACT(YEAR FROM now()) as INT)) - cast(SUBSTRING(code ,1,2) AS INT) - 2000) as year from enddevice e where e.station_id = ?1 and char_length(e.code) in(14, 18) and left(code, 1) ~ E'[0-9]' group by e.type, e.code) tc where tc.year >= 8 group by tc.type) t2 on t1.type = t2.type left outer join(select tc.type, count(tc.type) as year7 from(select type, code, ((cast(EXTRACT(YEAR FROM now()) as INT)) - cast(SUBSTRING(code ,1,2) AS INT) - 2000) as year from enddevice e where e.station_id = ?1 and char_length(e.code) in(14, 18) and left(code, 1) ~ E'[0-9]' group by e.type, e.code) tc where tc.year = 7 group by tc.type) t3 on t1.type = t3.type left outer join(select tc.type, count(tc.type) as year6 from (select type, code, ((cast(EXTRACT(YEAR FROM now()) as INT)) - cast(SUBSTRING(code ,1,2) AS INT) - 2000) as year from enddevice e where e.station_id = ?1 and char_length(e.code) in(14, 18) and left(code, 1) ~ E'[0-9]' group by e.type, e.code) tc where tc.year = 6 group by tc.type) t4 on t1.type = t4.type left outer join(select tc.type, count(tc.type) as year5 from (select type, code, ((cast(EXTRACT(YEAR FROM now()) as INT)) - cast(SUBSTRING(code ,1,2) AS INT) - 2000) as year from enddevice e where e.station_id = ?1 and char_length(e.code) in(14, 18) and left(code, 1) ~ E'[0-9]' group by e.type, e.code) tc where tc.year = 5 group by tc.type) t5 on t1.type = t5.type left outer join(select tc.type, count(tc.type) as year5less from (select type, code, ((cast(EXTRACT(YEAR FROM now()) as INT)) - cast(SUBSTRING(code ,1,2) AS INT) - 2000) as year from enddevice e where e.station_id = ?1 and char_length(e.code) in(14, 18) and left(code, 1) ~ E'[0-9]' group by e.type, e.code) tc where tc.year < 5 group by tc.type) t6 on t1.type = t6.type left outer join(select tc.type, count(tc.type) as unknown from (select type, code, ((cast(EXTRACT(YEAR FROM now()) as INT)) - cast(SUBSTRING(code ,1,2) AS INT) - 2000) as year from enddevice e where e.station_id = ?1 and (char_length(e.code) not in(14, 18) or left(code, 1) ~ E'[a-zA-Z]') group by e.type, e.code) tc group by tc.type) t7 on t1.type = t7.type group by t1.type, t1.total, t2.year8more, t3.year7, t4.year6, t5.year5, t6.year5less, t7.unknown)a")
+	Page<Object[]> getProductInfoList(Long stationId, Pageable pageable);
+}

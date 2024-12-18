@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog classpath:/db/changelog/dbchangelog-3.5.xsd">
+
+	<changeSet author="hs.sihn" id="4.7.0" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql, mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<createIndex tableName="aims_portal_batch" indexName="idx_for_overview">
+			<column name="created"/>
+			<column name="station_code"/>
+			<column name="type"/>
+			<column name="status"/>
+			<column name="message_provider"/>
+		</createIndex>
+		<createIndex tableName="aims_portal_batch" indexName="idx_status_type_server_id">
+			<column name="status"/>
+			<column name="type"/>
+			<column name="server_id"/>
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="hs.sihn" id="4.7.0-1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql, mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<createSequence sequenceName="revinfo_seq"
+						incrementBy="50"
+						minValue="1"
+						maxValue="9223372036854775807"
+						startValue="1"
+						cacheSize="1"/>
+	</changeSet>
+
+	<changeSet author="hs.sihn" id="4.7.0-2" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql, mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>
+			update template_type
+			set template_size = case when template_size = '1.6" (200x200)' then '1.54"/1.6" (200x200)' else
+				case when template_size = '2.2" (296x160)' then '2.15"/2.2" (296x160)' else
+					case when template_size = '2.6" (360x184)' then '2.6"/2.66" (360x184)' else
+						'5.79"/5.85" (792x272)'
+						end
+					end
+				end
+			where template_size in ('1.6" (200x200)', '2.2" (296x160)', '2.6" (360x184)','5.85" (792x272)')
+		</sql>
+		<sql>
+			update template_area
+			set template_size = case when template_size = '1.6" (200x200)' then '1.54"/1.6" (200x200)' else
+				case when template_size = '2.2" (296x160)' then '2.15"/2.2" (296x160)' else
+					case when template_size = '2.6" (360x184)' then '2.6"/2.66" (360x184)' else
+						'5.79"/5.85" (792x272)'
+						end
+					end
+				end
+			where template_size in ('1.6" (200x200)', '2.2" (296x160)', '2.6" (360x184)','5.85" (792x272)')
+		</sql>
+		<sql>
+			update template_station
+			set template_size = case when template_size = '1.6" (200x200)' then '1.54"/1.6" (200x200)' else
+				case when template_size = '2.2" (296x160)' then '2.15"/2.2" (296x160)' else
+					case when template_size = '2.6" (360x184)' then '2.6"/2.66" (360x184)' else
+						'5.79"/5.85" (792x272)'
+						end
+					end
+				end
+			where template_size in ('1.6" (200x200)', '2.2" (296x160)', '2.6" (360x184)','5.85" (792x272)')
+		</sql>
+	</changeSet>
+	<!--AIMS CMS related-->
+	<changeSet author="sti" id="4.7.0-3"
+			   logicalFilePath="classpath:/db/changelog/db.changelog-master.xml"
+			   dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>INSERT INTO aims_portal_property (name, properties)
+			 values('AIMS_CMS_ENABLE', 'false')
+		</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties)
+			 values('AIMS_CMS_PORT','' )
+		</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties)
+			 values('AIMS_CMS_IP','' )
+		</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties)
+			 values('AIMS_CMS_SCHEME', '')
+		</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties)
+			 values('AIMS_CMS_SUMMARY_URL', '' )
+		</sql>
+
+		<sql>INSERT INTO aims_portal_property (name, properties)
+			 values('AIMS_SYSTEM_INFO_URL', '')
+		</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties)
+			 values('AIMS_REQUEST_STATUS','' )
+		</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties)
+			 values('AIMS_SINGLE_STATION_CODE','' )
+		</sql>
+	</changeSet>
+	
+	<changeSet author="sti" id="4.7.0-4"
+	logicalFilePath="classpath:/db/changelog/db.changelog-master.xml"
+	dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<addColumn tableName="article">
+		<column name="reserved" type="json" />
+		</addColumn>
+		<addColumn tableName="standard_data_map">
+		<column name="reserved" type="json" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="sti" id="4.7.0-5"
+	logicalFilePath="classpath:/db/changelog/db.changelog-master.xml"
+	dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<addColumn tableName="article">
+		<column name="reserved" type="NVARCHAR(MAX)" />
+		</addColumn>
+		<addColumn tableName="standard_data_map">
+		<column name="reserved" type="NVARCHAR(MAX)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="sti" id="4.7.0-6"
+			   logicalFilePath="classpath:/db/changelog/db.changelog-master.xml"
+			   dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>
+			UPDATE access_level
+			SET access_menu = '2100,2600,3100,3200,4100,5100,5200,5300,5400,6100,6600,6200,7100,7200,8100,8200,8300,9100,9200,9300,9500,9400,10100,10300,10200,21000,22000,22100,23000,23100,23200,24000,24100,25000,25100,8400,5500,11000,11100,11200',
+				access_action = '2100,2101,2102,2103,3100,3101,3102,3103,3104,3200,4100,4101,4102,4103,5100,5200,5300,5400,6100,6200,7100,7101,7102,7103,7200,7201,8100,8101,8102,8200,8300,9100,9200,9300,9400,9500,10100,10200,10300,21000,22000,22100,22001,22002,22003,22004,22005,22006,22007,23000,23100,23101,23102,23200,23201,23202,23203,24000,24100,24001,24002,24003,24004,25000,25100,25001,25002,6600,2601,8400,8401'
+			WHERE id = 0
+		</sql>
+		<sql>
+			UPDATE access_level
+			SET access_menu = '2100,3100,3200,4100,5100,5400,6100,6200,7100,7200,8100,8200,8300,10100,10300,10200,9100,5200,5300,2600,6600,21000,22000,22100,23000,23100,23200,24000,24100,25000,25100,8400,5500,11000,11100,11200',
+				access_action = '2100,2101,2102,2103,3100,3101,3102,3103,3104,3200,4100,4101,4102,4103,5100,5400,6100,6200,7100,7101,7102,7103,7200,7201,8100,8101,8102,8200,8300,10100,10200,10300,9100,2601,21000,22000,22100,22001,22002,22003,22004,22005,22006,22007,23000,23100,23101,23102,23200,23201,23202,23203,24000,24100,24001,24002,24003,24004,25000,25100,25001,25002,8400,8401'
+			WHERE id = 1
+		</sql>
+	</changeSet>
+
+</databaseChangeLog>

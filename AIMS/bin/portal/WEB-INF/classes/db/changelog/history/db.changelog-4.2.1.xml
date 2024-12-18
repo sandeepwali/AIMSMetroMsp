@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+	<changeSet author="dh.yeo" id="4.2.1-1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<addColumn tableName="file_result">
+	    	<column name="completed" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+	    </addColumn>
+	    <sql>
+	    	UPDATE file_result SET completed=created;
+	    </sql>
+	</changeSet>
+	
+	<changeSet author="dg.lim" id="4.2.1-2" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>
+	    	UPDATE access_level 
+			SET access_menu = '1000,2000,2100,3000,3100,3200,4000,4100,5000,5100,5200,5300,6000,6100,6200,6300,7000,7100,7200,8000,8100,8200,8300,8400,9000,9100,9200,9300,9400,10000,10100,10200,11000,11100,11200',
+				access_action = '2100,2101,2102,2103,3100,3101,3102,3103,3104,3200,4100,4101,4102,4103,5100,5101,5200,5300,6100,6200,7100,7101,7102,7103,7200,7201,8100,8101,8102,8200,8300,8400,8401,9100,9101,9102,9200,9201,9300,9400,10100,10200,10201,11100,11200'
+			WHERE id = 0
+	    </sql>
+	</changeSet>
+	
+</databaseChangeLog>

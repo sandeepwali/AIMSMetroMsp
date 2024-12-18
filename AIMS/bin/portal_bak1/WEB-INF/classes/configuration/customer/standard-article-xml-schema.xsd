@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xsd:element name="ARTICLES">
+  	 <xsd:complexType>
+	    <xsd:sequence>
+			  <xsd:element minOccurs="1" maxOccurs="unbounded" name="ARTICLE">
+			    <xsd:complexType>
+			      <xsd:sequence>
+					  <xsd:element name="ID" minOccurs="1" type="xsd:string"/>
+					  <xsd:element name="STATION" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+					  <xsd:element name="NAME" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+					  <xsd:element name="NFC" minOccurs="0" maxOccurs="1" type="xsd:string"/>
+					  <xsd:element name="DATA" minOccurs="1">
+					    <xsd:complexType>
+					      <xsd:sequence>
+							  <xsd:element  minOccurs="1" maxOccurs="100" name="FIELD">
+							    <xsd:complexType>
+							      <xsd:simpleContent>
+							        <xsd:extension base="xsd:string">
+							          <xsd:attribute name="name" use="required"/>
+							        </xsd:extension>
+							      </xsd:simpleContent>
+							    </xsd:complexType>
+							  </xsd:element>
+					      </xsd:sequence>
+					    </xsd:complexType>
+					  </xsd:element>
+			      </xsd:sequence>
+			    </xsd:complexType>
+			  </xsd:element>
+	      </xsd:sequence>
+	    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

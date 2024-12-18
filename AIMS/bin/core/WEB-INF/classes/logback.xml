@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="60 seconds" >
+	<property scope="local" name="aimsRootPath" value="${aims.root.path}" />
+
+	<conversionRule conversionWord="ansihighlight" converterClass="com.solum.aims.core.log.logback.AnsiHighlightingCompositeConverter" />
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+		<if condition='property("spring.profiles.active").equalsIgnoreCase("dev")'>
+			<then>
+       			<if condition='property("sleuth.enabled").equalsIgnoreCase("true")'>
+       				<then>
+       					<pattern>%boldMagenta(%d{yyyy-MM-dd HH:mm:ss.SSS}) %ansihighlight(%-5p) %gray([core,%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}]) %cyan([%t]) %boldCyan(%logger{0}) - %ansihighlight(%m) %n</pattern>
+       				</then>
+       				<else>
+       					<pattern>%boldMagenta(%d{yyyy-MM-dd HH:mm:ss.SSS}) %ansihighlight(%-5p) %cyan([%t]) %boldCyan(%logger{0}) - %ansihighlight(%m) %n</pattern>
+       				</else>
+       			</if>
+			</then>
+			<else>
+				<if condition='property("sleuth.enabled").equalsIgnoreCase("true")'>
+					<then>
+						<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [core,%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}][%t] %logger{0} - %m%n</pattern>
+					</then>
+					<else>
+						<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] %logger{0} - %m%n</pattern>
+					</else>
+				</if>
+			</else>
+		</if>
+		<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${aimsRootPath}/log/core.log</file>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+	      <fileNamePattern>${aimsRootPath}/log/core/core.%d.%i.log.zip</fileNamePattern>
+	      <maxHistory>30</maxHistory>
+	      <maxFileSize>100MB</maxFileSize>
+	      <totalSizeCap>3GB</totalSizeCap>
+	    </rollingPolicy>
+
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%t] %logger{0} - %m%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="ASYNC_CONSOLE" class="ch.qos.logback.classic.AsyncAppender">
+		<appender-ref ref="CONSOLE" />
+	</appender>
+
+	<appender name="ASYNC_ROLLING_FILE" class="ch.qos.logback.classic.AsyncAppender">
+		<queueSize>512</queueSize>
+<!--		<discardingThreshold>0</discardingThreshold> --> <!-- //TODO For Debugging -->
+		<appender-ref ref="ROLLING_FILE" />
+	</appender>
+
+<!--    <logger name="com.solum.aims.core.solum.infrastructure.batch.job.linker.inbound.InboundLinkerJobMessageEndPointChain" level="DEBUG" /> --> <!-- //TODO For Debugging -->
+<!--    <logger name="com.solum.aims.core.solum.service.impl.SGatewayServiceImpl" level="DEBUG" /> --> <!-- //TODO For Debugging -->
+
+	<root level="INFO">
+		<appender-ref ref="ASYNC_CONSOLE" />
+		<appender-ref ref="ASYNC_ROLLING_FILE" />
+	</root>
+</configuration>

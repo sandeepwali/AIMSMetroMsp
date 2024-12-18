@@ -1,0 +1,93 @@
+plugins {
+	//id 'org.springframework.boot' version '2.6.9'
+	id 'org.springframework.boot' version '3.0.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	//id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id 'war'
+	id 'org.ajoberstar.grgit' version '4.1.1'
+}
+
+group = 'com.solum.aims'
+version = aimsMspVersion
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+bootWar {
+	enabled=true
+	archiveBaseName.set('aims-metro-msp-service')
+	archiveVersion.set("${project.version}")
+}
+
+bootWar.doFirst {
+	File propertiesFile = file("build//resources/main/application.properties")
+	propertiesFile.append("\n\n###########\n# Version #\n###########\naims.msp.version=${project.version}")
+	propertiesFile.append('\naims.msp.revision=' + grgit.head().abbreviatedId + "\n")
+}
+
+
+repositories {
+	mavenCentral()
+	maven {
+		url "$aimsPrivateMavenRepositoryUrl"
+		allowInsecureProtocol = true
+		credentials {
+			username = project.repositoryUserName
+			password = project.repositoryPassword
+		}
+	}
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-batch'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-integration'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.integration:spring-integration-file'
+	//implementation 'org.hsqldb:hsqldb'
+	implementation 'org.hsqldb:hsqldb:2.5.2'
+	
+	implementation 'com.opencsv:opencsv:5.2'
+	implementation 'org.apache.xmlgraphics:batik-codec:1.13'
+	
+	implementation 'com.solum.aims.core:aims-core-entity:4.7.0.RELEASE'
+	implementation 'net.sf.barcode4j:barcode4j:2.1'
+	implementation 'org.springframework.data:spring-data-envers'
+	
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.liquibase:liquibase-core'
+
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'org.postgresql:postgresql'
+	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:2.1.2'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'org.springframework.batch:spring-batch-test'
+	testImplementation 'org.springframework.integration:spring-integration-test'
+
+//	implementation group: 'com.vladmihalcea', name: 'hibernate-types-52', version: '2.19.2'
+	implementation 'org.codehaus.jettison:jettison:1.4.0'
+	//Pdf
+	implementation('org.apache.pdfbox:pdfbox:2.0.24')
+	implementation group: 'io.hypersistence', name: 'hypersistence-utils-hibernate-60', version: '3.3.2'
+	//implementation 'org.hibernate.orm:hibernate-core: 6.1.7.Final'
+
+
+	
+
+
+}
+
+test {
+	useJUnitPlatform()
+}

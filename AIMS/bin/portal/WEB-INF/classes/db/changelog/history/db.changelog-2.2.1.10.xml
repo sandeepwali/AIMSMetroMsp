@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+	<changeSet author="Justyn (generated)" id="2.2.1.10.postgresql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<addColumn tableName="payment_license">
+			<column name="use_layout_designer" type="boolean" defaultValueBoolean="true" />
+		</addColumn>
+	</changeSet>
+	
+    <changeSet author="Justyn (generated)" id="2.2.1.10.mssql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <addColumn tableName="payment_license">
+			<column name="use_layout_designer" type="boolean"/>
+		</addColumn>
+		<update tableName="payment_license">
+			<column name="use_layout_designer" valueBoolean="true"/>
+		</update>
+	</changeSet>
+</databaseChangeLog>

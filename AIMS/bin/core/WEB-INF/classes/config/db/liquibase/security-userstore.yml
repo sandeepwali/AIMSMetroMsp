@@ -1,0 +1,63 @@
+databaseChangeLog:
+- changeSet:
+    id: 3.0.0.RELEASE
+    author: Solu-M
+    comment: Security UserStore Initialization
+    preConditions:
+    - onFail: CONTINUE
+    - changeLogPropertyDefined:
+        property: security.user-store.enabled
+        value: true
+    - not:
+        - tableExists:
+            tableName: users
+    changes:
+    - createTable:
+        tableName: users
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: username
+            type: VARCHAR(50)
+        - column:
+            constraints:
+              nullable: false
+            name: enabled
+            type: BOOLEAN
+        - column:
+            constraints:
+              nullable: false
+            name: password
+            type: VARCHAR(255)
+    - createTable:
+        tableName: authorities
+        columns:
+        - column:
+            constraints:
+              nullable: false
+            name: authority
+            type: VARCHAR(50)
+        - column:
+            constraints:
+              nullable: false
+            name: username
+            type: VARCHAR(50)
+    - addPrimaryKey:
+        columnNames: username
+        constraintName: users_pkey
+        tableName: users
+    - addPrimaryKey:
+        columnNames: username
+        constraintName: authorities_pkey
+        tableName: authorities
+    - addForeignKeyConstraint:
+        baseColumnNames: username
+        baseTableName: authorities
+        constraintName: fk_baahryprcge2u172egph1qwur
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: username
+        referencedTableName: users

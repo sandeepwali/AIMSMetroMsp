@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="Songju.Ahn" id="3.3.0" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <addColumn tableName="dashboard_user">
+			<column name="last_modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE" defaultValueDate="now()"/>
+		</addColumn>
+	</changeSet>
+	
+	<changeSet author="Songju.Ahn" id="3.3.0" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <addColumn tableName="dashboard_user">
+			<column name="last_modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+		</addColumn>
+		<sql>
+    		UPDATE dashboard_user SET last_modified_date=getDate();
+    	</sql>
+	</changeSet>
+	
+	<changeSet author="Justyn.Lee" id="3.3.0.LedPattern" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <createTable tableName="led_pattern">
+	    	<column name="id" type="BIGINT">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="name" type="varchar(255)"/>
+    		<column name="active_time" type="INT"/>
+    		<column name="in_active_time" type="INT"/>
+    		<column name="idle_time" type="INT"/>
+    		<column name="active_count" type="INT"/>
+	    </createTable>
+	    <addPrimaryKey constraintName="PK_ledPattern" columnNames="id" tableName="led_pattern"/>
+	    
+	    <insert tableName="led_pattern">
+	    	<column name="id" valueNumeric="0"/>
+	    	<column name="name" value="DEFAULT"/>
+	    	<column name="active_time" valueNumeric="30"/>
+	    	<column name="in_active_time" valueNumeric="30"/>
+	    	<column name="idle_time" valueNumeric="1"/>
+	    	<column name="active_count" valueNumeric="5"/>
+	    </insert>
+	    <insert tableName="led_pattern">
+	    	<column name="id" valueNumeric="1"/>
+	    	<column name="name" value="PATTERN_1"/>
+	    	<column name="active_time" valueNumeric="30"/>
+	    	<column name="in_active_time" valueNumeric="30"/>
+	    	<column name="idle_time" valueNumeric="1"/>
+	    	<column name="active_count" valueNumeric="5"/>
+	    </insert>
+	    <insert tableName="led_pattern">
+	    	<column name="id" valueNumeric="2"/>
+	    	<column name="name" value="PATTERN_2"/>
+	    	<column name="active_time" valueNumeric="30"/>
+	    	<column name="in_active_time" valueNumeric="30"/>
+	    	<column name="idle_time" valueNumeric="1"/>
+	    	<column name="active_count" valueNumeric="5"/>
+	    </insert>
+	    <insert tableName="led_pattern">
+	    	<column name="id" valueNumeric="3"/>
+	    	<column name="name" value="PATTERN_3"/>
+	    	<column name="active_time" valueNumeric="30"/>
+	    	<column name="in_active_time" valueNumeric="30"/>
+	    	<column name="idle_time" valueNumeric="1"/>
+	    	<column name="active_count" valueNumeric="5"/>
+	    </insert>
+	    <insert tableName="led_pattern">
+	    	<column name="id" valueNumeric="4"/>
+	    	<column name="name" value="PATTERN_4"/>
+	    	<column name="active_time" valueNumeric="30"/>
+	    	<column name="in_active_time" valueNumeric="30"/>
+	    	<column name="idle_time" valueNumeric="1"/>
+	    	<column name="active_count" valueNumeric="5"/>
+	    </insert>
+	    <insert tableName="led_pattern">
+	    	<column name="id" valueNumeric="5"/>
+	    	<column name="name" value="PATTERN_5"/>
+	    	<column name="active_time" valueNumeric="30"/>
+	    	<column name="in_active_time" valueNumeric="30"/>
+	    	<column name="idle_time" valueNumeric="1"/>
+	    	<column name="active_count" valueNumeric="5"/>
+	    </insert>
+	</changeSet>
+</databaseChangeLog>

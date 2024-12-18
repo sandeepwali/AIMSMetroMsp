@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+      <!-- XML Schema Generated from XML Document on Wed Nov 11 2015 13:24:37 GMT+0900 (대한민국 표준시) -->
+      <!-- with XmlGrid.net Free Online Service http://xmlgrid.net -->
+      <xs:element name="AIMSMessages">
+            <xs:complexType>
+                  <xs:sequence>
+                        <xs:element name="AIMSMessage" maxOccurs="unbounded">
+                              <xs:complexType>
+                                    <xs:sequence>
+                                          <xs:element name="stationId" type="xs:int"></xs:element>
+                                          <xs:element name="EndDevice">
+                                                <xs:complexType>
+                                                      <xs:sequence>
+                                                            <xs:element name="labelCode" type="xs:string"></xs:element>
+                                                            <xs:element name="ePaperTagType" type="xs:string"></xs:element>
+                                                      </xs:sequence>
+                                                      <xs:attribute name="endDeviceType" type="xs:string"></xs:attribute>
+                                                </xs:complexType>
+                                          </xs:element>
+                                          <xs:element name="Contents">
+                                                <xs:complexType>
+                                                      <xs:sequence>
+                                                            <xs:element name="fileName" type="xs:string"></xs:element>
+                                                            <xs:element name="pageIndex" type="xs:int"></xs:element>
+                                                      </xs:sequence>
+                                                      <xs:attribute name="contentsType" type="xs:string"></xs:attribute>
+                                                </xs:complexType>
+                                          </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="id" type="xs:int"></xs:attribute>
+                                    <xs:attribute name="messageType" type="xs:string"></xs:attribute>
+                                    <xs:attribute name="commandType" type="xs:string"></xs:attribute>
+                              </xs:complexType>
+                        </xs:element>
+                  </xs:sequence>
+            </xs:complexType>
+      </xs:element>
+</xs:schema>

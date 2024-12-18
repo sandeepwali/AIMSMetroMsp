@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+	<changeSet author="hs.sihn" id="4.3.1-1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <createTable tableName="app_settings">
+	    	<column name="id" type="BIGINT">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="area_id" type="BIGINT">
+				<constraints nullable="true"/>
+			</column>
+    		<column name="station_code" type="VARCHAR(255)">
+				<constraints nullable="true"/>
+			</column>
+    		<column name="category" type="VARCHAR(255)">
+				<constraints nullable="false"/>
+			</column>
+    		<column name="data" type="VARCHAR(4000)">
+				<constraints nullable="true"/>
+			</column>
+    		<column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE">
+				<constraints nullable="false"/>
+			</column>
+    		<column name="last_modified" type="TIMESTAMP(6) WITHOUT TIME ZONE">
+				<constraints nullable="false"/>
+			</column>
+	    </createTable>
+	    <addPrimaryKey constraintName="PK_app_settings" columnNames="id" tableName="app_settings"/>
+		<addUniqueConstraint columnNames="area_id, station_code, category" constraintName="idx_app_settings_area_id" tableName="app_settings"/>
+		<createSequence sequenceName="app_settings_seq" incrementBy="1" minValue="1" maxValue="9223372036854775807" startValue="1" cacheSize="1"/>
+		
+		<dropIndex indexName="idx_favoriteBtn_station_code" tableName="favorite_button"/>
+		<dropNotNullConstraint columnDataType="varchar(255)" columnName="station_code" tableName="favorite_button"/>
+		<addColumn tableName="favorite_button">
+			<column name="area_id" type="int8"/>
+		</addColumn>
+		
+		<dropIndex indexName="idx_customer_info_station_code" tableName="customer_info"/>
+	    <dropNotNullConstraint columnDataType="varchar(255)" columnName="station_code" tableName="customer_info"/>  
+		<addColumn tableName="customer_info">
+			<column name="area_id" type="int8"/>
+		</addColumn>
+	</changeSet>
+	
+	<changeSet author="hs.sihn" id="4.3.1-2.postgresql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	   <sql>
+			insert into app_settings(id, area_id, station_code, category, data, created, last_modified) values(nextval('app_settings_seq') , null , null, 'Product ID Extraction', '{"productIdExtraction":[{"enable":"false","prefix":"","validDigits":"","paddingValue":"","totalDigits":""}]}', now(), now());
+			insert into app_settings(id, area_id, station_code, category, data, created, last_modified) values(nextval('app_settings_seq') , null , null, 'Editable Product Info', '{"editableProductInfo": []}', now(), now());
+			insert into app_settings(id, area_id, station_code, category, data, created, last_modified) values(nextval('app_settings_seq') , null , null, 'LiDL Function', '{"SSCEnabled":false}', now(), now());
+			insert into app_settings(id, area_id, station_code, category, data, created, last_modified) values(nextval('app_settings_seq') , null , null, 'LiDL Origin Translate', '{"en":"See pack/label","de":"Siehe Packung/Etikett","ko":"별도 표기"}', now(), now());
+			insert into app_settings(id, area_id, station_code, category, data, created, last_modified) values(nextval('app_settings_seq') , null , null, 'Activate Features', '{"batchMode":"false","assignSuccess":"false"}', now(), now());
+			insert into app_settings(id, area_id, station_code, category, data, created, last_modified) values(nextval('app_settings_seq') , null , null, 'Add Info Config', '{"addInfoConfigList": [{"id": 1,"name": "Arrow","enable": false},{"id": 2,"name": "","enable": false},{"id": 3,"name": "","enable": false},{"id": 4,"name": "","enable": false},{"id": 5,"name": "","enable": false}]}', now(), now());
+	   </sql>
+	</changeSet>
+	
+	<changeSet author="hs.sihn" id="4.3.1-2.mssql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	   <sql>
+			insert into app_settings(id, area_id, station_code, category, data, created, last_modified) values(next value for app_settings_seq , null , null, 'Product ID Extraction', '{"productIdExtraction":[{"enable":"false","prefix":"","validDigits":"","paddingValue":"","totalDigits":""}]}', getDate(), getDate());
+			insert into app_settings(id, area_id, station_code, category, data, created, last_modified) values(next value for app_settings_seq , null , null, 'Editable Product Info', '{"editableProductInfo": []}', getDate(), getDate());
+			insert into app_settings(id, area_id, station_code, category, data, created, last_modified) values(next value for app_settings_seq , null , null, 'LiDL Function', '{"SSCEnabled":false}', getDate(), getDate());
+			insert into app_settings(id, area_id, station_code, category, data, created, last_modified) values(next value for app_settings_seq , null , null, 'LiDL Origin Translate', '{"en":"See pack/label","de":"Siehe Packung/Etikett","ko":"별도 표기"}', getDate(), getDate());
+			insert into app_settings(id, area_id, station_code, category, data, created, last_modified) values(next value for app_settings_seq , null , null, 'Activate Features', '{"batchMode":"false","assignSuccess":"false"}', getDate(), getDate());
+			insert into app_settings(id, area_id, station_code, category, data, created, last_modified) values(next value for app_settings_seq , null , null, 'Add Info Config', '{"addInfoConfigList": [{"id": 1,"name": "Arrow","enable": false},{"id": 2,"name": "","enable": false},{"id": 3,"name": "","enable": false},{"id": 4,"name": "","enable": false},{"id": 5,"name": "","enable": false}]}', getDate(), getDate());
+	   </sql>
+	</changeSet>
+	
+	<changeSet author="Justyn.Lee" id="4.3.1-3" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<createIndex tableName="end_device_articles" indexName="idx_enddevice_articles_station_and_articleId">
+			<column name="station_code"/>
+			<column name="article_id"/>
+		</createIndex>
+	</changeSet>
+	
+	<changeSet author="hs.sihn" id="4.3.1-4.postgresql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>
+			with base as (
+			select store_id, max(summary_date) summary_date from central_summary 
+			group by store_id
+			)
+			delete from central_summary as cs 
+			where not exists (
+								select 1 from base 
+								where base.store_id = cs.store_id 
+								and base.summary_date = cs.summary_date 
+			);
+		</sql>	    
+	    <dropPrimaryKey constraintName="PK_central_summary" tableName="central_summary"/>
+	    <addPrimaryKey constraintName="PK_central_summary" columnNames="store_id" tableName="central_summary"/>
+	    <dropColumn tableName="central_summary" columnName="summary_date"/>
+	</changeSet>
+	
+	<changeSet author="hs.sihn" id="4.3.1-4.mssql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>
+			with base as (
+				select 
+					store_id, max(summary_date) summary_date 
+				from central_summary 
+				group by store_id
+			)
+			delete from central_summary
+			from central_summary cs
+			where not exists (select 1 from base 
+								where base.store_id = cs.store_id 
+								and base.summary_date = cs.summary_date
+			);
+		</sql>	    
+	    <dropPrimaryKey constraintName="PK_central_summary" tableName="central_summary"/>
+	    <addPrimaryKey constraintName="PK_central_summary" columnNames="store_id" tableName="central_summary"/>
+	    <dropColumn tableName="central_summary" columnName="summary_date"/>
+	</changeSet>
+		
+	<changeSet author="dh.yeo" id="4.3.1-5" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	     <createTable tableName="template_type">
+    		<column name="type_name" type="VARCHAR(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="template_size" type="VARCHAR(255)">
+				<constraints nullable="false"/>
+			</column>	
+			<column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="last_modified" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>		
+	    </createTable>	 
+	    <addPrimaryKey columnNames="type_name" constraintName="template_type_pk" tableName="template_type"/>
+	    <createTable tableName="template_area">
+    		<column name="type_name" type="VARCHAR(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="template_size" type="VARCHAR(255)">
+				<constraints nullable="false"/>
+			</column>	
+			<column name="area_key" type="VARCHAR(255)">
+				<constraints nullable="false"/>
+			</column>	
+			<column name="area_value" type="VARCHAR(255)">
+				<constraints nullable="false"/>
+			</column>	
+			<column name="template_name" type="VARCHAR(255)"/>
+			<column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="last_modified" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+	    </createTable>  
+	    <addPrimaryKey columnNames="type_name,template_size,area_key,area_value" constraintName="template_area_pk" tableName="template_area"/>
+	    <createTable tableName="template_station">
+    		<column name="station_code" type="VARCHAR(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="type_name" type="VARCHAR(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="template_size" type="VARCHAR(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="template_name" type="VARCHAR(255)"/>
+			<column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="last_modified" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+	    </createTable>  
+	    <addPrimaryKey columnNames="station_code,type_name,template_size" constraintName="template_statione_pk" tableName="template_station"/>
+	</changeSet>
+	
+	<changeSet author="Jiwon" id="4.3.1-6" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <addPrimaryKey columnNames="name,station_code,group_name" constraintName="template_group_map_pk" tableName="template_group_map"/>
+	</changeSet>
+	
+	<changeSet author="hs.sihn" id="4.3.1-7" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>
+			update app_settings
+			 set data = replace(data,'}',',"assignStart":"false","unassign":"false"}')
+			where category  = 'Activate Features'
+		</sql>
+	</changeSet>
+	
+	<changeSet author="dh.yeo" id="4.3.1-8" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>INSERT INTO aims_portal_property (name, properties) values('CHANGE_TEMPLATE_NAME_TO_TYPE', '0')</sql>
+	</changeSet>
+		
+	<changeSet author="hs.sihn" id="4.3.1-9">
+		<sql>
+			update app_settings
+				set data = replace(data,'[{"enable":"false",','"enable":"false",[{')
+			where category  = 'Product ID Extraction'
+		</sql>
+	</changeSet>	
+		
+</databaseChangeLog>

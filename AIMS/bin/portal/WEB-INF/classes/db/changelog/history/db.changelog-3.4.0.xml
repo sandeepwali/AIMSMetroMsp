@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="Songju.Ahn" id="3.4.0" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <createSequence sequenceName="mail_seq" incrementBy="1" minValue="1" maxValue="9223372036854775807" startValue="1" cacheSize="1"/>
+	    <createTable tableName="mail">
+	    	<column name="id" type="BIGINT">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="mail_address" type="varchar(255)">
+    			<constraints nullable="false"/>
+    		</column>
+	    </createTable>
+	    <addPrimaryKey constraintName="PK_Mail" columnNames="id" tableName="mail"/>
+	    
+	    <createTable tableName="report_config">
+	    	<column name="id" type="BIGINT">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="mail_host" type="varchar(255)"/>
+    		<column name="mail_port" type="varchar(255)"/>
+    		<column name="mail_username" type="varchar(255)"/>
+    		<column name="mail_pw" type="varchar(255)"/>
+    		<column name="mail_title" type="varchar(255)"/>
+    		<column name="mail_message" type="varchar(255)"/>
+    		<column name="mail_encoding" type="varchar(255)"/>
+    		<column name="mail_auth" type="varchar(255)"/>
+    		<column name="report_file_path" type="varchar(255)"/>
+    		<column name="report_hour" type="INT"/>
+    		<column name="report_use" type="boolean"/>
+	    </createTable>
+	    <addPrimaryKey constraintName="PK_reportConfig" columnNames="id" tableName="report_config"/>
+	    <insert tableName="report_config">
+	    	<column name="id" valueNumeric="0"/>
+	    	<column name="mail_host" value=""/>
+    		<column name="mail_port" value="25"/>
+    		<column name="mail_username" value=""/>
+    		<column name="mail_pw" value=""/>
+    		<column name="mail_title" value="ESL Reports from SoluM"/>
+    		<column name="mail_message" value="Find your attached reports"/>
+    		<column name="mail_encoding" value="UTF-8"/>
+    		<column name="mail_auth" value=""/>
+    		<column name="report_hour" valueNumeric="23"/>
+    		<column name="report_use" value="false"/>
+	    </insert>
+	</changeSet>
+	<changeSet author="Justyn.Lee" id="3.4.0-1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <addColumn tableName="aims_portal_batch">
+	    	<column name="number_of_items" type="INT" defaultValue="0"/>
+	    </addColumn>
+	    <sql>
+	    	UPDATE aims_portal_batch SET number_of_items=0;
+	    </sql>
+	</changeSet>
+	<changeSet author="Justyn.Lee" id="3.4.0-2" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	     <createTable tableName="aims_portal_property">
+	    	<column name="name" type="varchar(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="properties" type="varchar(1048576)"/>
+	    </createTable>
+	    <addPrimaryKey constraintName="PK_aimsPortalProperty" columnNames="name" tableName="aims_portal_property"/>
+	</changeSet>
+	
+	<changeSet author="Justyn.Lee" id="3.4.0-3.postgresql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<addColumn tableName="article">
+			<column name="custom_batch_id" type="varchar(255)"/>
+		</addColumn>
+		<sql>
+			update article a set custom_batch_id = (select custom_batch_id from aims_portal_batch where id=a.aims_portal_batch_id);
+		</sql>
+		
+		<dropIndex indexName="idx_fk_aims_portal_batch" tableName="article"/>
+		<dropForeignKeyConstraint baseTableName="article" constraintName="fk_o16t3wqpgd82kuatnt8sn9mlp"/>
+		<dropColumn tableName="article" columnName="aims_portal_batch_id"/>
+		
+		<addColumn tableName="template">
+			<column name="custom_batch_id" type="varchar(255)"/>
+		</addColumn>
+		<sql>
+			update template a set custom_batch_id = (select custom_batch_id from aims_portal_batch where id=a.aims_portal_batch_id);
+		</sql>
+		
+		<dropIndex indexName="idx_template_fk_aims_portal_batch" tableName="template"/>
+		<dropForeignKeyConstraint baseTableName="template" constraintName="fk_mdf05u9x1dqub05n61w7frdfv"/>
+		<dropColumn tableName="template" columnName="aims_portal_batch_id"/>
+
+	</changeSet>
+
+	<changeSet author="Justyn.Lee" id="3.4.0-3.mssql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<addColumn tableName="article">
+			<column name="custom_batch_id" type="varchar(255)"/>
+		</addColumn>
+		<sql>
+			update a set a.custom_batch_id = (select b.custom_batch_id from aims_portal_batch b with(nolock) where b.id=a.aims_portal_batch_id) from article a with(nolock);
+		</sql>
+		
+		<dropIndex indexName="idx_fk_aims_portal_batch" tableName="article"/>
+		<dropForeignKeyConstraint baseTableName="article" constraintName="FKpdct60kgexrhaf948vq0sunly"/>
+		<dropColumn tableName="article" columnName="aims_portal_batch_id"/>
+		
+		<addColumn tableName="template">
+			<column name="custom_batch_id" type="varchar(255)"/>
+		</addColumn>
+		<sql>
+			update t set t.custom_batch_id = (select b.custom_batch_id from aims_portal_batch b with(nolock) where b.id=t.aims_portal_batch_id) from template t with(nolock);
+		</sql>
+		
+		<dropIndex indexName="idx_template_fk_aims_portal_batch" tableName="template"/>
+		<dropForeignKeyConstraint baseTableName="template" constraintName="FKs19k8vsopi5taasgxwwli6o73"/>
+		<dropColumn tableName="template" columnName="aims_portal_batch_id"/>
+	</changeSet>
+	<changeSet author="Justyn.Lee" id="3.4.0-4.postgresql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<createTable tableName="revinfo">
+			<column name="rev" type="int4">
+				<constraints nullable="false"/>
+			</column>
+			<column name="revtstmp" type="int8"/>
+		</createTable>
+		<addPrimaryKey columnNames="rev" constraintName="revinfo_pkey" tableName="revinfo"/>
+        
+		<createTable tableName="article_aud">
+            <column name="article_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="station_code" type="VARCHAR(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="rev" type="int4">
+				<constraints nullable="false"/>
+			</column>
+			<column name="revtype" type="int2"/>
+            <column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="data" type="VARCHAR"/>
+            <column name="last_modified" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="name" type="VARCHAR(512)"/>
+            <column name="nfc_url" type="VARCHAR(255)"/>
+            <column name="custom_batch_id" type="varchar(255)"/>
+            <column name="reserved_one" type="VARCHAR(255)" />
+			<column name="reserved_two" type="VARCHAR(255)" />
+			<column name="reserved_three" type="VARCHAR(255)" />
+        </createTable>
+        <addPrimaryKey 
+        		columnNames="article_id, station_code, rev" 
+        		constraintName="article_aud_pkey" 
+        		tableName="article_aud"/>
+        <addForeignKeyConstraint 
+	        	baseColumnNames="rev" 
+	        	baseTableName="article_aud" 
+	        	constraintName="fk_rev_on_article_aud" 
+	        	deferrable="false" 
+	        	initiallyDeferred="false" 
+	        	onDelete="NO ACTION" 
+	        	onUpdate="NO ACTION" 
+	        	referencedColumnNames="rev" 
+	        	referencedTableName="revinfo"/>
+	</changeSet>
+
+	<changeSet author="Justyn.Lee" id="3.4.0-4.mssql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<createTable tableName="revinfo">
+			<column name="rev" type="int" autoIncrement="true">
+				<constraints nullable="false"/>
+			</column>
+			<column name="revtstmp" type="bigint"/>
+		</createTable>
+		<addPrimaryKey columnNames="rev" constraintName="revinfo_pkey" tableName="revinfo"/>
+                          
+		<createTable tableName="article_aud">
+            <column name="article_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="station_code" type="VARCHAR(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="rev" type="int">
+				<constraints nullable="false"/>
+			</column>
+			<column name="revtype" type="smallint"/>
+            <column name="created" type="datetime2(7)"/>
+            <column name="data" type="varchar(MAX)"/>
+            <column name="last_modified" type="datetime2(7)"/>
+            <column name="name" type="VARCHAR(512)"/>
+            <column name="nfc_url" type="VARCHAR(255)"/>
+            <column name="custom_batch_id" type="varchar(255)"/>
+            <column name="reserved_one" type="VARCHAR(255)" />
+			<column name="reserved_two" type="VARCHAR(255)" />
+			<column name="reserved_three" type="VARCHAR(255)" />
+        </createTable>
+        <addPrimaryKey 
+        		columnNames="article_id, station_code, rev" 
+        		constraintName="article_aud_pkey" 
+        		tableName="article_aud"/>
+        <addForeignKeyConstraint 
+	        	baseColumnNames="rev" 
+	        	baseTableName="article_aud" 
+	        	constraintName="fk_rev_on_article_aud" 
+	        	deferrable="false" 
+	        	initiallyDeferred="false" 
+	        	onDelete="NO ACTION" 
+	        	onUpdate="NO ACTION" 
+	        	referencedColumnNames="rev" 
+	        	referencedTableName="revinfo"/>
+	</changeSet>
+	
+	<changeSet author="dh.yeo" id="3.4.0-5.newDashboard" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <createSequence sequenceName="area_seq" incrementBy="1" minValue="1" maxValue="9223372036854775807" startValue="1" cacheSize="1"/>
+	    <createTable tableName="area">
+	    	<column name="id" type="BIGINT">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="company" type="varchar(255)">
+    			<constraints nullable="false"/>
+    		</column>   		
+    		<column name="country" type="varchar(255)"/>
+    		<column name="region" type="varchar(255)"/>
+    		<column name="city" type="varchar(255)"/>
+	    </createTable>
+	    <addPrimaryKey constraintName="PK_area" columnNames="id" tableName="area"/>
+	    
+	    <createTable tableName="access_level">
+	    	<column name="id" type="BIGINT">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="access_level" type="varchar(255)"/>
+    		<column name="title" type="varchar(255)"/>
+    		<column name="access_menu" type="varchar(4000)"/>
+    		<column name="access_action" type="varchar(4000)"/>
+	    </createTable>
+	    <addPrimaryKey constraintName="PK_accessLevel" columnNames="id" tableName="access_level"/>
+	    <insert tableName="access_level">
+	    	<column name="id" valueNumeric="0"/>
+	    	<column name="access_level" value="1"/>
+	    	<column name="title" value="Admin"/>
+    		<column name="access_menu" value=""/>
+    		<column name="access_action" value=""/>
+	    </insert>
+	    <insert tableName="access_level">
+	    	<column name="id" valueNumeric="1"/>
+	    	<column name="access_level" value="2"/>
+	    	<column name="title" value="Master"/>
+    		<column name="access_menu" value=""/>
+    		<column name="access_action" value=""/>
+	    </insert>
+	    <insert tableName="access_level">
+	    	<column name="id" valueNumeric="2"/>
+	    	<column name="access_level" value="3"/>
+	    	<column name="title" value="Manager"/>
+    		<column name="access_menu" value=""/>
+    		<column name="access_action" value=""/>
+	    </insert>
+	    <insert tableName="access_level">
+	    	<column name="id" valueNumeric="3"/>
+	    	<column name="access_level" value="4"/>
+	    	<column name="title" value="Sub Manager"/>
+    		<column name="access_menu" value=""/>
+    		<column name="access_action" value=""/>
+	    </insert>
+	    <insert tableName="access_level">
+	    	<column name="id" valueNumeric="4"/>
+	    	<column name="access_level" value="5"/>
+	    	<column name="title" value="Associate"/>
+    		<column name="access_menu" value=""/>
+    		<column name="access_action" value=""/>
+	    </insert>
+	    
+	    <addColumn tableName="dashboard_user">
+			<column name="access_level" type="varchar(255)"/>
+		</addColumn>
+		<addColumn tableName="dashboard_user">
+			<column name="permission_key" type="varchar(255)"/>
+		</addColumn>
+		<addColumn tableName="dashboard_user">
+			<column name="permission_value" type="varchar(4000)"/>
+		</addColumn>
+		
+		<addColumn tableName="dashboard_user">
+			<column name="email_alarm" type="boolean" defaultValueBoolean="false" />
+		</addColumn>
+		<addColumn tableName="dashboard_user">
+			<column name="email_report" type="boolean" defaultValueBoolean="false" />
+		</addColumn>
+		<addColumn tableName="dashboard_user">
+			<column name="phone_number" type="varchar(255)"/>
+		</addColumn>
+		
+		<sql>
+	    	UPDATE dashboard_user SET access_level='1' where user_name='admin';
+	    </sql>
+	    <sql>
+	    	UPDATE dashboard_user SET permission_key='company' where user_name='admin';
+	    </sql>
+	</changeSet>
+	<changeSet author="Songju.Ahn" id="3.4.0-6.newDashboard" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<insert tableName="dashboard_settings">
+	    	<column name="id" valueNumeric="1"/>
+	    	<column name="created" value="now()"/>
+	    	<column name="last_modified" value="now()"/>
+	    	<column name="category" value="Setting"/>
+	    	<column name="item" value="Signal Setting"/>
+	    	<column name="param_1" value='{"gwOfflineCaution":"15","gwOfflineDanger":"30","labelUpdatedCaution":"15","labelUpdatedDanger":"30","labelLowBatteryCaution":"70","labelLowBatteryDanger":"90","labelOfflineCaution":"15","labelOfflineDanger":"30","labelSignalCaution":"15","labelSignalDanger":"30","labelMisusedCaution":"15","labelMisusedDanger":"30"}'/>
+    		<column name="param_descr" value="New Dashboard Setting value"/>
+	    </insert>
+	</changeSet>
+	
+	<changeSet author="Songju.Ahn" id="3.4.0-7.newDashboard" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<insert tableName="dashboard_settings">
+	    	<column name="id" valueNumeric="1"/>
+	    	<column name="created" value="getDate()"/>
+	    	<column name="last_modified" value="getDate()"/>
+	    	<column name="category" value="Setting"/>
+	    	<column name="item" value="Signal Setting"/>
+	    	<column name="param_1" value='{"gwOfflineCaution":"15","gwOfflineDanger":"30","labelUpdatedCaution":"15","labelUpdatedDanger":"30","labelLowBatteryCaution":"70","labelLowBatteryDanger":"90","labelOfflineCaution":"15","labelOfflineDanger":"30","labelSignalCaution":"15","labelSignalDanger":"30","labelMisusedCaution":"15","labelMisusedDanger":"30"}'/>
+    		<column name="param_descr" value="New Dashboard Setting value"/>
+	    </insert>
+	</changeSet>
+	
+	<changeSet author="dh.yeo" id="3.4.0-8.newDashboard.mssql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<update tableName="dashboard_user">
+			<column name="email_alarm" valueBoolean="false"/>
+		</update>
+		<update tableName="dashboard_user">
+			<column name="email_report" valueBoolean="false"/>
+		</update>
+	</changeSet>
+	
+	<changeSet author="dg.lim" id="3.4.0-9.newDashboard" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>
+	    	UPDATE access_level 
+			SET access_menu = '1000,2000,2100,3000,3100,3200,4000,4100,5000,5100,5200,5300,6000,6100,6200,6300,7000,7100,7200,8000,8100,8200,8300,8400,9000,9100,9200,9300,9400',
+				access_action = '2100,2101,2102,2103,3100,3101,3102,3103,3104,3200,4100,4101,4102,4103,5100,5101,5200,5300,6100,6200,7100,7101,7102,7103,7200,7201,8100,8101,8102,8200,8300,8400,8401,9100,9101,9102,9200,9201,9300,9400'
+			WHERE id = 0
+	    </sql>
+   		<sql>
+	    	UPDATE access_level 
+			SET access_menu = '1000,2000,2100,3000,3100,3200,4000,4100,5000,5100,5200,5300,6000,6100,6200,6300,7000,7100,7200,8000,8100,8200,8300,8400',
+				access_action = '2100,2101,2102,2103,3100,3101,3102,3103,3104,3200,4100,4101,4102,4103,5100,5101,5200,5300,6100,6200,7100,7101,7102,7103,7200,7201,8100,8101,8102,8200,8300,8400,8401'
+			WHERE id = 1
+	    </sql>
+   		<sql>
+	    	UPDATE access_level 
+			SET access_menu = '1000,2000,2100,3000,3100,3200,4000,4100,5000,5100,5200,5300,6000,6100,6200,6300,7000,7100,7200',
+				access_action = '2101,2102,2103,3100,3103,3104,3200,4100,4103,5101,7100,7102,7200,7201'
+			WHERE id = 2
+	    </sql>
+   		<sql>
+	    	UPDATE access_level 
+			SET access_menu = '1000,2000,2100,3000,3100,3200,4000,4100,5000,5100,5200,5300,6000,6100,6200,6300,7000,7100,7200',
+				access_action = '2101,2102,2103,3100,3103,3104,3200,4100,4103,5101,7100,7102,7200,7201'
+			WHERE id = 3
+	    </sql>
+   		<sql>
+	    	UPDATE access_level 
+			SET access_menu = '1000,2000,2100,3000,3100,3200,4000,4100,5000,5100,5200,5300,6000,6100,6200,6300,7000,7100,7200',
+				access_action = '2101,2102,2103,3100,3103,3104,3200,4100,4103,5101,7100,7102,7200,7201'
+			WHERE id = 4
+	    </sql>
+	</changeSet>
+	
+	<changeSet author="Songju.Ahn" id="3.4.0-10.newDashboard" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<insert tableName="dashboard_settings">
+	    	<column name="id" valueNumeric="2"/>
+	    	<column name="created" value="now()"/>
+	    	<column name="last_modified" value="now()"/>
+	    	<column name="category" value="Setting"/>
+	    	<column name="item" value="Alive Interval"/>
+	    	<column name="param_1" value="24"/>
+    		<column name="param_descr" value="New Dashboard Setting value"/>
+	    </insert>
+	</changeSet>
+	
+	<changeSet author="Songju.Ahn" id="3.4.0-10.newDashboard" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<insert tableName="dashboard_settings">
+	    	<column name="id" valueNumeric="2"/>
+	    	<column name="created" value="getDate()"/>
+	    	<column name="last_modified" value="getDate()"/>
+	    	<column name="category" value="Setting"/>
+	    	<column name="item" value="Alive Interval"/>
+	    	<column name="param_1" value="24"/>
+    		<column name="param_descr" value="New Dashboard Setting value"/>
+	    </insert>
+	</changeSet>
+	<changeSet author="Songju.Ahn" id="3.4.0-11" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <createTable tableName="article_mapping">
+	    	<column name="station_code" type="varchar(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="article_id" type="varchar(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="ean" type="varchar(255)">
+    			<constraints nullable="false"/>
+    		</column>
+	    </createTable>
+       	<addPrimaryKey 
+      		columnNames="station_code, ean" 
+      		constraintName="article_mapping_pkey" 
+      		tableName="article_mapping"/>
+	</changeSet>
+	
+	<changeSet author="Justyn.Lee" id="3.4.0-12" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>INSERT INTO aims_portal_property (name, properties) values('SUPPORT_LINK_WITH_MISSING_ARTICLE', 'true')</sql>
+	</changeSet>
+	
+	<changeSet author="dh.yeo" id="3.4.0-13" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <createTable tableName="dashboard_user_session">
+	    	<column name="user_name" type="varchar(255)">
+	    		<constraints nullable="false"/>
+	    	</column>	    	
+	    	<column name="session_id" type="varchar(255)"/>
+	    	<column name="last_access_time" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+	    	<column name="last_failure_time" type="TIMESTAMP(6) WITHOUT TIME ZONE" />
+	    	<column name="failure_count" type="bigint"/>
+	    </createTable>
+	    <addPrimaryKey columnNames="user_name" constraintName="PK_dashboard_user_session" tableName="dashboard_user_session"/>
+	</changeSet>
+	
+	<changeSet author="dh.yeo" id="3.4.0-14" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS" failOnError="false">
+		<createTable tableName="end_device_add_info">
+            <column name="label_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="station_code" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="add_info_1" type="VARCHAR(255)"/>
+            <column name="add_info_2" type="VARCHAR(255)"/>
+            <column name="add_info_3" type="VARCHAR(255)"/>
+            <column name="add_info_4" type="VARCHAR(255)"/>
+            <column name="add_info_5" type="VARCHAR(255)"/>
+        </createTable>
+        <addPrimaryKey columnNames="label_code" constraintName="end_device_add_info_pkey" tableName="end_device_add_info"/>
+        
+        <createTable tableName="add_info_config">
+            <column name="id" type="BIGINT">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="name" type="varchar(255)"/>
+    		<column name="enable" type="boolean">
+	    		<constraints nullable="false"/>
+	    	</column>
+        </createTable>
+        <insert tableName="add_info_config">
+	    	<column name="id" valueNumeric="1"/>
+	    	<column name="name" value="Arrow"/>
+	    	<column name="enable" valueBoolean="false"/> 	
+	    </insert>
+	    <insert tableName="add_info_config">
+	    	<column name="id" valueNumeric="2"/>
+	    	<column name="name" value=""/>
+	    	<column name="enable" valueBoolean="false"/> 	
+	    </insert>
+	    <insert tableName="add_info_config">
+	    	<column name="id" valueNumeric="3"/>
+	    	<column name="name" value=""/>
+	    	<column name="enable" valueBoolean="false"/>
+	    </insert>
+	    <insert tableName="add_info_config">
+	    	<column name="id" valueNumeric="4"/>
+	    	<column name="name" value=""/>
+	    	<column name="enable" valueBoolean="false"/>
+	    </insert>
+	    <insert tableName="add_info_config">
+	    	<column name="id" valueNumeric="5"/>
+	    	<column name="name" value=""/>
+	    	<column name="enable" valueBoolean="false"/>
+	    </insert>
+    </changeSet>
+    
+    <changeSet author="dh.yeo" id="3.4.0-15" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<insert tableName="dashboard_settings">
+	    	<column name="id" valueNumeric="3"/>
+	    	<column name="created" value="now()"/>
+	    	<column name="last_modified" value="now()"/>
+	    	<column name="category" value="Setting"/>
+	    	<column name="item" value="Product ID Extraction"/>
+	    	<column name="param_1" value='{"enable":"false","prefix":"","validDigits":"","paddingValue":"","totalDigits":""}'/>
+    		<column name="param_descr" value="New Dashboard Setting value"/>
+	    </insert>
+	    <insert tableName="dashboard_settings">
+	    	<column name="id" valueNumeric="4"/>
+	    	<column name="created" value="now()"/>
+	    	<column name="last_modified" value="now()"/>
+	    	<column name="category" value="Setting"/>
+	    	<column name="item" value="Editable Product Info"/>
+	    	<column name="param_1" value='{"editableProductInfo": []}'/>
+    		<column name="param_descr" value="New Dashboard Setting value"/>
+	    </insert>
+	</changeSet>
+	
+	<changeSet author="dh.yeo" id="3.4.0-16" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS" failOnError="false">
+		<insert tableName="dashboard_settings">
+	    	<column name="id" valueNumeric="3"/>
+	    	<column name="created" value="getDate()"/>
+	    	<column name="last_modified" value="getDate()"/>
+	    	<column name="category" value="Setting"/>
+	    	<column name="item" value="Product ID Extraction"/>
+	    	<column name="param_1" value='{"enable":"false","prefix":"","validDigits":"","paddingValue":"","totalDigits":""}'/>
+    		<column name="param_descr" value="New Dashboard Setting value"/>
+	    </insert>
+	    <insert tableName="dashboard_settings">
+	    	<column name="id" valueNumeric="4"/>
+	    	<column name="created" value="getDate()"/>
+	    	<column name="last_modified" value="getDate()"/>
+	    	<column name="category" value="Setting"/>
+	    	<column name="item" value="Editable Product Info"/>
+	    	<column name="param_1" value='{"editableProductInfo": []}'/>
+	    	<column name="param_descr" value="New Dashboard Setting value"/>
+	    </insert>
+	</changeSet>
+</databaseChangeLog>

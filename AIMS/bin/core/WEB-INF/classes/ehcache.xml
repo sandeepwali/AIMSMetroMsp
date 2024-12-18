@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+
+	<cache name="com.solum.aims.core.entity.AccessPoint"
+		   maxElementsInMemory="10"
+		   timeToLiveSeconds="10"
+		   overflowToDisk="false"
+		   eternal="false"/>
+
+	<cache name="com.solum.aims.core.entity.EndDevice"
+		   maxElementsInMemory="100"
+		   timeToLiveSeconds="10"
+		   overflowToDisk="false"
+		   eternal="false"/>
+
+	<cache name="com.solum.aims.core.entity.Content"
+		   maxElementsInMemory="100"
+		   timeToLiveSeconds="10"
+		   overflowToDisk="false"
+		   eternal="false"/>
+
+</ehcache>

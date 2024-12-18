@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="Dohoon.oh (generated)" id="2.0.8" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    	
+    	<createTable tableName="file_result">
+            <column name="id" type="BIGINT">
+            	<constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+            	<constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+			<column name="result" type="VARCHAR(255)"/>           
+            <column name="total" type="INT">
+                <constraints nullable="false"/>
+            </column>
+             <column name="success" type="INT">
+                <constraints nullable="false"/>
+            </column>           
+            <column name="fail" type="INT">
+                <constraints nullable="false"/>
+            </column>	
+    	</createTable>
+    	<addPrimaryKey columnNames="id" constraintName="file_result_id" tableName="file_result"/>
+    	<createSequence sequenceName="file_result_seq" 
+    		incrementBy="1" 
+    		minValue="1" 
+    		maxValue="9223372036854775807"
+    		startValue="1"
+    		cacheSize="1"/>
+    	<sql>SELECT setval('file_result_seq', max(id)) FROM file_result</sql>
+
+	 </changeSet>
+	 
+	 <changeSet author="Justyn (generated)" id="2.0.8-mssql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createSequence 
+        	incrementBy="1" 
+        	maxValue="9223372036854775807" 
+        	minValue="1" 
+        	sequenceName="file_result_seq" 
+        	startValue="1"/>
+        		 	
+	 	<createTable tableName="file_result">
+	 		<column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+            	<constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+			<column name="result" type="VARCHAR(255)"/>           
+            <column name="total" type="INT">
+                <constraints nullable="false"/>
+            </column>
+             <column name="success" type="INT">
+                <constraints nullable="false"/>
+            </column>           
+            <column name="fail" type="INT">
+                <constraints nullable="false"/>
+            </column>	
+    	</createTable>
+    	<addPrimaryKey columnNames="id" constraintName="file_result_id" tableName="file_result"/>
+	 </changeSet>
+</databaseChangeLog>

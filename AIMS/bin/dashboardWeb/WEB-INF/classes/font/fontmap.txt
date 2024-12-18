@@ -1,0 +1,3 @@
+JP:togoshi-gothic.ttf
+KO:NanumGothic-Regular.ttf
+CN:TTZhiHeiF-W2.ttf

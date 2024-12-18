@@ -1,0 +1,175 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+		
+    <changeSet author="Justyn (generated)" id="1.0.0" dbms="postgresql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    	
+    	<comment>Liquibase Start - 1.0.0</comment>
+        
+        <createTable tableName="aims_portal_batch">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="custom_batch_id" type="VARCHAR(255)"/>
+            <column name="last_modified" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="message_param" type="TEXT"/>
+            <column name="message_provider" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="type" type="VARCHAR(255)"/>
+        </createTable>
+        <addPrimaryKey columnNames="id" constraintName="aims_portal_batch_pkey" tableName="aims_portal_batch"/>
+        
+        <createTable tableName="article">
+            <column name="article_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="data" type="TEXT"/>
+            <column name="last_modified" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="name" type="VARCHAR(512)"/>
+            <column name="nfc_url" type="VARCHAR(255)"/>
+            <column name="aims_portal_batch" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="article_id" constraintName="article_pkey" tableName="article"/>
+        
+        <createTable tableName="template">
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="data" type="TEXT"/>
+            <column name="height" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="type" type="VARCHAR(255)"/>
+            <column name="width" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aims_portal_batch" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="name" constraintName="template_pkey" tableName="template"/>
+        
+        <addForeignKeyConstraint baseColumnNames="aims_portal_batch" baseTableName="template" constraintName="fk_mdf05u9x1dqub05n61w7frdfv" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="aims_portal_batch"/>
+        <addForeignKeyConstraint baseColumnNames="aims_portal_batch" baseTableName="article" constraintName="fk_o16t3wqpgd82kuatnt8sn9mlp" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="aims_portal_batch"/>
+        
+        <createTable tableName="end_device">
+            <column name="label_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="last_modified" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+        </createTable>
+        <addPrimaryKey columnNames="label_code" constraintName="end_device_pkey" tableName="end_device"/>
+        
+        <createTable tableName="end_device_articles">
+            <column name="label_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="article_id" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="seq" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="label_code, seq" constraintName="end_device_articles_pkey" tableName="end_device_articles"/>
+        <addForeignKeyConstraint baseColumnNames="article_id" baseTableName="end_device_articles" constraintName="fk_9jxn8oaj6k38s51b2kub4jkuc" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="article_id" referencedTableName="article"/>
+        <addForeignKeyConstraint baseColumnNames="label_code" baseTableName="end_device_articles" constraintName="fk_b8o71udimytqqkskh6gepnjsl" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="label_code" referencedTableName="end_device"/>
+        
+        <createTable tableName="end_device_templates">
+            <column name="label_code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="page" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey columnNames="label_code, page" constraintName="end_device_templates_pkey" tableName="end_device_templates"/>
+        <addForeignKeyConstraint baseColumnNames="name" baseTableName="end_device_templates" constraintName="fk_7ywt1kcksihl1jiuya8h5ns5c" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="name" referencedTableName="template"/>
+		<addForeignKeyConstraint baseColumnNames="label_code" baseTableName="end_device_templates" constraintName="fk_sukjb7sjbn6bglc6u07txux8o" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="label_code" referencedTableName="end_device"/>
+        
+        <createTable tableName="dashboard_settings">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="item" type="VARCHAR(255)"/>
+            <column name="last_modified" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="param_1" type="VARCHAR(4000)"/>
+            <column name="param_10" type="VARCHAR(255)"/>
+            <column name="param_2" type="VARCHAR(255)"/>
+            <column name="param_3" type="VARCHAR(255)"/>
+            <column name="param_4" type="VARCHAR(255)"/>
+            <column name="param_5" type="VARCHAR(255)"/>
+            <column name="param_6" type="VARCHAR(255)"/>
+            <column name="param_7" type="VARCHAR(255)"/>
+            <column name="param_8" type="VARCHAR(255)"/>
+            <column name="param_9" type="VARCHAR(255)"/>
+            <column name="param_descr" type="VARCHAR(1000)"/>
+            <column name="value" type="VARCHAR(255)"/>
+        </createTable>
+        <addPrimaryKey columnNames="id" constraintName="dashboard_settings_pkey" tableName="dashboard_settings"/>
+        
+        <createTable tableName="bletag_setting">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="createtime" type="VARCHAR(4000)"/>
+            <column name="labelid" type="VARCHAR(4000)"/>
+            <column name="macid" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updatetime" type="VARCHAR(4000)"/>
+            <column name="url" type="VARCHAR(4000)"/>
+        </createTable>
+        <addPrimaryKey columnNames="id" constraintName="bletag_setting_pkey" tableName="bletag_setting"/>
+        <addUniqueConstraint columnNames="macid" constraintName="uk_f7oluugj4mxfjhj7t4b5ptxr0" tableName="bletag_setting"/>
+        
+        <createTable tableName="warehouse_product">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bin" type="VARCHAR(4000)"/>
+            <column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="equip_no" type="VARCHAR(4000)"/>
+            <column name="gi_matr_id" type="VARCHAR(4000)"/>
+            <column name="last_modified" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="line_nm" type="VARCHAR(4000)"/>
+            <column name="matr_code" type="VARCHAR(4000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="req_dt" type="VARCHAR(4000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="stored_qty" type="VARCHAR(4000)"/>
+            <column name="supply_qty" type="VARCHAR(4000)"/>
+            <column name="tag_id" type="VARCHAR(4000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="zone" type="VARCHAR(4000)"/>
+        </createTable>
+        <addPrimaryKey columnNames="id" constraintName="warehouse_product_pkey" tableName="warehouse_product"/>
+        <addUniqueConstraint columnNames="tag_id" constraintName="uk_lxu8re3851a84vh6ukmitmwoy" tableName="warehouse_product"/>
+        
+         <createTable tableName="sequences">
+            <column name="sequence_name" type="VARCHAR(255)"/>
+            <column name="sequence_next_hi_value" type="INT"/>
+        </createTable>
+    </changeSet>
+  
+</databaseChangeLog>

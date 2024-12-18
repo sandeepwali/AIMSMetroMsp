@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+	<changeSet author="hs.sihn" id="4.6.1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<addColumn tableName="file_result">
+			<column name="binary_data" type="clob">
+				<constraints nullable="true"/>
+			</column>
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="Justyn.Lee" id="4.6.1-1.postgresql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<createTable tableName="article_master">
+            <column name="article_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="master_data" type="varchar"/>
+            <column name="created" type="timestamp(6)"/>
+            <column name="last_modified" type="timestamp(6)"/>
+        </createTable>
+        <addPrimaryKey columnNames="article_id" constraintName="pk_article_master" tableName="article_master"/>
+	</changeSet>
+	
+	<changeSet author="Justyn.Lee" id="4.6.1-1.mssql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<createTable tableName="article_master">
+            <column name="article_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="master_data" type="nvarchar(MAX)"/>
+            <column name="created" type="datetime2"/>
+            <column name="last_modified" type="datetime2"/>
+        </createTable>
+        <addPrimaryKey columnNames="article_id" constraintName="pk_article_master" tableName="article_master"/>
+	</changeSet>
+
+	<changeSet author="hs.sihn" id="4.6.1-2" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<createTable tableName="article_schedule">
+			<column name="id" type="BIGINT">
+				<constraints nullable="false"/>
+			</column>
+			<column name="station_code" type="varchar(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="file_name" type="varchar(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="binary_data" type="clob" />
+			<column name="time_zone" type="varchar(50)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="schedule_time" type="varchar(50)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="created" type="timestamp(6)" />
+			<column name="last_modified_date" type="timestamp(6)" />
+			<column name="file_status" type="varchar(50)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="process_date" type="timestamp(6)" />
+		</createTable>
+		<addPrimaryKey columnNames="id" constraintName="article_schedule_pk" tableName="article_schedule" />
+		<createSequence sequenceName="article_schedule_seq" incrementBy="1" minValue="1" maxValue="9223372036854775807" startValue="1" cacheSize="1"/>
+	</changeSet>
+
+	<changeSet author="hs.sihn" id="4.6.1-3" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<addColumn tableName="file_result">
+			<column name="station_code" type="varchar(255)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="hs.sihn" id="4.6.1-4" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<addColumn tableName="article_schedule">
+			<column name="execution_result" type="clob" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="hs.sihn" id="4.6.1-5.postgresql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>INSERT INTO dashboard_settings (id, category, item, param_1, param_descr, created, last_modified) values(8, 'Setting', 'API Path Setting', '{"layOutDesigner":{"path":"/LD","used":true},"webPDA":{"path":"/PDA","used":true},"portal":{"path":"/","used":true},"dashboardService":{"path":"/dashboardWeb","used":true}}', 'New Dashboard Setting value', now(), now())</sql>
+	</changeSet>
+
+	<changeSet author="hs.sihn" id="4.6.1-5.mssql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>INSERT INTO dashboard_settings (id, category, item, param_1, param_descr, created, last_modified) values(8, 'Setting', 'API Path Setting', '{"layOutDesigner":{"path":"/LD","used":true},"webPDA":{"path":"/PDA","used":true},"portal":{"path":"/","used":true},"dashboardService":{"path":"/dashboardWeb","used":true}}', 'New Dashboard Setting value', getDate(), getDate())</sql>
+	</changeSet>
+</databaseChangeLog>

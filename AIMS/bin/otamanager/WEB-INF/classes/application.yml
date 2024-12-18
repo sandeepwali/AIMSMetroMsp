@@ -1,0 +1,119 @@
+spring:
+# Work-around for using springfox in spring-boot 2.6.x.
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+    #File Upload/Download
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 10MB
+      max-request-size: 20MB
+#Database(Main)
+  #JPA
+  jpa:
+    show-sql: false
+    generate-ddl: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        database-platform: org.hibernate.dialect.${database.platform}Dialect
+        naming:
+          physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+          implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+        id:
+          new_generator_mappings: true
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+#Liquibase
+  liquibase:
+    # for Initialization
+    change-log: classpath:/db/changelog-master.xml
+    enabled: true
+    drop-first: false
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  sql:
+    init:
+      continue-on-error: true
+      platform: all
+# ----------------------------------------
+# ACTUATOR PROPERTIES
+# ----------------------------------------
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      exposure:
+        include: health, info, prometheus
+  endpoint:
+# HEALTH ENDPOINT
+    health:
+      probes:
+        enabled: true
+# INFO ENDPOINT
+    info:
+      enabled: true
+# PROMETHEUS ENDPOINT
+    prometheus:
+        enabled: true
+# JASYPT
+jasypt:
+  encryptor:
+    password: ${property.encryption.password:"aims"}
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+aimscore:
+  datasource:
+    #username: ${database.username}
+    #password: ${database.password}
+    type: com.zaxxer.hikari.HikariDataSource
+    connection-timeout: 5000
+    maximum-pool-size: 10
+    poolName: otamanager
+    read-only: true
+    max-lifetime: 30000
+ota:
+  execute:
+    duration:
+      maxhour: ${ota.manager.maxhour}
+      intervalminutes: ${ota.manager.intervalminutes}
+aims:
+  ota:
+    swagger:
+      enable: true
+    security:
+      enable: false
+    scheduler:
+      store:
+        update-cron: 0 * * * * *
+      gw:
+        update-cron: 5 */5 * * * ?
+        otaSchedulerInterval: 5
+    version: "4.7.0.RELEASE"
+server:
+  servlet:
+    context-path: ${ota.manager.url}
+    encoding:
+      charset: UTF-8
+  port: 8085
+springdoc:
+  api-docs:
+    path: /doc/json
+    groups:
+      enabled: true
+  default-produces-media-type: application/json;charset=UTF-8
+  default-consumes-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    operations-sorter: alpha
+    doc-expansion: none
+    version: 5.2.0
+    tags-sorter: alpha
+    enabled: true
+  cache:
+    disabled: true

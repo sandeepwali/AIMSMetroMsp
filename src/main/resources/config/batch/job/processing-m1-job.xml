@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+						http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	
+	<job id="processingM1Job" job-repository="processingM1JobRepository" xmlns="http://www.springframework.org/schema/batch">
+		<listeners>
+			<listener ref="processingM1JobListener"/>
+		</listeners>
+		
+		<step id="PROCESSINGM1.ProcessingM1" next="PROCESSINGM1.PfiMessageDecider">
+			<tasklet ref="processingM1Tasklet"/>
+		</step>
+		
+		<decision id="PROCESSINGM1.PfiMessageDecider" decider="pfiMessageDecider">
+			<next on="UPDATE" to="PROCESSINGM1.UpdatingArticle"/>
+			<next on="DELETE" to="PROCESSINGM1.DeletingArticle"/>
+			<next on="TARGETLINK" to="PROCESSINGM1.TargetLinking"/>
+		</decision>
+		
+		<step id="PROCESSINGM1.UpdatingArticle" next="PROCESSINGM1.FileBackup">
+			<tasklet ref="updatingArticleTasklet" />
+		</step>
+		
+		<step id="PROCESSINGM1.DeletingArticle" next="PROCESSINGM1.FileBackup">
+			<tasklet ref="deletingArticleTasklet" />
+		</step>
+		
+		<step id="PROCESSINGM1.TargetLinking" next="PROCESSINGM1.FileBackup">
+			<tasklet ref="targetLinkingTasklet" />
+		</step>
+		
+		<step id="PROCESSINGM1.FileBackup">
+			<tasklet ref="fileBackupProcessTasklet" />
+		</step>
+	</job>
+
+</beans>

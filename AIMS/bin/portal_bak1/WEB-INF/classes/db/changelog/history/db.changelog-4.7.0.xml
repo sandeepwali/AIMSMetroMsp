@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog classpath:/db/changelog/dbchangelog-3.5.xsd">
+
+	<changeSet author="hs.sihn" id="4.7.0" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql, mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<createIndex tableName="aims_portal_batch" indexName="idx_for_overview">
+			<column name="created"/>
+			<column name="station_code"/>
+			<column name="type"/>
+			<column name="status"/>
+			<column name="message_provider"/>
+		</createIndex>
+		<createIndex tableName="aims_portal_batch" indexName="idx_status_type_server_id">
+			<column name="status"/>
+			<column name="type"/>
+			<column name="server_id"/>
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="hs.sihn" id="4.7.0-1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql, mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<createSequence sequenceName="revinfo_seq"
+						incrementBy="50"
+						minValue="1"
+						maxValue="9223372036854775807"
+						startValue="1"
+						cacheSize="1"/>
+	</changeSet>
+
+	<changeSet author="hs.sihn" id="4.7.0-2" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql, mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>
+			update template_type
+			set template_size = case when template_size = '1.6" (200x200)' then '1.54"/1.6" (200x200)' else
+				case when template_size = '2.2" (296x160)' then '2.15"/2.2" (296x160)' else
+					case when template_size = '2.6" (360x184)' then '2.6"/2.66" (360x184)' else
+						'5.79"/5.85" (792x272)'
+						end
+					end
+				end
+			where template_size in ('1.6" (200x200)', '2.2" (296x160)', '2.6" (360x184)','5.85" (792x272)')
+		</sql>
+		<sql>
+			update template_area
+			set template_size = case when template_size = '1.6" (200x200)' then '1.54"/1.6" (200x200)' else
+				case when template_size = '2.2" (296x160)' then '2.15"/2.2" (296x160)' else
+					case when template_size = '2.6" (360x184)' then '2.6"/2.66" (360x184)' else
+						'5.79"/5.85" (792x272)'
+						end
+					end
+				end
+			where template_size in ('1.6" (200x200)', '2.2" (296x160)', '2.6" (360x184)','5.85" (792x272)')
+		</sql>
+		<sql>
+			update template_station
+			set template_size = case when template_size = '1.6" (200x200)' then '1.54"/1.6" (200x200)' else
+				case when template_size = '2.2" (296x160)' then '2.15"/2.2" (296x160)' else
+					case when template_size = '2.6" (360x184)' then '2.6"/2.66" (360x184)' else
+						'5.79"/5.85" (792x272)'
+						end
+					end
+				end
+			where template_size in ('1.6" (200x200)', '2.2" (296x160)', '2.6" (360x184)','5.85" (792x272)')
+		</sql>
+	</changeSet>
+</databaseChangeLog>

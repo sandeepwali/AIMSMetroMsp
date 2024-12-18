@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="dohoon.oh" id="3.2.0" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql,postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <createTable tableName="template_group">
+	    	<column name="name" type="varchar(255)">
+	    		<constraints nullable="false"/>
+	    	</column>
+	    	<column name="description" type="varchar(255)"/>
+            <column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="last_modified" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+	    </createTable>
+	    <addPrimaryKey columnNames="name" constraintName="template_group_pk" tableName="template_group"/>
+	    <dropDefaultValue columnName="group_name" tableName="template"/>
+	    <dropColumn columnName="group_name" tableName="template"></dropColumn>
+	    <createTable tableName="template_group_map">
+	    	<column name="name" type="varchar(255)">
+	    		<constraints nullable="false"/>
+	    	</column>
+	    	<column name="station_code" type="varchar(255)">
+	    		<constraints nullable="false"/>
+	    	</column>
+	    	<column name="group_name" type="varchar(255)">
+	    		<constraints nullable="false"/>
+	    	</column>  	    
+	    </createTable>
+	   	<insert tableName="template_group">
+	    	<column name="name" value="Default"/>
+	    	<column name="description" value="Default Template Group"/>
+	    	<column name="created" valueDate="${now}"/>
+	    	<column name="last_modified" valueDate="${now}"/>
+	    </insert>
+    	<sql>
+    		INSERT INTO template_group_map(name, station_code, group_name)
+    		SELECT name, station_code, 'Default'
+    		FROM template;
+    	</sql>
+	</changeSet>
+</databaseChangeLog>
+
+

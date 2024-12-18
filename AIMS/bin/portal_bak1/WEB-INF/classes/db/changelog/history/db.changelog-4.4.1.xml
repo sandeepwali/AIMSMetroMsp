@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+	<changeSet author="dh.yeo" id="4.4.1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<insert tableName="access_level">
+	    	<column name="id" valueNumeric="5"/>
+	    	<column name="access_level" value="6"/>
+	    	<column name="title" value="Additional Role 1"/>
+    		<column name="access_menu" value=""/>
+    		<column name="access_action" value=""/>
+	    </insert>
+	    <insert tableName="access_level">
+	    	<column name="id" valueNumeric="6"/>
+	    	<column name="access_level" value="7"/>
+	    	<column name="title" value="Additional Role 2"/>
+    		<column name="access_menu" value=""/>
+    		<column name="access_action" value=""/>
+	    </insert>
+	    <insert tableName="access_level">
+	    	<column name="id" valueNumeric="7"/>
+	    	<column name="access_level" value="8"/>
+	    	<column name="title" value="Additional Role 3"/>
+    		<column name="access_menu" value=""/>
+    		<column name="access_action" value=""/>
+	    </insert>
+	    <sql>
+	    	UPDATE access_level 
+			SET access_menu = '2000,2100,3000,3100,3200,4000,4100,5000,5100,5200,5300,5400,8000,8400,10000,10100,10200,10300',
+				access_action = '2101,2102,2103,3100,3103,3104,3200,4100,4103,5101,8400,8401,10201'
+			WHERE id = 5
+	    </sql>
+	    <sql>
+	    	UPDATE access_level 
+			SET access_menu = '2000,2100,3000,3100,3200,4000,4100,5000,5100,5200,5300,5400,8000,8400,10000,10100,10200,10300',
+				access_action = '2101,2102,2103,3100,3103,3104,3200,4100,4103,5101,8400,8401,10201'
+			WHERE id = 6
+	    </sql>
+	    <sql>
+	    	UPDATE access_level 
+			SET access_menu = '2000,2100,3000,3100,3200,4000,4100,5000,5100,5200,5300,5400,8000,8400,10000,10100,10200,10300',
+				access_action = '2101,2102,2103,3100,3103,3104,3200,4100,4103,5101,8400,8401,10201'
+			WHERE id = 7
+	    </sql>
+	</changeSet>
+	
+</databaseChangeLog>

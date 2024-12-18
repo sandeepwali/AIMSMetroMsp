@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+	<changeSet author="hs.sihn" id="4.5.1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>insert into aims_portal_property (name, properties) values('CLASSIFICATION_OF_CUSTOMERS', 'COMMON')</sql>
+	</changeSet>
+
+	<changeSet author="hs.sihn" id="4.5.1-1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<addColumn tableName="central_summary">
+			<column name="very_good_battery_count"  type="BIGINT"/>
+			<column name="good_battery_count"  type="BIGINT"/>
+			<column name="replace_battery_count"  type="BIGINT"/>
+		</addColumn>
+		<sql>
+			UPDATE central_summary SET very_good_battery_count=0, good_battery_count=0, replace_battery_count=0;
+		</sql>
+	</changeSet>
+
+	<changeSet author="hs.sihn" id="4.5.1-2" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<createTable tableName="white_list_pending_upload">
+			<column name="station_code" type="VARCHAR(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="label_code" type="VARCHAR(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="created" type="TIMESTAMP(6) WITHOUT TIME ZONE">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+		<addUniqueConstraint columnNames="station_code, label_code" constraintName="uk_white_list_pending_upload" tableName="white_list_pending_upload"/>
+	</changeSet>
+
+	<changeSet author="hs.sihn" id="4.5.1-3" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<addColumn tableName="white_list_pending_upload">
+			<column name="article_id_list"  type="VARCHAR(4000)"/>
+			<column name="template_name"  type="VARCHAR(255)"/>
+			<column name="status"  type="VARCHAR(50)"/>
+			<column name="arrow"  type="VARCHAR(255)"/>
+			<column name="add_info_2"  type="VARCHAR(255)"/>
+			<column name="add_info_3"  type="VARCHAR(255)"/>
+			<column name="add_info_4"  type="VARCHAR(255)"/>
+			<column name="add_info_5"  type="VARCHAR(255)"/>
+		</addColumn>
+	</changeSet>
+
+	<changeSet failOnError="false" author="wong.choi" id="4.5.1-4" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<preConditions onFail = "MARK_RAN">
+			<not>
+				<indexExists indexName="article_station_code_idx"/>
+			</not>
+		</preConditions>
+		<createIndex tableName="article" indexName="article_station_code_idx">
+			<column name="station_code"/>
+		</createIndex>
+	</changeSet>
+	
+	<changeSet failOnError="false" author="wong.choi" id="4.5.1-5" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<preConditions onFail = "MARK_RAN">
+			<not>
+				<indexExists indexName="article_reservered_idx"/>
+			</not>
+		</preConditions>
+		<sql dbms="postgresql">
+			create index article_reservered_idx on article (reserved_one,reserved_two,reserved_three) where ((reserved_one IS NOT NULL) OR (reserved_two IS NOT NULL) OR (reserved_three IS NOT NULL)) 
+    	</sql>
+		<comment>Partial Index for postgresql on article reserved column</comment>
+	</changeSet>
+
+</databaseChangeLog>

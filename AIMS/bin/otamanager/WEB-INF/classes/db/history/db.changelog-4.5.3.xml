@@ -1,0 +1,62 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+        
+    <changeSet author="yeji.j" id="4.5.3" dbms="postgresql,mssql" logicalFilePath="classpath:/db/changelog-master.xml" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<comment> apply multiple tag_class postgresql,mssql.</comment>
+		<dropColumn tableName="store_label_state" columnName="firmware_version"/>
+		<addPrimaryKey constraintName="PK_store_label_state" columnNames="id" tableName="store_label_state"/>
+		<createTable tableName="store_label_class">
+			<column name="id" type="BIGINT">
+				<constraints nullable="false"/>
+			</column>
+			<column name="tag_class" type="varchar(50)"/>
+			<column name="firmware_version" type="INT"/>
+			<column name="update_count" type="INT"/>
+			<column name="total_count" type="INT"/>
+			<column name="stationcode" type="varchar(255)"/>
+			<column name="last_updated_time" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+			<column name="store_label_state_id" type="BIGINT">
+            	<constraints nullable="false" referencedTableName="store_label_state" referencedColumnNames="id"
+            				 foreignKeyName="store_label_state_id"/>
+            </column>
+		</createTable>
+		<addPrimaryKey constraintName="PK_store_label_class" columnNames="id" tableName="store_label_class"/>
+		<createSequence
+			incrementBy="1" 
+        	maxValue="9223372036854775807" 
+        	minValue="1"  
+			startValue="1"
+			sequenceName="store_label_class_state_sequence"/>
+		<addColumn tableName="firmwarelabel">
+			<column name="tag_class"  type="varchar(50)"/>
+		</addColumn>
+		<addColumn tableName="firmware_label_state">
+			<column name="tag_class" type="varchar(20)"/>
+		</addColumn>
+		<update tableName="firmwarelabel">
+			<column name="tag_class" valueComputed="(select tagclass 
+											from firmwaredata 
+											where firmwarelabel.firmwaredata_id = firmwaredata.id)"/>
+		</update>
+		<update tableName="firmware_label_state">
+			<column name="tag_class" valueComputed="(select tagclass 
+											from firmwaredata
+											where firmwaredata.system = firmware_label_state.system
+											and firmwaredata.tagtypecode = firmware_label_state.type_code)"/>
+		</update>
+		<renameColumn tableName="firmwaredata" oldColumnName="tagtype" newColumnName="type"/>
+		<renameColumn tableName="firmwaredata" oldColumnName="tagclass" newColumnName="tag_class"/>
+		<renameColumn tableName="firmwaredata" oldColumnName="taginch" newColumnName="inch"/>
+		<renameColumn tableName="firmwaredata" oldColumnName="tagtypecode" newColumnName="type_code"/>
+		<modifyDataType tableName="firmwaredata" columnName="tag_class" newDataType="varchar(50)" />
+		<modifyDataType tableName="firmwaredata" columnName="type" newDataType="varchar(20)" />
+		<dropPrimaryKey constraintName="gwmac_pk" tableName="otaschedule"/>
+		<addNotNullConstraint tableName="otaschedule" columnDataType="varchar(255)" columnName="firmwareid"/>
+		<addPrimaryKey constraintName="PK_otaschedule" columnNames="firmwareid,gwmac" tableName="otaschedule"/>
+	</changeSet>		
+</databaseChangeLog>

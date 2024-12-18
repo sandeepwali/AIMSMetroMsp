@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Implementation-Title: AIMSPortal
+Implementation-Version: 4.7.0.RELEASE
+

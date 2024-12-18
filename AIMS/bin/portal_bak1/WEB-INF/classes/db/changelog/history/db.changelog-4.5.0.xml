@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+	<changeSet author="hj.park" id="4.5.0" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<addColumn tableName="report_config">
+			<column name="report_minute"  type="INT"/>
+		</addColumn>
+		<sql>
+			UPDATE report_config
+			SET report_minute = 0
+		</sql>
+	</changeSet>
+	
+	<changeSet author="dh.yeo" id="4.5.0-1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>INSERT INTO aims_portal_property (name, properties) values('ON_DEMAND_ALIVE_ENABLE', 'false')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('ON_DEMAND_ALIVE_CYCLE', 'Daily')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('ON_DEMAND_ALIVE_SCHEDULED_TIME', '00:00')</sql>
+	</changeSet>
+
+	<changeSet author="hs.sihn" id="4.5.0-2" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>UPDATE translation_language_content set content = replace(content,'Aaccess', 'Access'), default_content = replace(default_content, 'Aaccess', 'Access')</sql>
+	</changeSet>
+
+</databaseChangeLog>

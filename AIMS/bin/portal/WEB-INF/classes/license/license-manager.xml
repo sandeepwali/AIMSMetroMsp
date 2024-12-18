@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:int-file="http://www.springframework.org/schema/integration/file"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-4.3.xsd
+		http://www.springframework.org/schema/integration/file http://www.springframework.org/schema/integration/file/spring-integration-file-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	
+	<!-- 
+	<bean id="licenseJob" class="com.solum.aims.portal.batch.job.LicenseManagerEndPointChain"/>
+	
+	<int-file:inbound-channel-adapter id="createLicenseInputChannal"
+									directory="${aims.root.path}/lic"
+									filename-pattern="key.lic"
+									prevent-duplicates="false"
+									auto-create-directory="true"
+									use-watch-service="true"
+									watch-events="CREATE,MODIFY">
+		<int:poller id="poller" fixed-delay="1000"/>
+	</int-file:inbound-channel-adapter>
+	
+	<int:chain input-channel="createLicenseInputChannal">
+		<int:service-activator method="create" ref="licenseJob"/>
+	</int:chain>
+	
+	<bean id="removeFilter" class="com.solum.aims.portal.common.RemoveLicenseFileListFilter"/>
+	
+	<int-file:inbound-channel-adapter id="removeLicenseInputChannal"
+									directory="${aims.root.path}/lic"
+									prevent-duplicates="false"
+									auto-create-directory="false"
+									filter="removeFilter"
+									use-watch-service="true"
+									watch-events="DELETE">
+		<int:poller id="poller" fixed-delay="1000"/>
+	</int-file:inbound-channel-adapter>
+	
+	<int:chain input-channel="removeLicenseInputChannal">
+		<int:service-activator method="remove" ref="licenseJob"/>
+	</int:chain>
+	 -->
+</beans>

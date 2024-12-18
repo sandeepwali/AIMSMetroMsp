@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+	<changeSet author="Jiwon" id="4.5.3" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<addColumn tableName="dashboard_user">
+			<column name="temporary" type="boolean" defaultValueBoolean="false" />
+		</addColumn>
+		<sql>UPDATE dashboard_user SET temporary = 'false'</sql>
+	</changeSet>
+
+	<changeSet author="hs.sihn" id="4.5.3-1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<modifyDataType tableName="translation_language_content" columnName="content" newDataType="clob"/>
+		<modifyDataType tableName="translation_language_content" columnName="default_content" newDataType="clob"/>
+	</changeSet>
+</databaseChangeLog>

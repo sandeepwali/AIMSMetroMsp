@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+	<changeSet author="dg.lim" id="4.3.0-1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <insert tableName="dashboard_settings">
+	    	<column name="id" valueNumeric="7"/>
+	    	<column name="created" value="now()"/>
+	    	<column name="last_modified" value="now()"/>
+	    	<column name="category" value="Setting"/>
+	    	<column name="item" value="Activate Features"/>
+	    	<column name="param_1" value='{"batchMode":"false","assignSuccess":"false"}'/>
+    		<column name="param_descr" value="Activate Features Setting value"/>
+	    </insert>
+	</changeSet>
+	
+	<changeSet author="dg.lim" id="4.3.0-1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <insert tableName="dashboard_settings">
+	    	<column name="id" valueNumeric="7"/>
+	    	<column name="created" value="getDate()"/>
+	    	<column name="last_modified" value="getDate()"/>
+	    	<column name="category" value="Setting"/>
+	    	<column name="item" value="Activate Features"/>
+	    	<column name="param_1" value='{"batchMode":"false","assignSuccess":"false"}'/>
+    		<column name="param_descr" value="Activate Features Setting value"/>
+	    </insert>
+
+	</changeSet>
+	
+    <changeSet author="dg.lim" id="4.3.0-2" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+   		<sql>
+	    	UPDATE access_level SET title='Regional Manager' where access_level='3';
+	    </sql>
+	    <sql>
+	    	UPDATE access_level SET title='Local Manager' where access_level='4';
+	    </sql>
+	    <sql>
+	    	UPDATE access_level SET title='Base Role' where access_level='5';
+	    </sql>
+    </changeSet>
+    
+    <changeSet author="Jiwon" id="4.3.0-3" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	     <createTable tableName="template_decision">
+	    	<column name="station_code" type="VARCHAR(64)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="page" type="INT">
+				<constraints nullable="false"/>
+			</column>
+    		<column name="default_group" type="VARCHAR(255)">
+				<constraints nullable="false"/>
+			</column>
+    		<column name="condition_list" type="TEXT">
+				<constraints nullable="false"/>
+			</column>
+	    </createTable>
+		<addUniqueConstraint columnNames="station_code,page" constraintName="pk_template_decision" tableName="template_decision"/>
+	</changeSet>
+	
+	<changeSet author="hs.sihn" id="4.3.0-4" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <createTable tableName="central_summary">
+	    	<column name="store_id" type="BIGINT">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="summary_date" type="varchar(8)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="total_store_count" type="BIGINT" />
+    		<column name="issued_store_count" type="BIGINT" />
+    		<column name="last_update_inprogress_count" type="BIGINT" />
+    		<column name="last_updatetotal_count" type="BIGINT" />
+    		<column name="updated_label_count" type="BIGINT" />
+    		<column name="in_progress_label_count" type="BIGINT" />
+    		<column name="not_updated_label_count" type="BIGINT" />
+    		<column name="total_updated_label_count" type="BIGINT" />
+    		<column name="low_battery_count" type="BIGINT" />
+    		<column name="online_label_count" type="BIGINT" />
+    		<column name="offline_label_count" type="BIGINT" />
+    		<column name="bad_signal_label_count" type="BIGINT" />
+    		<column name="online_gw_count" type="BIGINT" />
+    		<column name="not_ready_gw_count" type="BIGINT" />
+    		<column name="offline_gw_count" type="BIGINT" />
+    		<column name="total_label_count" type="BIGINT" />
+    		<column name="total_assigned_product_count" type="BIGINT" />
+    		<column name="total_product_count" type="BIGINT" />
+    		<column name="mis_used_label_count" type="BIGINT" />
+    		<column name="last_modified" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+	    </createTable>
+	    <addPrimaryKey constraintName="PK_central_summary" columnNames="store_id,summary_date" tableName="central_summary"/>
+	</changeSet>
+	
+	<changeSet author="dh.yeo" id="4.3.0-5" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	     <createTable tableName="standard_data_map">
+	    	<column name="id" type="BIGINT">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="mapped_article_id" type="VARCHAR(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="mapped_station_code" type="VARCHAR(255)">
+				<constraints nullable="false"/>
+			</column>
+    		<column name="mapped_article_name" type="VARCHAR(255)"/>
+    		<column name="mapped_nfc" type="VARCHAR(255)"/>
+    		<column name="mapped_origin_price" type="VARCHAR(255)"/>
+    		<column name="mapped_sale_price" type="VARCHAR(255)"/>
+    		<column name="mapped_discount_percentage" type="VARCHAR(255)"/>
+    		<column name="mapped_reserved_one" type="VARCHAR(255)"/>
+    		<column name="mapped_reserved_two" type="VARCHAR(255)"/>
+    		<column name="mapped_reserved_three" type="VARCHAR(255)"/>
+    		<column name="standard_data_map_list" type="TEXT">
+				<constraints nullable="false"/>
+			</column>				
+	    </createTable>
+	    <insert tableName="standard_data_map">
+	    	<column name="id" value="1"/>
+	    	<column name="mapped_article_id" value="ARTICLE_ID"/>
+			<column name="mapped_station_code" value="STORE_CODE"/>
+			<column name="mapped_article_name" value="ITEM_NAME"/>
+			<column name="mapped_nfc" value="NFC_URL"/>
+			<column name="mapped_origin_price" value="LIST_PRICE"/>
+			<column name="mapped_sale_price" value="SALE_PRICE"/>
+			<column name="mapped_discount_percentage" value="DISCOUNT_PERCENTAGE"/>
+			<column name="mapped_reserved_one" value=""/>
+			<column name="mapped_reserved_two" value=""/>
+			<column name="mapped_reserved_three" value=""/>
+			<column name="standard_data_map_list" value="STORE_CODE,ARTICLE_ID,BARCODE,ITEM_NAME,ALIAS,SALE_PRICE,LIST_PRICE,UNIT_PRICE,ORIGIN,MANUFACTURER,TYPE,WEIGHT,WEIGHT_UNIT,UNIT_PRICE_UNIT,UNIT_DIMENSION,A_MARKER,R_MARKER,CATEGORY1,CATEGORY2,CATEGORY3,CATEGORY4,CATEGORY5,DISPLAY_TYPE,DISPLAY_TYPE2,DISPLAY_TYPE3,NFC_URL,ETC_0,ETC_1,ETC_2,ETC_3,ETC_4,ETC_5,ETC_6,ETC_7,ETC_8,ETC_9"/>
+		</insert>
+	</changeSet>
+	
+	<changeSet author="Jiwon" id="4.3.0-6" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>INSERT INTO aims_portal_property (name, properties) values('PORTAL_PROPERTY_UPDATE_AT_FIRST', 'false')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('DASHWEB_PROPERTY_UPDATE_AT_FIRST', 'false')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('CUSTOMER_FILE_INPUT_PATH', '/inf/input')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('CUSTOMER_FILE_BACKUP_PATH', '/inf/backup')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('CUSTOMER_FILE_PATTERN', '*.dat')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('CUSTOMER_FILE_NUMBER_OF_ROWS_PER_ONCE', '1000')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('CUSTOMER_FILE_PARSER_DELIMITER', ';')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('CUSTOMER_FILE_FIXED_DELAY', '10000')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('PORTAL_PW_POLICY_ENABLE', 'false')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('PORTAL_PW_POLICY_MINIMUM_LENGTH', '8')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('BATCH_PURGE_RETENTION_DAYS', '14')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('BATCH_PURGE_CRON', '0 20 0 * * ?')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('PORTL_BIZ1_MAX_PAGE', '3')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('REALTIME_CONFIG_SCANPERIOD', '0')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('REALTIME_CONFIG_HIBERNATE', 'true')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('REALTIME_CONFIG_SCANDIRECT', 'false')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('REALTIME_CONFIG_RETRY_PERIOD', '0')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('REALTIME_CONFIG_RETRY_COUNT', '0')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('REALTIME_CONFIG_CONNECTTHRESHMODE', '0')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('DASHBOARD_WEB_CHECKPERMISSION_ENABLE', 'true')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('DASHBOARD_WEB_SESSION_TIMEOUT', '1800')</sql>
+	</changeSet>
+	
+	<changeSet author="Jiwon" id="4.3.0-7" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>DELETE FROM aims_portal_property where name not in ('REALTIME_BUTTONS', 'SUPPORT_LINK_WITH_MISSING_ARTICLE', 'SUPPORT_LIDL_FUNCTION', 'SUPPORT_TEMPLATE_MAPPING_FUNCTION', 'DASHBOARD_WEB_CHECKPERMISSION_ENABLE', 'DASHBOARD_WEB_SESSION_TIMEOUT')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('PORTAL_PROPERTY_UPDATE_AT_FIRST', 'false')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('DASHWEB_PROPERTY_UPDATE_AT_FIRST', 'false')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('CUSTOMER_FILE_INPUT_PATH', 'C:/Program Files/AIMS/inf/input')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('CUSTOMER_FILE_BACKUP_PATH', 'C:/Program Files/AIMS/inf/backup')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('CUSTOMER_FILE_PATTERN', '*.dat')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('CUSTOMER_FILE_NUMBER_OF_ROWS_PER_ONCE', '1000')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('CUSTOMER_FILE_PARSER_DELIMITER', ';')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('CUSTOMER_FILE_FIXED_DELAY', '10000')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('PORTAL_PW_POLICY_ENABLE', 'false')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('PORTAL_PW_POLICY_MINIMUM_LENGTH', '8')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('BATCH_PURGE_RETENTION_DAYS', '14')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('BATCH_PURGE_CRON', '0 20 0 * * ?')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('PORTL_BIZ1_MAX_PAGE', '3')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('REALTIME_CONFIG_SCANPERIOD', '0')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('REALTIME_CONFIG_HIBERNATE', 'true')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('REALTIME_CONFIG_SCANDIRECT', 'false')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('REALTIME_CONFIG_RETRY_PERIOD', '0')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('REALTIME_CONFIG_RETRY_COUNT', '0')</sql>
+		<sql>INSERT INTO aims_portal_property (name, properties) values('REALTIME_CONFIG_CONNECTTHRESHMODE', '0')</sql>
+	</changeSet>
+	
+	<changeSet author="dg.lim" id="4.3.0-8" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>
+	    	UPDATE access_level 
+			SET access_menu = '1000,2000,2100,3000,3100,3200,4000,4100,5000,5100,5200,5300,6000,6100,6200,6300,7000,7100,7200,8000,8100,8200,8300,8400,9000,9100,9200,9300,9400,9500,10000,10100,10200,11000,11100,11200',
+				access_action = '2100,2101,2102,2103,3100,3101,3102,3103,3104,3200,4100,4101,4102,4103,5100,5101,5200,5300,6100,6200,7100,7101,7102,7103,7200,7201,8100,8101,8102,8200,8300,8400,8401,9100,9200,9300,9400,9500,10100,10200,10201,11100,11200'
+			WHERE id = 0
+	    </sql>
+	</changeSet>
+	
+</databaseChangeLog>

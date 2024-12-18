@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="hs.sihn" id="4.2.3-1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <createTable tableName="customer_info_contents">
+	    	<column name="id" type="BIGINT">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="type" type="varchar(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="split" type="varchar(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="file_name" type="varchar(255)" />
+    		<column name="content" type="clob"/>
+	    </createTable>
+	    <addPrimaryKey constraintName="PK_customer_info_contents" columnNames="id,type,split" tableName="customer_info_contents"/>
+	    
+	    <dropColumn tableName="customer_info" columnName="content"/>
+	    <dropColumn tableName="customer_info" columnName="file_name"/>
+	</changeSet>
+	
+</databaseChangeLog>

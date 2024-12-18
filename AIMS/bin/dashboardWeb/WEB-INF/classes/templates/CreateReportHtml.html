@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<body style="background-color:#ffffff;margin: auto;font-family: 'Montserrat'; padding:10px; margin-bottom:10px;font-family: 'NanumBarunGothic';">
+		<div class="all" style="width: 100%;font-family: 'NanumBarunGothic';">
+			<div class="total" style="width: 720px;height: auto;float: left;border-bottom: 10px solid #1d4288;">
+	
+				<div class="head" style="margin-top: 0px; width: 720px; height: 100px; color: #ffffff; text-align: center; background-color:#1d4288; padding: 25px 0px 0px 0px;">
+					<h1>SYSTEM CHECK REPORT</h1>
+				</div>
+	
+				<div class="rept" style="width: 700px; height: 25px; float: left; text-align: right; color: #000000; background-color: #dce8ff; font-size: 13px; line-height: 25px; padding-right: 20px;" th:text=${current_time}></div>
+							
+				<div th:if="${recipientLevel}=='high'" class="systm" style="width: 720px;float: left;height: auto;text-align: center;">
+					<div class="systm_hd" style="font-weight: bold;width: 720px;float: left;height: 30px;color: #ffffff;font-size: 18px;line-height: 30px; text-align: center;background-color: #31b0c9;">SYSTEM</div>
+					<div class="systm_table" style="width: 720px;height: auto;float: left;font-size: 12px;" >
+						<table style="width:100%;border: 1px solid gray;  border-collapse: collapse;" id="systemTable">
+							<tr style="background-color: #cccccc; padding: 10px; text-align: center;">
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">SYSTEM IP</th>
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">CPU</th>
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">DISK</th>
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">MEMORY</th>
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">FAIL FILE UPDATE</th>
+							</tr>
+							<tr th:if="${systemInfoSize}=='0'">
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" colspan=5>No data</td>
+							</tr>
+							<tr th:each="systemInfo : ${systemInfoList}">
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text="${systemInfo.ipAddr}"></td>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text="${systemInfo.cpu}"></td>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text="${systemInfo.disk}"></td>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text="${systemInfo.memory}"></td>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text="${systemInfo.file}"></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+	
+				<div class="systm" style="margin-top: 15px;width: 720px;float: left;height: auto;text-align: center;">
+					<div class="systm_hd" style="width: 720px; height: 30px; text-align: center; background-color: #31b0c9; float: left; line-height: 30px; color: #ffffff; font-size: 18px; font-weight: bold;">LABELS</div>
+					<div class="systm_table" style="width: 720px;height: auto;float: left;font-size: 12px;">
+						<table style="width:100%; border: 1px solid gray; border-collapse: collapse;" id="labelTable">
+							<tr style="background-color: #cccccc;">
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">TOTAL</th>
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">SUCCESS</th>
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">PROCESSING</th>
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">TIMEOUT</th>
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">UNASSIGNED</th>
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">LOW BATTERY</th>
+							</tr>
+							<tr>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;"  th:text=${totalLabels}/>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;"  th:text=${successLabels}/>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;"  th:text=${processingLabels}/>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;"  th:text=${timeoutLabels}/>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;"  th:text=${unassignedLabels}/>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;"  th:text=${lowbatteryLabels}/>
+							</tr>
+						</table>
+					</div>
+	
+					<div class="systm_hd" style="margin-top: 15px; width: 720px; height: 30px; text-align: center; background-color: #31b0c9; float: left; line-height: 30px; color: #ffffff; font-size: 18px; font-weight: bold;">GATEWAY</div>
+					<div class="systm_table" style="width: 720px;height: auto;float: left;font-size: 12px;">
+						<table style="width:100%; border: 1px solid gray; border-collapse: collapse;" id="gatewayTable">
+							<tr style="background-color: #cccccc;">
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">TOTAL</th>
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">ONLINE</th>
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">OFFLINE</th>
+							</tr>
+							<tr>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text=${totalGws}/>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text=${onlineGws}/>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text=${offlineGws}/>
+							</tr>
+						</table>
+					</div>
+	
+					<div class="systm_hd" style="margin-top: 15px; width: 720px; height: 30px; text-align: center; background-color: #31b0c9; float: left; line-height: 30px; color: #ffffff; font-size: 18px; font-weight: bold;">OFFLINE GATEWAY</div>
+					<div class="systm_table" style="width: 720px;height: auto;float: left;font-size: 12px;">
+						<table style="width:100%; border: 1px solid gray;border-collapse: collapse;" id="offlineGatewayTable">
+							<tr style="background-color: #cccccc;">
+								<th style="font-size: 15px;  padding: 10px; width:30%; text-align: center;border: 1px solid gray;  border-collapse: collapse;">STORE(STORE CODE)</th>
+								<th style="font-size: 15px; padding: 10px; width:70%; text-align: center;border: 1px solid gray;  border-collapse: collapse;">OFFLINE GW</th>
+							</tr>
+							<tr th:if="${offlineGatewayInfoSize}=='0'">
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" colspan=2>No data</td>
+							</tr>
+							<tr th:each="offlineGatewayInfo : ${offlineGatewayInfoList}">
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text="${offlineGatewayInfo.store}"></td>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text="${offlineGatewayInfo.offlineGateway}"></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+	
+				<div class="footrdv" style="margin-top: 15px;width: 720px;height: auto;float: left;font-size: 12px;text-align: center;">
+					<div class="systm_hd" style="width: 720px; height: 30px; text-align: center; background-color: #31b0c9; float: left; line-height: 30px; color: #ffffff; font-size: 18px; font-weight: bold;">FILE UPDATE HISTORY</div>
+					<div class="footrdv_sep" style="width: 720px;float: left;text-align: center;height: auto;">
+						<table style="width:100%; border: 1px solid gray; border-collapse: collapse;" id="fileUpdateHistoryTable">
+							<tr style="background-color: #cccccc;">
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">NO</th>
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">PROCESSED IMTE</th>
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">FILE NAME</th>
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">RESULT</th>
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">SUCCESS LINE</th>
+								<th style="font-size: 15px; padding: 10px;  text-align: center;border: 1px solid gray;  border-collapse: collapse;">SKIPPED LINE</th>
+							</tr>
+							<tr th:if="${fileHistoryInfoSize}=='0'">
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" colspan=6>No data</td>
+							</tr>
+							<tr th:each="fileHistoryInfo : ${fileHistoryInfoList}">
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text="${fileHistoryInfo.index}"></td>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text="${fileHistoryInfo.processed}"></td>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text="${fileHistoryInfo.fileName}"></td>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text="${fileHistoryInfo.result}"></td>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text="${fileHistoryInfo.success}"></td>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text="${fileHistoryInfo.skipped}"></td>
+							</tr>
+							<tr th:if="${fileHistoryInfoSize}!='0'">
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" colspan=4>TOTAL</td>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text="${successFile}"></td>
+								<td style="border: 1px solid gray;border-collapse: collapse;padding: 10px;text-align: center;" th:text="${skipFile}"></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+	
+				<div class="rept" style="width: 700px;height: 25px;float: left;text-align: right;color: #000000;background-color: #dce8ff;font-size: 13px;line-height:25px;padding-right: 20px;">
+					This report generated by AIMS.
+				</div>
+	
+			</div>
+		</div>
+	</body>
+</html>

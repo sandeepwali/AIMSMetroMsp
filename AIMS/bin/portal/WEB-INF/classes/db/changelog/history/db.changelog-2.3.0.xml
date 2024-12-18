@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="Sh.Lee (generated)" id="2.3.0.mssql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>CREATE INDEX idx_end_device_articles_article_id ON end_device_articles (article_id, station_code) WITH (FillFactor=90)</sql>
+	</changeSet>
+	
+	<changeSet author="donghyun.kim (generated)" id="2.3.0" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql,postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <addColumn tableName="aims_portal_batch">
+            <column name="request_sequence" type="BIGINT" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+	
+</databaseChangeLog>

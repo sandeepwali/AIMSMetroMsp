@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="Woong.Choi" id="4.2.0" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    
+		<preConditions onFail="MARK_RAN">
+			<not>
+				<tableExists tableName="shedlock"/>
+			</not>
+		</preConditions>
+	    <createTable tableName="shedlock">
+	    	<column name="name" type="VARCHAR(64)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="locked_by" type="VARCHAR(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="locked_at" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP">
+				<constraints nullable="false"/>
+			</column>
+			<column name="lock_until" type="DATETIME">
+				<constraints nullable="false"/>
+			</column>
+	    </createTable>
+		<addUniqueConstraint columnNames="name" constraintName="uk_shedlock_name" tableName="shedlock"/>
+
+		<createSequence sequenceName="aims_portal_entity_sequence" incrementBy="1" startValue="1" cacheSize="1"/>
+	    <createTable tableName="server">
+	    	<column name="id" type="BIGINT">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="code" type="varchar(100)"/>
+			<column name="group_id" type="varchar(100)"/>
+			<column name="portal_revision" type="varchar(50)"/>
+			<column name="portal_version" type="varchar(50)"/>
+    		<column name="description" type="varchar(255)"/>
+    		<column name="ip_address" type="varchar(255)"/>
+    		<column name="type" type="varchar(50)"/>
+    		<column name="lb_ip_address" type="varchar(255)"/>
+			<column name="lb_port" type="INT" value="80"/>
+			<column name="version" type="BIGINT"/>
+			<column name="port" type="INT" />
+			<column name="last_connection_date" type="DATETIME" />
+	    </createTable>
+		<addPrimaryKey constraintName="server_pkey" columnNames="id" tableName="server"/>
+		<addUniqueConstraint columnNames="code" constraintName="uk_server_code" tableName="server"/>
+		<addUniqueConstraint columnNames="ip_address" constraintName="uk_server_ip_address" tableName="server"/>
+        
+		<createSequence sequenceName="server_node_sequence" incrementBy="1" startValue="1" cacheSize="1"/>
+		<createTable tableName="server_node">
+	    	<column name="id" type="BIGINT">
+    			<constraints nullable="false"/>
+    		</column>
+			<column name="ip_address" type="varchar(255)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="code" type="varchar(100)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="port" type="INT">
+				<constraints nullable="false"/>
+			</column>
+			<column name="node_type" type="varchar(20)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="node_status" type="varchar(20)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="last_connection_date" type="DATETIME" />
+			<column name="version" type="varchar(50)" />
+			<column name="revision" type="varchar(50)" />
+	    </createTable>
+		<addPrimaryKey constraintName="server_node_pkey" columnNames="id" tableName="server_node"/>
+		<addUniqueConstraint columnNames="ip_address, port, node_type" constraintName="uk_server_node" tableName="server_node"/>
+
+	</changeSet>
+	
+	 <changeSet author="Songju.Ahn" id="4.2.0-1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <createSequence sequenceName="customer_info_seq" incrementBy="1" minValue="1" maxValue="9223372036854775807" startValue="1" cacheSize="1"/>
+	    <createTable tableName="customer_info">
+	    	<column name="id" type="BIGINT">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="station_code" type="varchar(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="language" type="varchar(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="description" type="varchar(255)"/>
+    		<column name="file_name" type="varchar(255)"/>
+    		<column name="content" type="clob"/>
+    		<column name="usage" type="varchar(50)" defaultValue="DEFAULT"/>
+    		<column name="priority" type="INT"/>
+	    </createTable>
+	    <addPrimaryKey constraintName="PK_customerInfo" columnNames="id" tableName="customer_info"/>
+	    <createIndex indexName="idx_customer_info_station_code" tableName="customer_info">
+	        <column name="station_code" type="varchar(255)"/>
+	    </createIndex>
+	    
+	    <createSequence sequenceName="favorite_button_seq" incrementBy="50" minValue="1" maxValue="9223372036854775807" startValue="1" cacheSize="1"/>
+	    <createTable tableName="favorite_button">
+	    	<column name="id" type="BIGINT">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="station_code" type="varchar(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="type" type="varchar(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="menu" type="INT"/>
+    		<column name="description" type="varchar(255)"/>
+    		<column name="priority" type="INT"/>
+	    </createTable>
+	    <addPrimaryKey constraintName="PK_favoriteBtn_id" columnNames="id" tableName="favorite_button"/>
+	    <createIndex indexName="idx_favoriteBtn_station_code" tableName="favorite_button">
+	        <column name="station_code" type="varchar(255)"/>
+	    </createIndex>
+	    
+	    <sql>INSERT INTO aims_portal_property (name, properties) values('SUPPORT_LIDL_FUNCTION', 'false')</sql>
+	</changeSet>
+	<changeSet author="Songju.Ahn" id="4.2.0-2" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <insert tableName="dashboard_settings">
+	    	<column name="id" valueNumeric="5"/>
+	    	<column name="created" value="now()"/>
+	    	<column name="last_modified" value="now()"/>
+	    	<column name="category" value="Setting"/>
+	    	<column name="item" value="LiDL Function"/>
+	    	<column name="param_1" value='{"SSCEnabled":false}'/>
+    		<column name="param_descr" value="LiDL Function Setting value"/>
+	    </insert>
+	</changeSet>
+	<changeSet author="Songju.Ahn" id="4.2.0-2" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <insert tableName="dashboard_settings">
+	    	<column name="id" valueNumeric="5"/>
+	    	<column name="created" value="getDate()"/>
+	    	<column name="last_modified" value="getDate()"/>
+	    	<column name="category" value="Setting"/>
+	    	<column name="item" value="LiDL Function"/>
+	    	<column name="param_1" value='{"SSCEnabled":false}'/>
+    		<column name="param_descr" value="LiDL Function Setting value"/>
+	    </insert>
+	</changeSet>
+	<changeSet author="Songju.Ahn" id="4.2.0-3" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <addColumn tableName="end_device">
+			<column name="template_manual" type="boolean" defaultValueBoolean="false" />
+		</addColumn>
+	</changeSet>
+	<changeSet author="Songju.Ahn" id="4.2.0-3" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <addColumn tableName="end_device">
+			<column name="template_manual" type="boolean" defaultValueBoolean="false"/>
+		</addColumn>
+		<update tableName="end_device">
+			<column name="template_manual" valueBoolean="false"/>
+		</update>
+	</changeSet>
+	
+	<changeSet author="Justyn.Lee" id="4.2.0-RC2" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<dropUniqueConstraint tableName="server" constraintName="uk_server_ip_address"/>
+		<addColumn tableName="aims_portal_batch">
+			<column name="server_id" type="BIGINT" defaultValue="0"/>
+		</addColumn>
+	</changeSet>
+	
+	<changeSet author="Songju.Ahn" id="4.2.0-4" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <insert tableName="dashboard_settings">
+	    	<column name="id" valueNumeric="6"/>
+	    	<column name="created" value="now()"/>
+	    	<column name="last_modified" value="now()"/>
+	    	<column name="category" value="Setting"/>
+	    	<column name="item" value="LiDL Origin Translate"/>
+	    	<column name="param_1" value='{"en":"See pack/label","de":"Siehe Packung/Etikett","ko":"별도 표기"}'/>
+    		<column name="param_descr" value="LiDL Function Setting value"/>
+	    </insert>
+	</changeSet>
+	<changeSet author="Songju.Ahn" id="4.2.0-4" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <insert tableName="dashboard_settings">
+	    	<column name="id" valueNumeric="6"/>
+	    	<column name="created" value="getDate()"/>
+	    	<column name="last_modified" value="getDate()"/>
+	    	<column name="category" value="Setting"/>
+	    	<column name="item" value="LiDL Origin Translate"/>
+	    	<column name="param_1" value='{"en":"See pack/label","de":"Siehe Packung/Etikett","ko":"별도 표기"}'/>
+    		<column name="param_descr" value="LiDL Function Setting value"/>
+	    </insert>
+	</changeSet>
+</databaseChangeLog>

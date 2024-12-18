@@ -1,0 +1,17 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+	
+    <changeSet author="Dohoon.Oh (generated)" id="1.0.1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS" >
+    	
+    	<comment> ADD station_code to aims_portal_batch table. </comment>
+    	
+   		<addColumn tableName="aims_portal_batch">
+   			 <column name="station_code" type="VARCHAR(255)"/>
+   		</addColumn>
+    </changeSet>
+  
+</databaseChangeLog>

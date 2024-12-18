@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+	<changeSet author="donghyun.kim (generated)" id="2.2.1.12.postgresql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql, postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<addColumn tableName="article">
+			<column name="reserved_one" type="VARCHAR(255)" />
+			<column name="reserved_two" type="VARCHAR(255)" />
+			<column name="reserved_three" type="VARCHAR(255)" />
+		</addColumn>
+	</changeSet>
+	
+</databaseChangeLog>

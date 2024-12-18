@@ -1,0 +1,19 @@
+databaseChangeLog:
+- include:
+    relativeToChangelogFile: true
+    file: liquibase-aims-core-entity.yml
+- include:
+    relativeToChangelogFile: true
+    file: liquibase-aims-core-infrasturcture.yml
+- include:
+    relativeToChangelogFile: true
+    file: liquibase-aims-core-service.yml
+- include:
+    relativeToChangelogFile: true
+    file: liquibase-solum.yml
+- include:
+    relativeToChangelogFile: true
+    file: liquibase/security-userstore.yml
+- include:
+    relativeToChangelogFile: true
+    file: liquibase/liquibase-changelog-control.yml

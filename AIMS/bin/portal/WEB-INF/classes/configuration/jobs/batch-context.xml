@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+ 	<!--  -->
+ 	<bean id="contentJobExcutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+ 		<property name="corePoolSize" value="${batch.processor.excutor.content.pool}"/>
+ 	</bean>
+ 	
+ 	<bean id="updateNfcJobExcutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+ 		<property name="corePoolSize" value="${batch.processor.excutor.updateNfc.pool}"/>
+ 	</bean>
+ 	
+ 	<bean id="updateScheduleJobExcutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+ 		<property name="corePoolSize" value="${batch.processor.excutor.updateSchedule.pool}"/>
+ 	</bean>
+ 	
+ 	<bean id="updateFrontPageIndexJobExcutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+ 		<property name="corePoolSize" value="${batch.processor.excutor.updateFrontPageIndex.pool}"/>
+ 	</bean>
+ 	
+ 	<bean id="articleJobExcutor" class="com.solum.aims.portal.batch.job.ArticleThreadPoolTaskExecutor" />
+
+ 	<bean id="templateJobExcutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+ 		<property name="corePoolSize" value="${batch.processor.excutor.template.pool}"/>
+ 	</bean>
+
+  	<bean id="forcedUpdateJobExcutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+ 		<property name="corePoolSize" value="1"/>
+ 	</bean>
+
+	<bean id="assignJobExcutor" class="com.solum.aims.portal.batch.job.AssignThreadPoolTaskExecutor" />
+
+	<bean id="assignExtraJobExcutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="${batch.processor.excutor.assignExtra.pool}"/>
+	</bean>
+
+ 	<bean id="removeArticleJobExcutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+ 		<property name="corePoolSize" value="${batch.processor.excutor.removeArticle.pool}"/>
+ 	</bean>
+ 	
+ 	<bean id="unassignJobExcutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+ 		<property name="corePoolSize" value="${batch.processor.excutor.unassign.pool}"/>
+ 	</bean>
+ 	
+ 	<bean id="deleteJobExcutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+ 		<property name="corePoolSize" value="${batch.processor.excutor.delete.pool}"/>
+ 	</bean>
+ 	<!--  -->
+ 	
+	<bean id="purgeJobExcutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+ 		<property name="corePoolSize" value="1"/>
+ 	</bean>
+ 	
+	<bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="taskExecutor" ref="taskExecutor"/>
+	</bean>
+		 
+	<bean id="jobTransactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!--  Initialise the database if enabled: -->
+	<jdbc:initialize-database data-source="dataSource" enabled="${batch.data.source.init}" ignore-failures="DROPS">
+		<jdbc:script location="${batch.drop.script}"/>
+		<jdbc:script location="${batch.schema.script}"/>
+	</jdbc:initialize-database>
+	 
+	<bean id="jobRegistryBeanPostProcessor" class="org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor">
+		<property name="jobRegistry" ref="jobRegistry"></property>
+	</bean>
+	
+	<bean id="jobRegistry" class="org.springframework.batch.core.configuration.support.MapJobRegistry"/>
+
+	<bean id="lastModifiedComparator" class="com.solum.aims.portal.common.util.LastModifiedComparator"/>	 
+	<bean id="jsonreader" class="com.solum.aims.portal.customer.standard.JsonFileRead"/>
+	<bean id="xmlreader" class="com.solum.aims.portal.customer.standard.XmlFileRead"/>
+	<bean id="reader" class="com.solum.aims.portal.customer.standard.FlatFileRead"/>
+	<bean id="excelreader" class="com.solum.aims.portal.customer.standard.ExcelFileRead"/>
+	<bean id="delreader" class="com.solum.aims.portal.customer.standard.FlatFileReadForDelete"/>
+	<bean id="mapreader" class="com.solum.aims.portal.customer.standard.FlatFileReadForMapping"/>
+	<bean id="labelLinkFileReader" class="com.solum.aims.portal.customer.standard.FlatFileReadForLabelLink"/>
+	
+</beans>

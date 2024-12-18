@@ -1,0 +1,353 @@
+# ----------------------------------------
+# AIMSCore PROPERTIES
+# ----------------------------------------
+aims-core:
+
+# BATCH
+  batch:
+    embedded-database.enabled: true
+    processor-job:
+      max-messages-per-poll: 10
+    inbound-linker-job:
+      max-messages-per-poll: 30
+    outbound-linker-job:
+      max-messages-per-poll: 20
+      max-handoff-count: ${aims.core.accessPoint.maxHandoffCount:500}
+      max-contract-size: ${aims.core.accessPoint.maxContractSize:5MB}   # 5MB(5242880), 10MB(10485760)
+      max-contract-count: ${aims.core.accessPoint.maxContractCount:500}
+    skip:
+      limit: 2147483647   # Integer.MAX_VALUE
+      exceptions:
+        - com.solum.aims.core.entity.util.EndDeviceTypeCodeDigitNotFoundException
+        - com.solum.aims.core.infrastructure.batch.SkippableBatchException
+        - java.nio.file.NoSuchFileException
+        - jakarta.persistence.EntityNotFoundException
+        - org.springframework.batch.item.validator.ValidationException
+        - org.springframework.data.rest.webmvc.ResourceNotFoundException
+
+# INTEGRATION
+  integration.file:
+    input:
+      path: ${aims.core.input.path}
+      age: 2
+      queue-size: 30
+      recover-count: 2
+    backup:
+      enable: false
+      path: ${aims.root.path}/bin/core/backup
+    skip:
+      enable: false
+      path: ${aims.core.input.path}
+
+# RETRY
+  retry:
+    max-attempts: 10
+    exceptions:
+      - java.io.FileNotFoundException
+      - jakarta.persistence.PersistenceException
+      - org.springframework.dao.DataAccessException
+      - org.springframework.transaction.TransactionException
+      - org.springframework.web.client.RestClientException
+
+# RABBITMQ
+  rabbitmq:
+    enabled: ${rabbitmq.enable}
+    virtual-host: ${rabbitmq.vhost}
+    user:
+      name: ${rabbitmq.user.name}
+      password: ${rabbitmq.user.password}
+    queue:
+      type: ${rabbitmq.queue.type:quorum}
+      routing-key:
+        processor-job: aims.core.processor.queue
+        inbound-linker-job: aims.core.inboundlinker.queue
+#      outbound-linker-job: aims.core.outboundlinker.queue
+
+# ENCRYPTION
+  encryption:
+    properties:
+      - database.password
+      - aims.core.http.basicAuth.password
+      - rabbitmq.user.password
+      - rabbitmq.ssl.store-password
+      - database.core.password
+      - database.portal.password
+      - database.lbs.password
+      - database.pda.password
+      - database.ota.password
+
+# WEB
+  web:
+    security:
+      http-basic-auth:
+        enabled: false
+        username: ${aims.core.http.basicAuth.username}
+        password: ${aims.core.http.basicAuth.password}
+      user-store:
+        enabled: false
+        b-crypt.log-rounds: 10
+    url:
+      connect-timeout: 30s
+      read-timeout: 30s
+
+# SCHEDULER
+  scheduler.timeout:
+    server:
+      fixed-delay: 180000
+      timeout-period: 10m
+    access-point:
+      fixed-delay: 300000
+      timeout-period: 5m
+    content:
+      fixed-delay: 60000
+      timeout-period: 2h
+      timeout-size: 200
+
+# ----------------------------------------
+# SPRING PROPERTIES
+# ----------------------------------------
+spring:
+  application.name: core
+  config.import: optional:configserver:http://localhost:8761/config
+#TODO https://github.com/micrometer-metrics/tracing/wiki/Spring-Cloud-Sleuth-3.1-Migration-Guide
+#  cloud:
+#    compatibility-verifier:
+#      enabled: false
+#  sleuth:
+#    messaging:
+#      rabbit:
+#        enabled: false
+#    propagation:
+#      type: w3c
+#  zipkin:
+#    enabled: ${zipkin.enable}
+#    base-url: http://${zipkin.url}
+#TODO https://github.com/spring-cloud/spring-cloud-sleuth/issues/2235 Sleuth is not compatible with spring boot 3
+
+# APPLICATION SETTINGS (SpringApplication)
+  lifecycle.timeout-per-shutdown-phase: 600s
+  main:
+    banner-mode: log
+    allow-circular-references: true
+
+# BATCH (BatchProperties)
+  batch:
+    job.enabled: false
+    jdbc.initialize-schema: never
+
+# DATASOURCE (DataSourceAutoConfiguration & DataSourceProperties)
+  datasource:
+    username: ${database.username}
+    password: ${database.password}
+    hikari:
+      maximum-pool-size: ${database.connection.maximumPoolSize:200}
+      max-lifetime: ${database.connection.maxLifeTime:600000}
+
+# SPRING JACKSON
+  jackson.serialization:
+    write-dates-as-timestamps: true
+
+# JPA (JpaBaseConfiguration, HibernateJpaAutoConfiguration)
+  jpa:
+    open-in-view: false
+    hibernate.ddl-auto: validate
+    generate-ddl: true
+    properties:
+      hibernate:
+        cache:
+          use_second_level_cache: false
+          region.factory_class: org.hibernate.cache.ehcache.EhCacheRegionFactory
+        enable_lazy_load_no_trans: true
+        proc.param_null_passing: true
+        order_inserts: true
+        order_updates: true
+        jdbc:
+          batch_size: 50
+          fetch_size: 10
+          lob.non_contextual_creation: true
+        session.events.log.LOG_QUERIES_SLOWER_THAN_MS: ${aims.core.jpa.slow-query.threshold:1000}
+        generate_statistics: false
+        format_sql: true
+      jakarta.persistence.query.timeout: 60000
+
+# LIQUIBASE (LiquibaseProperties)
+  liquibase:
+    enabled: true
+    drop-first: false
+    change-log: classpath:config/db/liquibase.yml
+    parameters:
+      version: ${info.version}
+      batch.repository.embedded: ${aims-core.batch.embedded-database.enabled}
+      security.user-store.enabled: ${aims-core.web.security.user-store.enabled}
+
+# INTERNATIONALIZATION (MessageSourceAutoConfiguration)
+  messages.basename: config/i11n/language
+
+# SPRING MVC (WebMvcProperties)
+  mvc:
+    servlet.load-on-startup: 1
+    view:
+      prefix: /WEB-INF/view/
+      suffix: .jsp
+    pathmatch.matching-strategy: ant-path-matcher
+
+# RABBIT (RabbitProperties)
+  rabbitmq:
+    username: ${rabbitmq.user.name}
+    password: ${rabbitmq.user.password}
+    addresses: ${rabbitmq.addresses}
+    virtual-host: ${rabbitmq.vhost}
+    dynamic: ${aims-core.rabbitmq.enabled}
+    listener.simple.max-concurrency: ${rabbitmq.listener.max-concurrency:8}
+    ssl:
+      enabled: ${rabbitmq.ssl.enable:true}
+      verify-hostname: false
+      key-store: classpath:config/client_key.p12
+      key-store-password: ${rabbitmq.ssl.store-password}
+      trust-store: classpath:config/rabbitstore.jks
+      trust-store-password: ${rabbitmq.ssl.store-password}
+    template.retry:
+      enabled: true
+      initial-interval: 2s
+
+# SQL (SqlInitializationAutoConfiguration)
+  sql.init:
+    mode: never
+    continue-on-error: true
+
+  task:
+# TASK EXECUTION (TaskExecutionAutoConfiguration)
+    execution:
+      pool.core-size: 8
+      shutdown:
+        await-termination: true
+        await-termination-period: 10m
+# TASK SCHEDULING (TaskSchedulingAutoConfiguration)
+    scheduling.pool.size: 4
+
+# ----------------------------------------
+# ACTUATOR PROPERTIES
+# ----------------------------------------
+management:
+  info:
+    env:
+      enabled: true
+
+# ENDPOINTS GENERAL CONFIGURATION
+  endpoints:
+    enabled-by-default: false
+    web.exposure.include: health, info, prometheus, metrics
+
+  endpoint:
+# INFO ENDPOINT
+    info.enabled: true
+# HEALTH ENDPOINT
+    health:
+      enabled: true
+      probes.enabled: true
+# PROMETHEUS ENDPOINT
+    prometheus.enabled: true
+# METRICS ENDPOINT
+    metrics.enabled: true
+
+# HEALTH ENDPOINT
+  health:
+    defaults.enabled: false
+    rabbit.enabled: ${aims-core.rabbitmq.enabled}
+
+# METRICS
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# INFO ENDPOINTS
+info:
+  version: "4.7.3.RELEASE"
+  revision: "f9c32f3"
+  buildDate: "2023-12-12T05:31:30.460568+09:00[Asia/Seoul]"
+
+# ----------------------------------------
+# LOGGING PROPERTIES
+# ----------------------------------------
+logging.level:
+  com.rabbitmq.client.TrustEverythingTrustManager: off
+  org.springframework.batch.core.job.SimpleStepHandler: off
+  org.hibernate.engine.internal.StatefulPersistenceContext: error
+#  sql: debug
+#  org.hibernate.orm.jdbc.bind: trace
+
+# ----------------------------------------
+# EMBEDDED SERVER CONFIGURATION (ServerProperties)
+# ----------------------------------------
+server:
+  servlet:
+    context-path: /${aims.core.url.path}
+    encoding.charset: UTF-8
+  shutdown: graceful
+  port: ${aims.core.url.port}
+  ssl.enabled: false
+
+# ----------------------------------------
+# JASYPT
+# ----------------------------------------
+jasypt.encryptor:
+  algorithm: PBEWithMD5AndDES
+  iv-generator-classname: org.jasypt.iv.NoIvGenerator
+  password: ${property.encryption.password:"aims"}
+
+# ----------------------------------------
+# AIMSServiceDiscovery PROPERTIES
+# ----------------------------------------
+#eureka:
+#  instance:
+#    preferIpAddress: true
+#  client:
+#    register-with-eureka: true
+#    fetch-registry: true
+#    serviceUrl:
+#      defaultZone: http://16.8.50.100:8761/eureka
+
+---
+##########################################
+# Profile: Development                   #
+##########################################
+# ----------------------------------------
+# SPRING PROPERTIES
+# ----------------------------------------
+spring:
+  config:
+    activate.on-profile: dev
+
+# LIQUIBASE (LiquibaseProperties)
+  liquibase.drop-first: true
+
+# ----------------------------------------
+# ACTUATOR PROPERTIES
+# ----------------------------------------
+management:
+
+# ENDPOINTS GENERAL CONFIGURATION
+  endpoints:
+    enabled-by-default: true
+    web.exposure.include: '*'
+
+  endpoint:
+# HEALTH ENDPOINT
+    health:
+      probes:
+        enabled: true
+# PROMETHEUS ENDPOINT
+    prometheus:
+      enabled: true
+
+  health:
+    defaults:
+      enabled: true
+    rabbit:
+      enabled: ${aims-core.rabbitmq.enabled}
+
+# ----------------------------------------
+# AIMSCore PROPERTIES
+# ----------------------------------------
+aims-core:
+  integration.file.backup.enable: true

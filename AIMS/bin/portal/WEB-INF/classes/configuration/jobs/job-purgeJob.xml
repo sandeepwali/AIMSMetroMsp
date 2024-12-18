@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:batch="http://www.springframework.org/schema/batch"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+	<task:scheduled-tasks>
+		<task:scheduled ref="purgeJobEndPointChain" method="clearMapJobRepository" fixed-delay="${batch.purge.map.delay}"/>
+		<task:scheduled ref="purgeDashboardLogdata" method="deleteFilesOlderThanNmonths" cron="${batch.delete.cron}"/>
+	</task:scheduled-tasks>
+	
+	<bean id="purgeJobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+		<property name="jobRepository" ref="jobRepository"/>
+		<property name="taskExecutor" ref="purgeJobExcutor"/>
+	</bean>
+	
+	<bean id="purgeJobEndPointChain" class="com.solum.aims.portal.batch.job.PurgeJobMessageEndPointChain">
+		<property name="job" ref="purgeJob"/>
+	</bean>
+	
+	<bean id="purgeSpringBatchHistoryTasklet" class="com.solum.aims.portal.batch.job.purge.PurgeSpringBatchHistoryTasklet"/>
+	
+	<batch:job id="purgeJob">
+		<batch:step id="purgeSpringBatchHistoryStep">
+			<batch:tasklet ref="purgeSpringBatchHistoryTasklet"/>
+		</batch:step>
+	</batch:job>
+	
+	<bean id="purgeInterfacefiles" class="com.solum.aims.portal.module.biz1.PurgeInterfacefilesInBackup"/>
+	
+	<bean id="purgeDashboardLogdata" class="com.solum.aims.portal.module.biz1.PurgeDashboardLogdata">
+		<property name="monthsBack" value="${batch.purge.retentionMonths}"/>
+	</bean>
+</beans>

@@ -1,0 +1,67 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+	
+    <changeSet author="Justyn (generated)" id="2.0.1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	 	
+	 	<createTable tableName="payment_license">
+	 		<column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="BOOLEAN"/>
+            <column name="license_id" type="VARCHAR(255)"/>
+            <column name="payment_license_type" type="VARCHAR(255)"/>
+            <column name="server_type" type="VARCHAR(255)"/>
+            <column name="expiry_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="version" type="VARCHAR(255)"/>
+            <column name="number_of_store" type="INT"/>
+            <column name="installation_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="encoded_license" type="VARCHAR"/>
+            <column name="last_modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+	 	</createTable>
+	 	<addPrimaryKey columnNames="id" constraintName="payment_license_pkey" tableName="payment_license"/>
+	 </changeSet>
+	 
+	 <changeSet author="Justyn (generated)" id="2.0.1-mssql" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	 	
+	 	<createTable tableName="payment_license">
+	 		<column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active" type="BOOLEAN"/>
+            <column name="license_id" type="VARCHAR(255)"/>
+            <column name="payment_license_type" type="VARCHAR(255)"/>
+            <column name="server_type" type="VARCHAR(255)"/>
+            <column name="expiry_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="version" type="VARCHAR(255)"/>
+            <column name="number_of_store" type="INT"/>
+            <column name="installation_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+            <column name="encoded_license" type="VARCHAR(MAX)"/>
+            <column name="last_modified_date" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+	 	</createTable>
+	 	<addPrimaryKey columnNames="id" constraintName="payment_license_pkey" tableName="payment_license"/>
+	 </changeSet>
+	 
+	 <changeSet author="Justyn (generated)" id="2.0.1-oracle" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="oracle" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	 	
+	 	<createTable tableName="PAYMENT_LICENSE">
+	 		<column name="ID" type="NUMBER(19, 0)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ACTIVE" type="BOOLEAN"/>
+            <column name="LICENSE_ID" type="VARCHAR2(255 CHAR)"/>
+            <column name="PAYMENT_LICENSE_TYPE" type="VARCHAR2(255 CHAR)"/>
+            <column name="SERVER_TYPE" type="VARCHAR2(255 CHAR)"/>
+            <column name="EXPIRY_DATE" type="TIMESTAMP(6)"/>
+            <column name="VERSION" type="VARCHAR2(255 CHAR)"/>
+            <column name="NUMBER_OF_STORE" type="INT"/>
+            <column name="INSTALLATION_DATE" type="TIMESTAMP(6)"/>
+            <column name="ENCODED_LICENSE" type="LONG"/>
+            <column name="LAST_MODIFIED_DATE" type="TIMESTAMP(6)"/>
+	 	</createTable>
+	 	<addPrimaryKey columnNames="ID" constraintName="PAYMENT_LICENSE_PKEY" tableName="PAYMENT_LICENSE"/>
+	 </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+	<changeSet author="Justyn (generated)" id="3.2.0.tapAndGo" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql,postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<createTable tableName="tap_and_go_info">
+    		<column name="user_id" type="varchar(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="station_code" type="VARCHAR(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="article_id" type="VARCHAR(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		
+    		<column name="product_name" type="varchar(512)"/>
+    		<column name="count" type="INT"/>
+    		<column name="label_code" type="varchar(20)"/>
+    		<column name="status_update_time" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+    		<column name="accesspoint_ip_address" type="varchar(20)"/>
+    		<column name="accesspoint_mac" type="varchar(20)"/>
+    		<column name="modified" type="TIMESTAMP(6) WITHOUT TIME ZONE"/>
+    	</createTable>
+    	<addPrimaryKey constraintName="PK_tapAndGo" columnNames="user_id, station_code, article_id" tableName="tap_and_go_info"/>
+    	<createIndex tableName="tap_and_go_info" indexName="index_user_id_tapAndGo">
+    		<column name="user_id"/>
+    	</createIndex>
+	</changeSet>
+</databaseChangeLog>
+
+

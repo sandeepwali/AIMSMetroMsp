@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+						http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	
+	<job id="outboundMspJob" job-repository="outboundMspJobRepository" xmlns="http://www.springframework.org/schema/batch">
+		<listeners>
+			<listener ref="outboundMspJobListener"/>
+		</listeners>
+		
+		<decision id="OUTBOUND.MSP.LaunchingDecider" decider="outboundMspLaunchingDecider">
+			<next on="REQUEST_PRODUCT_IMAGE" to="OUTBOUND.MSP.RequestingProdecutImage"/>
+			<next on="REQUEST_RELEASE_IMAGE" to="OUTBOUND.MSP.RequestingReleaseImage"/>
+		</decision>
+		
+		<step id="OUTBOUND.MSP.RequestingProdecutImage">
+			<tasklet ref="requestingProductImageToMspTasklet" />
+		</step>
+		
+		<step id="OUTBOUND.MSP.RequestingReleaseImage">
+			<tasklet ref="requestingReleaseImageToMspTasklet" />
+		</step>
+	</job>
+
+</beans>

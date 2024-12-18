@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+	<changeSet author="Justyn (generated)" id="2.2.1.8" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <createSequence cycle="false" incrementBy="50" maxValue="9223372036854775807" minValue="-9223372036854775808" sequenceName="dashboard_user_group_seq" startValue="54"/>
+	    <createSequence cycle="false" incrementBy="50" maxValue="9223372036854775807" minValue="-9223372036854775808" sequenceName="dashboard_user_seq" startValue="51"/>
+	    <createSequence cycle="false" incrementBy="50" maxValue="9223372036854775807" minValue="-9223372036854775808" sequenceName="dashboard_log_seq" startValue="1"/>
+	    
+	    <createTable tableName="dashboard_role">
+	    	<column name="role_id" type="bigint">
+	    		<constraints nullable="false"/>
+	    	</column>
+	    	<column name="role_name" type="varchar(80)"/>
+	    </createTable>
+	    <insert tableName="dashboard_role">
+	    	<column name="role_id" valueNumeric="1"/>
+	    	<column name="role_name" value="Login Dashboard/PDA"/>
+	    </insert>
+	    <insert tableName="dashboard_role">
+	    	<column name="role_id" valueNumeric="2"/>
+	    	<column name="role_name" value="Add/Remove/Edit Store"/>
+	    </insert>
+	    <insert tableName="dashboard_role">
+	    	<column name="role_id" valueNumeric="3"/>
+	    	<column name="role_name" value="Add/Scan/Delete/Edit Gateway"/>
+	    </insert>
+	    <insert tableName="dashboard_role">
+	    	<column name="role_id" valueNumeric="4"/>
+	    	<column name="role_name" value="Reboot Gateway"/>
+	    </insert>
+	    <insert tableName="dashboard_role">
+	    	<column name="role_id" valueNumeric="5"/>
+	    	<column name="role_name" value="Add Template"/>
+	    </insert>
+	    <insert tableName="dashboard_role">
+	    	<column name="role_id" valueNumeric="6"/>
+	    	<column name="role_name" value="Export time out"/>
+	    </insert>
+	    <insert tableName="dashboard_role">
+	    	<column name="role_id" valueNumeric="7"/>
+	    	<column name="role_name" value="Swagger link"/>
+	    </insert>
+	    <insert tableName="dashboard_role">
+	    	<column name="role_id" valueNumeric="8"/>
+	    	<column name="role_name" value="Assign/Unassign/Upload Image"/>
+	    </insert>
+	    <addPrimaryKey columnNames="role_id" constraintName="PK_dashboard_role" tableName="dashboard_role"/>
+	    
+	    <createTable tableName="dashboard_user_group">
+	    	<column name="user_group_id" type="bigint">
+	    		<constraints nullable="false"/>
+	    	</column>
+	    	<column name="user_group_name" type="varchar(255)"/>
+	    	<column name="role_list" type="varchar(2048)"/>
+	    	<column name="description" type="varchar(255)"/>
+	    </createTable>
+	    <insert tableName="dashboard_user_group">
+	    	<column name="user_group_id" valueNumeric="1"/>
+	    	<column name="user_group_name" value="Store Ops"/>
+	    	<column name="role_list" value="all"/>
+	    	<column name="description" value="Store Ops(Administrator)"/>
+	    </insert>
+	    <insert tableName="dashboard_user_group">
+	    	<column name="user_group_id" valueNumeric="2"/>
+	    	<column name="user_group_name" value="Store Manager"/>
+	    	<column name="role_list" value=""/>
+	    	<column name="description" value="Store Manager"/>
+	    </insert>
+	    <insert tableName="dashboard_user_group">
+	    	<column name="user_group_id" valueNumeric="3"/>
+	    	<column name="user_group_name" value="Dept Manager"/>
+	    	<column name="role_list" value=""/>
+	    	<column name="description" value="Dept Manager"/>
+	    </insert>
+	    <insert tableName="dashboard_user_group">
+	    	<column name="user_group_id" valueNumeric="4"/>
+	    	<column name="user_group_name" value="Employee"/>
+	    	<column name="role_list" value=""/>
+	    	<column name="description" value="Employee"/>
+	    </insert>
+	    <addPrimaryKey columnNames="user_group_id" constraintName="PK_dashboard_user_group" tableName="dashboard_user_group"/>
+	    
+	    <createTable tableName="dashboard_user">
+	    	<column name="user_id" type="bigint">
+	    		<constraints nullable="false"/>
+	    	</column>
+	    	<column name="user_name" type="varchar(255)"/>
+	    	<column name="first_name" type="varchar(255)"/>
+	    	<column name="last_name" type="varchar(255)"/>
+	    	<column name="password" type="varchar(255)"/>
+	    	<column name="email_address" type="varchar(255)"/>
+	    	<column name="profile_path" type="varchar(10000)"/>
+	    	<column name="user_group_id" type="bigint"/>
+	    	<column name="store_list" type="varchar(2048)"/>
+	    	<column name="description" type="varchar(255)"/>
+	    </createTable>
+	    <insert tableName="dashboard_user">
+	    	<column name="user_id" valueNumeric="1"/>
+	    	<column name="user_name" value="admin"/>
+	    	<column name="first_name" value="admin"/>
+	    	<column name="last_name" value="admin"/>
+	    	<column name="password" value="admin"/>
+	    	<column name="email_address" value=""/>
+	    	<column name="profile_path" value=""/>
+	    	<column name="user_group_id" valueNumeric="1"/>
+	    	<column name="store_list" value="all"/>
+	    	<column name="description" value="-"/>
+	    </insert>
+	    <addPrimaryKey columnNames="user_id" constraintName="PK_dashboard_user" tableName="dashboard_user"/>
+	    
+	    <createTable tableName="dashboard_log">
+	    	<column name="log_id" type="bigint">
+	    		<constraints nullable="false"/>
+	    	</column>
+	    	<column name="type" type="bigint"/>
+	    	<column name="user_name" type="varchar(255)"/>
+	    	<column name="url" type="varchar(255)"/>
+	    	<column name="json_data" type="varchar(2048)"/>
+	    	<column name="result" type="varchar(255)"/>
+	    	<column name="time" type="datetime2(7)"/>
+	    </createTable>
+	    
+	</changeSet>
+	
+	<changeSet author="Jiwon (generated)" id="2.2.1.8-1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+ 		<modifyDataType tableName="dashboard_log" columnName="json_data" newDataType="varchar"/>
+ 	</changeSet>
+	
+    <changeSet author="Justyn (generated)" id="2.2.1.8" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <createSequence cycle="false" incrementBy="50" maxValue="9223372036854775807" minValue="-9223372036854775808" sequenceName="dashboard_user_group_seq" startValue="54"/>
+	    <createSequence cycle="false" incrementBy="50" maxValue="9223372036854775807" minValue="-9223372036854775808" sequenceName="dashboard_user_seq" startValue="51"/>
+	    <createSequence cycle="false" incrementBy="50" maxValue="9223372036854775807" minValue="-9223372036854775808" sequenceName="dashboard_log_seq" startValue="1"/>
+	    
+	    <createTable tableName="dashboard_role">
+	    	<column name="role_id" type="bigint">
+	    		<constraints nullable="false"/>
+	    	</column>
+	    	<column name="role_name" type="varchar(80)"/>
+	    </createTable>
+	    <insert tableName="dashboard_role">
+	    	<column name="role_id" valueNumeric="1"/>
+	    	<column name="role_name" value="Login Dashboard/PDA"/>
+	    </insert>
+	    <insert tableName="dashboard_role">
+	    	<column name="role_id" valueNumeric="2"/>
+	    	<column name="role_name" value="Add/Remove/Edit Store"/>
+	    </insert>
+	    <insert tableName="dashboard_role">
+	    	<column name="role_id" valueNumeric="3"/>
+	    	<column name="role_name" value="Add/Scan/Delete/Edit Gateway"/>
+	    </insert>
+	    <insert tableName="dashboard_role">
+	    	<column name="role_id" valueNumeric="4"/>
+	    	<column name="role_name" value="Reboot Gateway"/>
+	    </insert>
+	    <insert tableName="dashboard_role">
+	    	<column name="role_id" valueNumeric="5"/>
+	    	<column name="role_name" value="Add Template"/>
+	    </insert>
+	    <insert tableName="dashboard_role">
+	    	<column name="role_id" valueNumeric="6"/>
+	    	<column name="role_name" value="Export time out"/>
+	    </insert>
+	    <insert tableName="dashboard_role">
+	    	<column name="role_id" valueNumeric="7"/>
+	    	<column name="role_name" value="Swagger link"/>
+	    </insert>
+	    <insert tableName="dashboard_role">
+	    	<column name="role_id" valueNumeric="8"/>
+	    	<column name="role_name" value="Assign/Unassign/Upload Image"/>
+	    </insert>
+	    <addPrimaryKey columnNames="role_id" constraintName="PK_dashboard_role" tableName="dashboard_role"/>
+	    
+	    <createTable tableName="dashboard_user_group">
+	    	<column name="user_group_id" type="bigint">
+	    		<constraints nullable="false"/>
+	    	</column>
+	    	<column name="user_group_name" type="varchar(255)"/>
+	    	<column name="role_list" type="varchar(2048)"/>
+	    	<column name="description" type="varchar(255)"/>
+	    </createTable>
+	    <insert tableName="dashboard_user_group">
+	    	<column name="user_group_id" valueNumeric="1"/>
+	    	<column name="user_group_name" value="Store Ops"/>
+	    	<column name="role_list" value="all"/>
+	    	<column name="description" value="Store Ops(Administrator)"/>
+	    </insert>
+	    <insert tableName="dashboard_user_group">
+	    	<column name="user_group_id" valueNumeric="2"/>
+	    	<column name="user_group_name" value="Store Manager"/>
+	    	<column name="role_list" value=""/>
+	    	<column name="description" value="Store Manager"/>
+	    </insert>
+	    <insert tableName="dashboard_user_group">
+	    	<column name="user_group_id" valueNumeric="3"/>
+	    	<column name="user_group_name" value="Dept Manager"/>
+	    	<column name="role_list" value=""/>
+	    	<column name="description" value="Dept Manager"/>
+	    </insert>
+	    <insert tableName="dashboard_user_group">
+	    	<column name="user_group_id" valueNumeric="4"/>
+	    	<column name="user_group_name" value="Employee"/>
+	    	<column name="role_list" value=""/>
+	    	<column name="description" value="Employee"/>
+	    </insert>
+	    <addPrimaryKey columnNames="user_group_id" constraintName="PK_dashboard_user_group" tableName="dashboard_user_group"/>
+	    
+	    <createTable tableName="dashboard_user">
+	    	<column name="user_id" type="bigint">
+	    		<constraints nullable="false"/>
+	    	</column>
+	    	<column name="user_name" type="varchar(255)"/>
+	    	<column name="first_name" type="varchar(255)"/>
+	    	<column name="last_name" type="varchar(255)"/>
+	    	<column name="password" type="varchar(255)"/>
+	    	<column name="email_address" type="varchar(255)"/>
+	    	<column name="profile_path" type="varchar(10000)"/>
+	    	<column name="user_group_id" type="bigint"/>
+	    	<column name="store_list" type="varchar(2048)"/>
+	    	<column name="description" type="varchar(255)"/>
+	    </createTable>
+	    <insert tableName="dashboard_user">
+	    	<column name="user_id" valueNumeric="1"/>
+	    	<column name="user_name" value="admin"/>
+	    	<column name="first_name" value="admin"/>
+	    	<column name="last_name" value="admin"/>
+	    	<column name="password" value="admin"/>
+	    	<column name="email_address" value=""/>
+	    	<column name="profile_path" value=""/>
+	    	<column name="user_group_id" valueNumeric="1"/>
+	    	<column name="store_list" value="all"/>
+	    	<column name="description" value="-"/>
+	    </insert>
+	    <addPrimaryKey columnNames="user_id" constraintName="PK_dashboard_user" tableName="dashboard_user"/>
+	    
+	    <createTable tableName="dashboard_log">
+	    	<column name="log_id" type="bigint">
+	    		<constraints nullable="false"/>
+	    	</column>
+	    	<column name="type" type="bigint"/>
+	    	<column name="user_name" type="varchar(255)"/>
+	    	<column name="url" type="varchar(255)"/>
+	    	<column name="json_data" type="varchar(2048)"/>
+	    	<column name="result" type="varchar(255)"/>
+	    	<column name="time" type="datetime2(7)"/>
+	    </createTable>
+	    
+	</changeSet>
+
+	<changeSet author="Justyn (generated)" id="2.2.1.8-1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<preConditions onFail="CONTINUE">
+			<not>
+				<indexExists tableName="article" indexName="idx_fk_aims_portal_batch"/>
+			</not>
+		</preConditions>
+		
+	    <createIndex indexName="idx_fk_aims_portal_batch" tableName="article" >
+	        <column name="aims_portal_batch_id" type="bigint"/>
+	    </createIndex>
+	</changeSet>
+	
+	<changeSet author="Justyn (generated)" id="2.2.1.8-2" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql, postgresql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<preConditions onFail="CONTINUE">
+			<not>
+				<indexExists tableName="template" indexName="idx_template_fk_aims_portal_batch"/>
+			</not>
+		</preConditions>
+		
+	    <createIndex indexName="idx_template_fk_aims_portal_batch" tableName="template" >
+	        <column name="aims_portal_batch_id" type="bigint"/>
+	    </createIndex>
+	</changeSet>
+	
+	<changeSet author="Jiwon (generated)" id="2.2.1.8-3" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+ 		<modifyDataType tableName="dashboard_log" columnName="json_data" newDataType="varchar(MAX)"/>
+ 	</changeSet>
+	
+</databaseChangeLog>

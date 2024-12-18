@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog classpath:db/changelog/dbchangelog-3.5.xsd">
+
+	<changeSet author="dh.yeo" id="4.3.3-1" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+	    <sql>update template_type set template_size = '7.3"/7.4"/7.5" (480x800)' where template_size in ('7.3" (480x800)', '7.4" (480x800)', '7.5" (480x800)')</sql>
+		<sql>update template_type set template_size = '2.7"/3.3" (300x200)' where template_size in ('2.7" (300x200)', '3.3" (300x200)')</sql>
+		<sql>update template_area set template_size = '7.3"/7.4"/7.5" (480x800)' where template_size in ('7.3" (480x800)', '7.4" (480x800)', '7.5" (480x800)')</sql>
+		<sql>update template_area set template_size = '2.7"/3.3" (300x200)' where template_size in ('2.7" (300x200)', '3.3" (300x200)')</sql>
+		<sql>update template_station set template_size = '7.3"/7.4"/7.5" (480x800)' where template_size in ('7.3" (480x800)', '7.4" (480x800)', '7.5" (480x800)')</sql>
+		<sql>update template_station set template_size = '2.7"/3.3" (300x200)' where template_size in ('2.7" (300x200)', '3.3" (300x200)')</sql> 		
+	</changeSet>	
+	
+	<changeSet author="hs.sihn" id="4.3.3-2" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>
+			update app_settings
+				set data = replace(data,'{"productIdExtraction":"enable":"false",','{"enable":"false","productIdExtraction":')
+			where category  = 'Product ID Extraction'
+		</sql>
+	</changeSet>	
+	
+	<changeSet author="Jiwon" id="4.3.3-3" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<sql>INSERT INTO aims_portal_property (name, properties) values('UPDATE_USER_PASSWORD_AT_FIRST', 'false')</sql>
+	</changeSet>
+	
+	<changeSet author="hs.sihn" id="4.3.3-4" logicalFilePath="classpath:/db/changelog/db.changelog-master.xml" dbms="postgresql,mssql" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+		<createIndex tableName="aims_portal_batch" indexName="idx_aims_portal_batch_station_and_created">
+			<column name="station_code"/>
+			<column name="created"/>
+		</createIndex>
+	</changeSet>
+	
+</databaseChangeLog>
